@@ -8,10 +8,7 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      {
-        // TODO Прописать роутинг
-      },
-
+      // Другие модули и маршруты
     ]
   },
   {
