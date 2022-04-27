@@ -1,0 +1,10 @@
+{
+  "MENU": {
+    "TITLE": "Project Name",
+    "LINKS": {
+      "BOARDS": "Boards",
+      "CREATEBOARD": "Create board",
+      "LOGIN": "Login"
+    }
+  }
+}

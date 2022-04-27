@@ -1,0 +1,31 @@
+<mat-drawer-container
+  class="container mat-app-background"
+  [ngClass]="{ 'dark-theme-mode': isDarkTheme }"
+>
+  <mat-drawer-content class="container mat-app-background">
+    <mat-toolbar color="primary">
+      <button mat-raised-button color="accent">
+        {{ "MENU.LINKS.BOARDS" | translate }}
+      </button>
+      <button mat-raised-button color="accent">
+        {{ "MENU.LINKS.CREATEBOARD" | translate }}
+      </button>
+      <button mat-raised-button color="accent">
+        {{ "MENU.LINKS.LOGIN" | translate }}
+      </button>
+      <span style="flex: auto"></span>
+      <span>{{ "MENU.TITLE" | translate }}</span>
+      <span style="flex: auto"></span>
+      <div class="toggles">
+        <mat-slide-toggle (change)="changeLanguage()">
+          <mat-icon>language</mat-icon>
+        </mat-slide-toggle>
+        <mat-slide-toggle [(ngModel)]="isDarkTheme">
+          <mat-icon>bedtime</mat-icon>
+        </mat-slide-toggle>
+      </div>
+    </mat-toolbar>
+    <router-outlet></router-outlet>
+    <app-footer></app-footer>
+  </mat-drawer-content>
+</mat-drawer-container>
