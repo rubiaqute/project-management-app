@@ -8,7 +8,7 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      // Другие модули и маршруты
+      //Another routes to modules and components
     ]
   },
   {

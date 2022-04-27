@@ -1,8 +1,19 @@
 @use "@angular/material" as mat;
 @import "~@angular/material/theming";
+@import "./constants.scss";
 @include mat.core();
-$themes-primary: mat.define-palette(mat.$cyan-palette, 500, A200, 700);
-$themes-accent: mat.define-palette(mat.$pink-palette, 700, A200, 900);
+$themes-primary: mat.define-palette(
+  mat.$cyan-palette,
+  $cyan-default,
+  $cyan-light,
+  $cyan-dark
+);
+$themes-accent: mat.define-palette(
+  mat.$pink-palette,
+  $pink-default,
+  $pink-light,
+  $pink-dark
+);
 $themes-warn: mat.define-palette(mat.$red-palette);
 $themes-theme: mat.define-light-theme(
   (
@@ -14,8 +25,17 @@ $themes-theme: mat.define-light-theme(
   )
 );
 @include angular-material-theme($themes-theme);
-$themes-primary-dark: mat.define-palette(mat.$red-palette, 900, 700);
-$themes-accent-dark: mat.define-palette(mat.$blue-gray-palette, 600, 100, 900);
+$themes-primary-dark: mat.define-palette(
+  mat.$red-palette,
+  $red-default,
+  $red-light
+);
+$themes-accent-dark: mat.define-palette(
+  mat.$blue-gray-palette,
+  $blue-gray-default,
+  $blue-gray-light,
+  $blue-gray-dark
+);
 
 $themes-warn-dark: mat.define-palette(mat.$red-palette);
 $themes-theme-dark: mat.define-dark-theme(

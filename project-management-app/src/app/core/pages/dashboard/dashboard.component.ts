@@ -7,12 +7,12 @@ import { TranslateService } from '@ngx-translate/core';
   styleUrls: ['./dashboard.component.scss']
 })
 export class DashboardComponent {
-  isDarkTheme = false;
-  langValue = false;
+  isDarkTheme: boolean = false;
+  langValue: boolean = false;
 
   constructor(public translate: TranslateService) { }
 
-  changeLanguage() {
+  changeLanguage(): void {
     this.langValue = !this.langValue
     if (this.langValue) this.translate.use('ru')
     else this.translate.use('en')
