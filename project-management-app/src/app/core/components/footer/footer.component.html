@@ -1,8 +1,28 @@
 <footer>
   <mat-toolbar class="footer-bar" color="primary">
-    <mat-toolbar-row>
-      <div class="footer-bar__names"></div>
-      <div class="footer-bar__date">2022</div>
+    <mat-toolbar-row class="footer-container">
+      <a class="footer__item rsschool" href="https://rs.school/angular/" target="_blank"></a>
+      <p class="footer__item center">2022</p>
+      <div class="developers">
+        <p class="developers__title footer__item">{{ "FOOTER.DEVELOPERS.TITLE" | translate }}:</p>
+        <ul class="developers__list">
+          <li class="list__item">
+            <a class="item__link" href="http://github.com/rubiaqute" target="_blank">
+              {{ "FOOTER.DEVELOPERS.LIST.INGA" | translate }}
+            </a>
+          </li>
+          <li class="list__item">
+            <a class="item__link" href="https://github.com/batashofa" target="_blank">
+              {{ "FOOTER.DEVELOPERS.LIST.NASTASSIA" | translate }}
+            </a>
+          </li>
+          <li class="list__item">
+            <a class="item__link" href="https://github.com/EdChekanov" target="_blank">
+              {{ "FOOTER.DEVELOPERS.LIST.ED" | translate }}
+            </a>
+          </li>
+        </ul>
+      </div>
     </mat-toolbar-row>
   </mat-toolbar>
 </footer>

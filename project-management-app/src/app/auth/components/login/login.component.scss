@@ -1,0 +1,19 @@
+@import "../../../../constants.scss";
+
+.login {
+  margin: 2vh auto;
+  padding: $padding-default;
+  width: 24%;
+  &__input {
+    width: 100%;
+    font-size: 12px;
+    .suffix {
+      cursor: pointer;
+    }
+  }
+  &__btn {
+    margin-left: 100%;
+    transform: translateX(-100%);
+    padding: 0 3vw;
+  }
+}

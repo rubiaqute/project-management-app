@@ -2,7 +2,25 @@
   width: 100%;
   min-height: 100vh;
 }
-.toggles {
+.header-container {
+  position: relative;
   display: flex;
-  gap: 10%;
+  align-items: center;
+  justify-content: space-between;
+  .user-controls {
+    &__btn {
+      margin: 0 0.22vw;
+    }
+  }
+  .toggles {
+    display: flex;
+    gap: 10%;
+  }
 }
+
+// temporary styles
+
+.authorized {
+  display: none;
+}
+
