@@ -1,5 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -10,30 +11,38 @@ import { Subscription } from 'rxjs';
 export class SignUpComponent implements OnInit, OnDestroy {
   public isPasswordHide: boolean = true;
 
-  public name: string = '';
+  public firstNameValue: string = '';
 
-  public token: string = 'fake';
+  public lastNameValue: string = '';
 
-  public loginForm!: FormGroup;
+  public emailValue: string = '';
+
+  public signUpForm!: FormGroup;
 
   private subs: Subscription | undefined;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(private fb: FormBuilder, private router: Router) {}
 
   ngOnInit(): void {
-    this.loginForm = this.fb.group({
+    this.signUpForm = this.fb.group({
+      firstName: ['', [Validators.required]],
+      lastName: [''],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordValidator]],
     });
-    this.subs = this.loginForm.valueChanges.subscribe((val) => (console.log(val)));
+    this.subs = this.signUpForm.valueChanges.subscribe((val) => (console.log(val)));
   }
 
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
   }
 
-  public login(email: string, token: string): void {
-    console.log(email, token);
+  public signUp(email: string, name: string, lastName: string = ''): void {
+    console.log(email, name, lastName);
+  }
+
+  public onLogin(): void {
+    this.router.navigate(['auth/login']);
   }
 
   private passwordValidator(control: FormControl): { [key: string]: string } | null {
@@ -42,24 +51,32 @@ export class SignUpComponent implements OnInit, OnDestroy {
     const minLength = /^.{8,}$/.test(control.value);
 
     if (!hasNumber)
-      return { invalidPassword: "AUTH.LOGIN.PASSWORD_NO_NUMBERS" };
+      return { invalidPassword: "AUTH.REGISTER.PASSWORD_NO_NUMBERS" };
     if (!hasLetter)
       return {
         invalidPassword:
-          "AUTH.LOGIN.PASSWORD_NO_LETTERS",
+          "AUTH.REGISTER.PASSWORD_NO_LETTERS",
       };
     if (!minLength)
       return {
-        invalidPassword: "AUTH.LOGIN.PASSWORD_MIN_LENGTH",
+        invalidPassword: "AUTH.REGISTER.PASSWORD_MIN_LENGTH",
       };
     return null;
   }
 
+  get firstName(): AbstractControl | null {
+    return this.signUpForm.get('firstName');
+  }
+
+  get lastName(): AbstractControl | null {
+    return this.signUpForm.get('lastName');
+  }
+
   get email(): AbstractControl | null {
-    return this.loginForm.get('email');
+    return this.signUpForm.get('email');
   }
 
   get password(): AbstractControl | null {
-    return this.loginForm.get('password');
+    return this.signUpForm.get('password');
   }
 }

@@ -30,6 +30,21 @@
       "PASSWORD_NO_NUMBERS": "Your password isn't strong enough, please add numbers",
       "PASSWORD_NO_LETTERS": "Your password isn't strong enough, please add letters",
       "PASSWORD_MIN_LENGTH": "The password should contain at least 8 characters"
+    },
+    "REGISTER": {
+      "TITLE": "sign up",
+      "FIRST_NAME": "first name",
+      "LAST_NAME": "last name",
+      "EMAIL": "email",
+      "PASSWORD": "password",
+      "FIRST_NAME_REQUIRED": "The first name is required",
+      "EMAIL_REQUIRED": "The login email is required",
+      "EMAIL_INVALID": "The login email is invalid",
+      "PASSWORD_REQUIRED": "The password is required",
+      "PASSWORD_NO_NUMBERS": "Your password isn't strong enough, please add numbers",
+      "PASSWORD_NO_LETTERS": "Your password isn't strong enough, please add letters",
+      "PASSWORD_MIN_LENGTH": "The password should contain at least 8 characters",
+      "ALREADY_MEMBER": "Already a member?"
     }
   }
 }
