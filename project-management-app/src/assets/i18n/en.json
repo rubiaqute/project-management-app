@@ -4,6 +4,7 @@
     "LINKS": {
       "BOARDS": "Boards",
       "CREATEBOARD": "Create board",
+      "EDIT": "Edit profile",
       "LOGOUT": "Logout",
       "LOGIN": "Login",
       "REGISTER": "Register"

@@ -4,6 +4,7 @@
     "LINKS": {
       "BOARDS": "Доски",
       "CREATEBOARD": "Новая доска",
+      "EDIT": "Изменить профиль",
       "LOGOUT": "Выход",
       "LOGIN": "Вход",
       "REGISTER": "Регистрация"

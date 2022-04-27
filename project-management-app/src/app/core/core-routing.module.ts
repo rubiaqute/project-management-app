@@ -12,11 +12,15 @@ const routes: Routes = [
         path: 'auth', 
         loadChildren: () => import('./../auth/auth.module').then(m => m.AuthModule)
       }, 
+      { 
+        path: 'page-not-found', 
+        loadChildren: () => import('./../shared/shared.module').then(m => m.SharedModule)
+      }, 
     ]
   },
   {
     path: '**',
-    redirectTo: '',
+    redirectTo: 'page-not-found',
     pathMatch: 'full'
   }
 ];
