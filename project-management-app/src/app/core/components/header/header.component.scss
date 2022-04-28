@@ -2,6 +2,7 @@
 
 .header {
   height: $header-footer-height;
+  overflow: hidden;
   &-container {
     position: relative;
     display: flex;
@@ -10,16 +11,12 @@
     height: 100%;
     .user-controls {
       &__btn {
-        margin: 0 0.22vw;
+        margin: 0 0.25vw;
       }
     }
     .toggles {
       display: flex;
-      gap: 10%;
-      padding-right: 5vh;
-      &__{
-        font-size: 1rem;
-      }
+      gap: 5%;
     }
   }
 }
