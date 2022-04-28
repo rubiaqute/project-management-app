@@ -1,0 +1,43 @@
+<header class="header">
+  <mat-toolbar class="header-container" color="primary">
+    <span>{{ "MENU.TITLE" | translate }}</span>
+    <div class="user-controls center">
+      <div class="authorized">
+        <button class="user-controls__btn" mat-raised-button color="accent">
+          {{ "MENU.LINKS.BOARDS" | translate }}
+        </button>
+        <button class="user-controls__btn" mat-raised-button color="accent">
+          {{ "MENU.LINKS.CREATEBOARD" | translate }}
+        </button>
+        <button class="user-controls__btn" mat-raised-button color="accent">
+          {{ "MENU.LINKS.EDIT" | translate }}
+        </button>
+        <button class="user-controls__btn" mat-raised-button color="accent">
+          {{ "MENU.LINKS.LOGOUT" | translate }}
+        </button>
+      </div>
+      <div class="unauthorized">
+        <button class="user-controls__btn" 
+                mat-raised-button 
+                color="accent"
+                (click)="onLogin()">
+          {{ "MENU.LINKS.LOGIN" | translate }}
+        </button>
+        <button class="user-controls__btn" 
+                mat-raised-button 
+                color="accent"
+                (click)="onRegister()">
+          {{ "MENU.LINKS.REGISTER" | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="toggles">
+      <mat-slide-toggle (change)="changeLanguage()">
+        <mat-icon class="toggles__icon">language</mat-icon>
+      </mat-slide-toggle>
+      <mat-slide-toggle (change)="isDarkTheme = !isDarkTheme; changeTheme(isDarkTheme)">
+        <mat-icon class="toggles__icon">bedtime</mat-icon>
+      </mat-slide-toggle>
+    </div>
+  </mat-toolbar>
+</header>

@@ -1,26 +1,16 @@
+@import "../../../../constants.scss";
+
 .container {
-  width: 100%;
-  min-height: 100vh;
-}
-.header-container {
-  position: relative;
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
-  align-items: center;
+  flex-direction: column;
   justify-content: space-between;
-  .user-controls {
-    &__btn {
-      margin: 0 0.22vw;
-    }
-  }
-  .toggles {
-    display: flex;
-    gap: 10%;
+  width: 100vw;
+  height: 100vh;
+  .main {
+    height: $main-height;
+    overflow-y: auto;
   }
 }
-
-// temporary styles
-
-.authorized {
-  display: none;
-}
-

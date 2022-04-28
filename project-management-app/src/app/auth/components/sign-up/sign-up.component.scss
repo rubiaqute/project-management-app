@@ -1,9 +1,9 @@
 @import "../../../../constants.scss";
 
 .sign-up {
-  margin: 2vh auto;
+  margin-top: 2vh;
   padding: $padding-default;
-  width: 24%;
+  width: $authcard-width;
   &__input {
     width: 100%;
     font-size: 12px;

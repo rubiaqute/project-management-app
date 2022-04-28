@@ -1,50 +1,8 @@
-<mat-drawer-container
-  class="container mat-app-background"
-  [ngClass]="{ 'dark-theme-mode': isDarkTheme }"
->
-  <mat-drawer-content class="container mat-app-background">
-    <mat-toolbar class="header-container" color="primary">
-      <span>{{ "MENU.TITLE" | translate }}</span>
-      <div class="user-controls center">
-        <div class="authorized">
-          <button class="user-controls__btn" mat-raised-button color="accent">
-            {{ "MENU.LINKS.BOARDS" | translate }}
-          </button>
-          <button class="user-controls__btn" mat-raised-button color="accent">
-            {{ "MENU.LINKS.CREATEBOARD" | translate }}
-          </button>
-          <button class="user-controls__btn" mat-raised-button color="accent">
-            {{ "MENU.LINKS.EDIT" | translate }}
-          </button>
-          <button class="user-controls__btn" mat-raised-button color="accent">
-            {{ "MENU.LINKS.LOGOUT" | translate }}
-          </button>
-        </div>
-        <div class="unauthorized">
-          <button class="user-controls__btn" 
-                  mat-raised-button 
-                  color="accent"
-                  (click)="onLogin()">
-            {{ "MENU.LINKS.LOGIN" | translate }}
-          </button>
-          <button class="user-controls__btn" 
-                  mat-raised-button 
-                  color="accent"
-                  (click)="onRegister()">
-            {{ "MENU.LINKS.REGISTER" | translate }}
-          </button>
-        </div>
-      </div>
-      <div class="toggles">
-        <mat-slide-toggle (change)="changeLanguage()">
-          <mat-icon>language</mat-icon>
-        </mat-slide-toggle>
-        <mat-slide-toggle [(ngModel)]="isDarkTheme">
-          <mat-icon>bedtime</mat-icon>
-        </mat-slide-toggle>
-      </div>
-    </mat-toolbar>
-    <router-outlet></router-outlet>
-    <app-footer></app-footer>
-  </mat-drawer-content>
-</mat-drawer-container>
+<div class="container mat-app-background"
+     [ngClass]="{ 'dark-theme-mode': isDarkTheme }">
+     <app-header (themeChanged)="themeChanged($event)"></app-header>
+     <div class="main">
+      <router-outlet></router-outlet>
+     </div>
+     <app-footer></app-footer>
+</div>

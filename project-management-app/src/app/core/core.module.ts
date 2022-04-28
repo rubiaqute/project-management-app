@@ -8,6 +8,7 @@ import { CoreRoutingModule } from './core-routing.module';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
+import { HeaderComponent } from './components/header/header.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -16,7 +17,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [DashboardComponent, FooterComponent],
+  declarations: [DashboardComponent, FooterComponent, HeaderComponent],
   imports: [
     FormsModule,
     MaterialModule,

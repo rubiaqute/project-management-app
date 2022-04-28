@@ -9,6 +9,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
+import { MatGridListModule } from '@angular/material/grid-list';
 
 
 
@@ -26,7 +27,8 @@ import { MatInputModule } from '@angular/material/input';
     MatCardModule,
     MatDividerModule,
     MatListModule,
-    MatInputModule 
+    MatInputModule,
+    MatGridListModule
   ]
 })
 export class MaterialModule { }
