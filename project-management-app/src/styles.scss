@@ -1,6 +1,6 @@
 @use "@angular/material" as mat;
 @import "~@angular/material/theming";
-@import "./constants.scss";
+@import "./assets/styles/constants.scss";
 @include mat.core();
 $themes-primary: mat.define-palette(
   mat.$cyan-palette,
