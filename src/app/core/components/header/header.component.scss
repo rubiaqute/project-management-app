@@ -6,7 +6,7 @@
   &__title {
     cursor: pointer;
     &:hover {
-      opacity: 0.7;
+      filter: blur(1px);
     }
   }
   &-container {
