@@ -40,7 +40,7 @@
       </mat-form-field>
       <p class="subtext">
         {{ "AUTH.REGISTER.ALREADY_MEMBER" | translate }} 
-        <span class="subtext__link" (click)="onLogin()">
+        <span class="subtext__link" [routerLink]="'/auth/login'">
           <b>
             {{ "AUTH.LOGIN.TITLE" | translate | titlecase }}
           </b>

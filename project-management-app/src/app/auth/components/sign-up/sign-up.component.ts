@@ -1,6 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 
 @Component({
@@ -21,7 +20,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   private subs: Subscription | undefined;
 
-  constructor(private fb: FormBuilder, private router: Router) {}
+  constructor(private fb: FormBuilder) {}
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -39,10 +38,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   public signUp(email: string, name: string, lastName: string = ''): void {
     console.log(email, name, lastName);
-  }
-
-  public onLogin(): void {
-    this.router.navigate(['auth/login']);
   }
 
   private passwordValidator(control: FormControl): { [key: string]: string } | null {

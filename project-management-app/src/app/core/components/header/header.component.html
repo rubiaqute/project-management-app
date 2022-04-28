@@ -1,6 +1,6 @@
 <header class="header">
   <mat-toolbar class="header-container" color="primary">
-    <span class="header__title" [routerLink]="'main'">{{ "MENU.TITLE" | translate }}</span>
+    <span class="header__title" [routerLink]="'/main'">{{ "MENU.TITLE" | translate }}</span>
     <div class="user-controls center">
       <div class="authorized">
         <button class="user-controls__btn" mat-raised-button color="accent">
@@ -20,13 +20,13 @@
         <button class="user-controls__btn" 
                 mat-raised-button 
                 color="accent"
-                [routerLink]="'auth/login'">
+                [routerLink]="'/auth/login'">
           {{ "MENU.LINKS.LOGIN" | translate }}
         </button>
         <button class="user-controls__btn" 
                 mat-raised-button 
                 color="accent"
-                [routerLink]="'auth/sign-up'">
+                [routerLink]="'/auth/sign-up'">
           {{ "MENU.LINKS.REGISTER" | translate }}
         </button>
       </div>
