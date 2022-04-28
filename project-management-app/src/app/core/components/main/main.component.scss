@@ -1,0 +1,36 @@
+@import "../../../../assets/styles/constants.scss";
+
+.main {
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+  flex-wrap: wrap;
+  width: 100%;
+  padding: $padding-default;
+  gap: 1vw;
+  &__board {
+    width: 15vw;
+    height: 20vh;
+    padding: $padding-default;
+    cursor: pointer;
+    transition: 0.3s;
+    &:hover {
+      transform: translateY(2%);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 3px -3px,
+                  rgba(0, 0, 0, 0.14) 0px 3px 3px 0px,
+                  rgba(0, 0, 0, 0.12) 0px 3px 9px 0px;
+    }
+    .board {
+      &__title {
+        font-size: 1.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+      &__description {
+        font-size: 1.3rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+    }
+  }
+}
