@@ -47,5 +47,6 @@
       "PASSWORD_MIN_LENGTH": "The password should contain at least 8 characters",
       "ALREADY_MEMBER": "Already a member?"
     }
-  }
+  },
+  "NOT_FOUND": "Oops, something went wrong"
 }
