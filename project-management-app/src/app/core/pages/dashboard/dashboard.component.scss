@@ -1,8 +1,16 @@
+@import "../../../../assets/styles/constants.scss";
+
 .container {
-  width: 100%;
-  min-height: 100vh;
-}
-.toggles {
+  position: absolute;
+  top: 0;
+  left: 0;
   display: flex;
-  gap: 10%;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 100vw;
+  height: 100vh;
+  .main {
+    height: $main-height;
+    overflow-y: auto;
+  }
 }
