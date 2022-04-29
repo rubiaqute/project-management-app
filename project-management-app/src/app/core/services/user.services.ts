@@ -17,18 +17,21 @@ export class UserServices {
   }
 
   getUsers() {
-    return this.http.get<IUser[]>('https://kanban-rest-api.herokuapp.com/users', {headers: this.headers});
+    return this.http.get<IUser[]>('https://kanban-rest-api.herokuapp.com/users',
+      {headers: this.headers});
   }
 
   getUserById(id: string) {
-    return this.http.get<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`, {headers: this.headers})
+    return this.http.get<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
+      {headers: this.headers})
   }
 
   // deleteUser(id: string) {
-  //   return this.http.delete<UserModel>(`https://kanban-rest-api.herokuapp.com/users/${id}`, {headers: this.headers})
+  //   return this.http.delete<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
+  //   {headers: this.headers})
   // }
 
-  changeUser(id: string, name: string, login: string, password: string) {
+  updateUser(id: string, name: string, login: string, password: string) {
     return this.http.put<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
       {
         name: name,

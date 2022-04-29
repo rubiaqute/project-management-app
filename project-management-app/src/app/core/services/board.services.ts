@@ -41,4 +41,9 @@ export class BoardServices {
       },
       {headers: this.headers})
   }
+
+  // deleteBoard(id: string) {
+  //   return this.http.delete<IBoard>(`https://kanban-rest-api.herokuapp.com/boards/${id}`,
+  //   {headers: this.headers})
+  // }
 }
