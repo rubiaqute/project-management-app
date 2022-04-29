@@ -12,10 +12,10 @@ export interface ITask {
   done: boolean,
   description: string,
   userId: string,
-  files: IFiles[],
+  files: IFile[],
 }
 
-export interface IFiles {
+export interface IFile {
   filename: string,
-  fileSize: number
+  fileSize: number,
 }
