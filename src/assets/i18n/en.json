@@ -50,6 +50,14 @@
       "ALREADY_MEMBER": "Already a member?"
     }
   },
-  "NOT_FOUND": "Oops, something went wrong",
-  "DELETE": "Delete"
+  "NOT_FOUND": {
+    "MESSAGE": "Oops, something went wrong",
+    "TO_MAIN": "Main page"
+  },
+  "DELETE": "Delete",
+  "BOARDS": {
+    "TITLE": "Let's look at your boards",
+    "NO_BOARDS": "Oops, you don't have boards yet",
+    "CREATE": "Create a new one"
+  }
 }
