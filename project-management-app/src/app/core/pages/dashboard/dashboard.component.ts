@@ -8,9 +8,6 @@ import {Component} from '@angular/core';
 export class DashboardComponent {
   isDarkTheme: boolean = false;
 
-  constructor() {
-  }
-
   public themeChanged(value: any): void {
     this.isDarkTheme = value;
   }

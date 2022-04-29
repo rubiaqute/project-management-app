@@ -8,7 +8,7 @@ import {IUser} from "../models/user.models";
   }
 )
 
-export class UserServices {
+export class UserService {
   public token$ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZWY1MGZiZS01ZmQ5LTQwNmYtOWE2Yy04YTViMGM4ODhkNTYiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTEyMDc0MjF9.fAP56cGNedi0rCipajhGc8DxvB6bJjg928ljzRWkhZQ';
   users: IUser[] = [];
   headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.token$}`);

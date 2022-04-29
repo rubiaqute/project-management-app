@@ -8,7 +8,7 @@ import {IColumn} from "../models/column.models";
   }
 )
 
-export class ColumnServices {
+export class ColumnService {
   public token$ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZWY1MGZiZS01ZmQ5LTQwNmYtOWE2Yy04YTViMGM4ODhkNTYiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTEyMDc0MjF9.fAP56cGNedi0rCipajhGc8DxvB6bJjg928ljzRWkhZQ';
   columns: IColumn[] = [];
   headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.token$}`);
@@ -32,8 +32,7 @@ export class ColumnServices {
         title: title,
         order: order,
       },
-      {headers: this.headers}
-    )
+      {headers: this.headers})
   }
 
   updateColumn(BoardId: string, ColumnId: string, title: string, order: number) {
@@ -42,13 +41,11 @@ export class ColumnServices {
         title: title,
         order: order
       },
-      {headers: this.headers}
-    )
+      {headers: this.headers})
   }
 
   deleteColumn(BoardId: string, ColumnId: string) {
     return this.http.delete<IColumn>(`https://kanban-rest-api.herokuapp.com/boards/${BoardId}/columns/${ColumnId}`,
-      {headers: this.headers}
-    )
+      {headers: this.headers})
   }
 }

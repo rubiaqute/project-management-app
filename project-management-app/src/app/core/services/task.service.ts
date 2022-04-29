@@ -8,7 +8,7 @@ import { ITask } from "../models/column.models";
   }
 )
 
-export class TaskServices {
+export class TaskService {
   public token$ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZWY1MGZiZS01ZmQ5LTQwNmYtOWE2Yy04YTViMGM4ODhkNTYiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTEyMDc0MjF9.fAP56cGNedi0rCipajhGc8DxvB6bJjg928ljzRWkhZQ';
   tasks: ITask[] = [];
   headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.token$}`);

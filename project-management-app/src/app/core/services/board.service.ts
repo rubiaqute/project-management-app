@@ -1,6 +1,6 @@
-import { HttpClient, HttpHeaders } from "@angular/common/http";
-import { Injectable } from "@angular/core";
-import { IBoard } from "../models/board.models";
+import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {Injectable} from "@angular/core";
+import {IBoard} from "../models/board.models";
 
 @Injectable(
   {
@@ -8,7 +8,7 @@ import { IBoard } from "../models/board.models";
   }
 )
 
-export class BoardServices {
+export class BoardService {
   public token$ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZWY1MGZiZS01ZmQ5LTQwNmYtOWE2Yy04YTViMGM4ODhkNTYiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTEyMDc0MjF9.fAP56cGNedi0rCipajhGc8DxvB6bJjg928ljzRWkhZQ';
   boards: IBoard[] = [];
   headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.token$}`);
@@ -44,6 +44,6 @@ export class BoardServices {
 
   deleteBoard(id: string) {
     return this.http.delete<IBoard>(`https://kanban-rest-api.herokuapp.com/boards/${id}`,
-    {headers: this.headers})
+      {headers: this.headers})
   }
 }
