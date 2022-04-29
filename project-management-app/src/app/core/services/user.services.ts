@@ -26,11 +26,6 @@ export class UserServices {
       {headers: this.headers})
   }
 
-  // deleteUser(id: string) {
-  //   return this.http.delete<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
-  //   {headers: this.headers})
-  // }
-
   updateUser(id: string, name: string, login: string, password: string) {
     return this.http.put<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
       {
@@ -39,5 +34,10 @@ export class UserServices {
         password: password,
       },
       {headers: this.headers})
+  }
+
+  deleteUser(id: string) {
+    return this.http.delete<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
+    {headers: this.headers})
   }
 }

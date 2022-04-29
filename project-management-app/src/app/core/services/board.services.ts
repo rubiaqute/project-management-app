@@ -1,6 +1,6 @@
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {Injectable} from "@angular/core";
-import {IBoard} from "../models/board.models";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
+import { Injectable } from "@angular/core";
+import { IBoard } from "../models/board.models";
 
 @Injectable(
   {
@@ -42,8 +42,8 @@ export class BoardServices {
       {headers: this.headers})
   }
 
-  // deleteBoard(id: string) {
-  //   return this.http.delete<IBoard>(`https://kanban-rest-api.herokuapp.com/boards/${id}`,
-  //   {headers: this.headers})
-  // }
+  deleteBoard(id: string) {
+    return this.http.delete<IBoard>(`https://kanban-rest-api.herokuapp.com/boards/${id}`,
+    {headers: this.headers})
+  }
 }
