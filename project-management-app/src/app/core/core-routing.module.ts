@@ -11,11 +11,11 @@ const routes: Routes = [
     children: [
       { 
         path: '',
-        redirectTo: 'main',
+        redirectTo: 'boards',
         pathMatch: 'full'
       }, 
       { 
-        path: 'main', 
+        path: 'boards', 
         component: MainComponent
       }, 
       { 
