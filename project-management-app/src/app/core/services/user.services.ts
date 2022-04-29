@@ -28,11 +28,12 @@ export class UserServices {
   //   return this.http.delete<UserModel>(`https://kanban-rest-api.herokuapp.com/users/${id}`, {headers: this.headers})
   // }
 
-  changeUser(id: string) {
-    return this.http.put<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`, {
-        name: 'Vasya',
-        login: 'user001',
-        password: 'userpass@123',
+  changeUser(id: string, name: string, login: string, password: string) {
+    return this.http.put<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
+      {
+        name: name,
+        login: login,
+        password: password,
       },
       {headers: this.headers})
   }
