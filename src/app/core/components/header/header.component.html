@@ -34,8 +34,9 @@
         <button class="user-controls__btn"
                 mat-raised-button
                 color="accent"
-                *ngIf="logOut">
-          {{ "MENU.LINKS.EDIT" | translate }}
+                *ngIf="logOut"
+                [routerLink]="'/auth/edit'">
+        {{ "MENU.LINKS.EDIT" | translate }}
         </button>
         <button class="user-controls__btn"
                 mat-raised-button

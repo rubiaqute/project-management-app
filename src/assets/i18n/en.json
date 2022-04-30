@@ -4,7 +4,8 @@
     "LINKS": {
       "BOARDS": "Boards",
       "CREATEBOARD": "Create board",
-      "EDIT": "Edit profile",
+      "EDIT": "Edit",
+      "EDIT_PROFILE": "Edit profile",
       "LOGOUT": "Logout",
       "LOGIN": "Login",
       "REGISTER": "Register"
@@ -34,6 +35,7 @@
     },
     "REGISTER": {
       "TITLE": "sign up",
+      "NAME": "name",
       "FIRST_NAME": "first name",
       "LAST_NAME": "last name",
       "EMAIL": "email",

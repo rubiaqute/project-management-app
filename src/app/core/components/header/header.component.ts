@@ -37,6 +37,10 @@ export class HeaderComponent {
     this.themeChanged.emit(value);
   }
 
+  edit() {
+    setTimeout(() => this.router.navigateByUrl('/edit'), 0);
+  }
+
   logout() {
     this.authService.clearInfo();
     setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);

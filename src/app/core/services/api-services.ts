@@ -46,7 +46,7 @@ export class ApiServices {
       {headers: this.headers})
   }
 
-  updateUser(id: string, user: IUserRequest) {
+  updateUser(id: string | null, user: IUserRequest) {
     return this.http.put<IUser>(`${this.url}/users/${id}`,
       user, {headers: this.headers})
   }

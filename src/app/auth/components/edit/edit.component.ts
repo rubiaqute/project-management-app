@@ -1,16 +1,15 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import {ISignInRequest, ISignUp, ISignUpRequest} from "../../../core/models/api.models";
+import {IUserRequest} from "../../../core/models/api.models";
 import {ApiServices} from "../../../core/services/api-services";
-import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.components.scss']
 })
-export class SignUpComponent implements OnInit, OnDestroy {
+export class EditComponent implements OnInit, OnDestroy {
   public isPasswordHide: boolean = true;
   public nameValue: string = '';
   public emailValue: string = '';
@@ -18,7 +17,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
   private subs: Subscription | undefined;
 
   constructor(private fb: FormBuilder,
-              private router: Router,
               private apiService: ApiServices) {}
 
   ngOnInit(): void {
@@ -32,10 +30,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
-  }
-
-  public signUp(email: string, name: string, lastName: string = ''): void {
-    console.log(email, name, lastName);
   }
 
   private passwordValidator(control: FormControl): { [key: string]: string } | null {
@@ -69,14 +63,14 @@ export class SignUpComponent implements OnInit, OnDestroy {
     return this.signUpForm.get('password');
   }
 
-  signup() {
-    const body: ISignUpRequest = {
+  edit() {
+    const body: IUserRequest = {
+      name: this.name?.value,
       login: this.email?.value,
       password: this.password?.value,
-      name: this.name?.value,
     }
-    this.apiService.signUp(body).subscribe((data: ISignUp) => {
-      this.router.navigateByUrl('/auth/login');
+    this.apiService.updateUser(localStorage.getItem('id'), body).subscribe((data:any) => {
+      console.log(data);
     })
   }
 }

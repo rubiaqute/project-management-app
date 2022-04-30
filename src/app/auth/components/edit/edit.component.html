@@ -1,7 +1,7 @@
 <div class="middle-container">
   <mat-card class="sign-up">
     <form [formGroup]="signUpForm">
-      <mat-card-title>{{ "AUTH.REGISTER.TITLE" | translate | titlecase }}</mat-card-title>
+      <mat-card-title>{{ "MENU.LINKS.EDIT_PROFILE" | translate | titlecase }}</mat-card-title>
       <mat-form-field class="sign-up__input" appearance="fill">
         <mat-label>{{ "AUTH.REGISTER.NAME" | translate }}</mat-label>
         <input matInput type="text" [(ngModel)]="nameValue" formControlName="name">
@@ -34,16 +34,8 @@
                   {{ isPasswordHide ? 'visibility_off' : 'visibility' }}
                 </mat-icon>
       </mat-form-field>
-      <p class="subtext">
-        {{ "AUTH.REGISTER.ALREADY_MEMBER" | translate }}
-        <span class="subtext__link" [routerLink]="'/auth/login'">
-          <b>
-            {{ "AUTH.LOGIN.TITLE" | translate | titlecase }}
-          </b>
-        </span>
-      </p>
-      <button class="sign-up__btn" mat-raised-button color="primary" type="submit" (click)="signup()"
-        [disabled]="signUpForm.invalid">{{ "AUTH.REGISTER.TITLE" | translate }}</button>
+      <button class="sign-up__btn" mat-raised-button color="primary" type="submit" (click)="edit()"
+        [disabled]="signUpForm.invalid">{{ "MENU.LINKS.EDIT" | translate }}</button>
     </form>
   </mat-card>
 </div>

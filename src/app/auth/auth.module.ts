@@ -6,12 +6,13 @@ import { AuthRoutingModule } from './auth-routing.module';
 
 import { LoginComponent } from './components/login/login.component';
 import { SignUpComponent } from './components/sign-up/sign-up.component';
+import {EditComponent} from "./components/edit/edit.component";
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
 
 @NgModule({
-  declarations: [LoginComponent, SignUpComponent],
+  declarations: [LoginComponent, SignUpComponent, EditComponent],
   imports: [
     CommonModule,
     MaterialModule,

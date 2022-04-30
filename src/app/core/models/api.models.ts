@@ -12,7 +12,7 @@ export interface ISignUpRequest extends ISignInRequest {
 }
 
 export interface ISignUp {
-  id: string,
+  id: string | null,
   name: string,
   login: string,
 }
