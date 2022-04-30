@@ -9,15 +9,10 @@ import { Subscription } from 'rxjs';
 })
 export class SignUpComponent implements OnInit, OnDestroy {
   public isPasswordHide: boolean = true;
-
   public firstNameValue: string = '';
-
   public lastNameValue: string = '';
-
   public emailValue: string = '';
-
   public signUpForm!: FormGroup;
-
   private subs: Subscription | undefined;
 
   constructor(private fb: FormBuilder) {}

@@ -10,10 +10,12 @@ import {
   IUser, IUserRequest
 } from "../models/api.models";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
+import {environment} from "../../../environments/environment.prod";
 
 @Injectable({providedIn: 'root'})
 
 export class ApiServices {
+  url = environment.urlApi;
   public token$ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZWY1MGZiZS01ZmQ5LTQwNmYtOWE2Yy04YTViMGM4ODhkNTYiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTEyMDc0MjF9.fAP56cGNedi0rCipajhGc8DxvB6bJjg928ljzRWkhZQ';
   headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.token$}`);
   boards: IBoard[] = [];
@@ -24,122 +26,122 @@ export class ApiServices {
 
   //Authorization
   signIn(signIn: ISignInRequest) {
-    return this.http.post<ISignIn>(`https://kanban-rest-api.herokuapp.com/signin`,
+    return this.http.post<ISignIn>(`${this.url}/signin`,
       signIn, {headers: this.headers})
   }
 
   signUp(signUp: ISignUpRequest) {
-    return this.http.post<ISignUp>(`https://kanban-rest-api.herokuapp.com/signup`,
+    return this.http.post<ISignUp>(`${this.url}/signup`,
       signUp, {headers: this.headers})
   }
 
   //Users
   getUsers() {
-    return this.http.get<IUser[]>('https://kanban-rest-api.herokuapp.com/users',
+    return this.http.get<IUser[]>(`${this.url}/users`,
       {headers: this.headers});
   }
 
   getUserById(id: string) {
-    return this.http.get<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
+    return this.http.get<IUser>(`${this.url}/users/${id}`,
       {headers: this.headers})
   }
 
   updateUser(id: string, user: IUserRequest) {
-    return this.http.put<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
+    return this.http.put<IUser>(`${this.url}/users/${id}`,
       user, {headers: this.headers})
   }
 
   deleteUser(id: string) {
-    return this.http.delete<IUser>(`https://kanban-rest-api.herokuapp.com/users/${id}`,
+    return this.http.delete<IUser>(`${this.url}/users/${id}`,
       {headers: this.headers})
   }
 
   //Boards
   getBoards() {
-    return this.http.get<IBoard[]>('https://kanban-rest-api.herokuapp.com/boards',
+    return this.http.get<IBoard[]>(`${this.url}/boards`,
       {headers: this.headers});
   }
 
   getBoardById(id: string) {
-    return this.http.get<IBoard>(`https://kanban-rest-api.herokuapp.com/boards/${id}`,
+    return this.http.get<IBoard>(`${this.url}/boards/${id}`,
       {headers: this.headers});
   }
 
   createBoard(board: IBoardRequest) {
-    return this.http.post<IBoard>('https://kanban-rest-api.herokuapp.com/boards',
+    return this.http.post<IBoard>(`${this.url}/boards`,
       board, {headers: this.headers})
   }
 
   updateBoard(board: IBoardRequest, id: string) {
-    return this.http.put<IBoard>(`https://kanban-rest-api.herokuapp.com/boards/${id}`,
+    return this.http.put<IBoard>(`${this.url}/boards/${id}`,
       board, {headers: this.headers})
   }
 
   deleteBoard(id: string) {
-    return this.http.delete<IBoard>(`https://kanban-rest-api.herokuapp.com/boards/${id}`,
+    return this.http.delete<IBoard>(`${this.url}/boards/${id}`,
       {headers: this.headers})
   }
 
   //Columns
   getColumns(boardId: string) {
-    return this.http.get<IColumn[]>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns`,
+    return this.http.get<IColumn[]>(`${this.url}/boards/${boardId}/columns`,
       {headers: this.headers});
   }
 
   getColumnById(boardId: string, columnId: string) {
-    return this.http.get<IColumn>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}`,
+    return this.http.get<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`,
       {headers: this.headers});
   }
 
   createColumn(column: IColumnRequest, boardId: string) {
-    return this.http.post<IColumn>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns`,
+    return this.http.post<IColumn>(`${this.url}/boards/${boardId}/columns`,
       column, {headers: this.headers})
   }
 
   updateColumn(boardId: string, columnId: string, column: IColumnRequest) {
-    return this.http.put<IColumn>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}`,
+    return this.http.put<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`,
       column, {headers: this.headers})
   }
 
   deleteColumn(boardId: string, columnId: string) {
-    return this.http.delete<IColumn>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}`,
+    return this.http.delete<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`,
       {headers: this.headers})
   }
 
   //Tasks
   getTasks(boardId: string, columnId: string) {
-    return this.http.get<ITask[]>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}/tasks`,
+    return this.http.get<ITask[]>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`,
       {headers: this.headers})
   }
 
   getTaskById(boardId: string, columnId: string, taskId: string) {
-    return this.http.get<ITask>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+    return this.http.get<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
       {headers: this.headers})
   }
 
   createTask(boardId: string, columnId: string, task: ITaskRequest) {
-    return this.http.post<ITask>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}/tasks`,
+    return this.http.post<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`,
       task,{headers: this.headers})
   }
 
   updateTask(boardId: string, columnId: string, taskId: string, task: ITaskRequestUpdate) {
-    return this.http.put<ITask>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+    return this.http.put<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
       task,{headers: this.headers})
   }
 
   deleteTask(boardId: string, columnId: string, taskId: string) {
-    return this.http.delete<ITask>(`https://kanban-rest-api.herokuapp.com/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
+    return this.http.delete<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
       {headers: this.headers})
   }
 
   //Files
   uploadFile(file: IFileUpload) {
-    return this.http.post<IFile>(`https://kanban-rest-api.herokuapp.com/file`,
+    return this.http.post<IFile>(`${this.url}/file`,
       file,{headers: this.headers})
   }
 
   downloadFile(taskId: string, fileName: string) {
-    return this.http.get<IFile>(`https://kanban-rest-api.herokuapp.com/file/${taskId}/${fileName}`,
+    return this.http.get<IFile>(`${this.url}/file/${taskId}/${fileName}`,
       {headers: this.headers})
   }
 }
