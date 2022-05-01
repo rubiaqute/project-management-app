@@ -6,20 +6,19 @@ import {
   HttpRequest,
 } from "@angular/common/http";
 import {Observable} from "rxjs";
-import {environment} from "../../../environments/environment.prod";
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({providedIn: 'root'})
 export class AuthInterceptorService implements HttpInterceptor {
 
-  constructor() {
-  }
+  constructor() {}
 
   intercept(req: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
-    let tokenizedRed = req.clone({
-       url: req.url.replace('key=', `key=${environment.API_KEY}`)
+    console.log(req)
+    req = req.clone({
+      setHeaders: {
+        'Authorization': `Bearer ${localStorage.getItem('token')}`,
+      }
     })
-    return next.handle(tokenizedRed);
+    return next.handle(req);
   }
 }

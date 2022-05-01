@@ -7,29 +7,26 @@ import {
   ISignIn, ISignInRequest,
   ISignUp, ISignUpRequest,
   ITask, ITaskRequest, ITaskRequestUpdate,
-  IUser, IUserRequest, IUserError
+  IUser, IUserRequest
 } from "../models/api.models";
-import {HttpClient, HttpHeaders} from "@angular/common/http";
-import {environment} from "../../../environments/environment.prod";
+import {HttpClient} from "@angular/common/http";
+import {environment} from "../../../environments/environment";
 import {catchError, throwError} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 
 export class ApiServices {
   url = environment.urlApi;
-  public token$ = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VySWQiOiJjZWY1MGZiZS01ZmQ5LTQwNmYtOWE2Yy04YTViMGM4ODhkNTYiLCJsb2dpbiI6InVzZXIwMDEiLCJpYXQiOjE2NTEyMDc0MjF9.fAP56cGNedi0rCipajhGc8DxvB6bJjg928ljzRWkhZQ';
-  headers: HttpHeaders = new HttpHeaders().set('Authorization', `Bearer ${this.token$}`);
   boards: IBoard[] = [];
   columns: IColumn[] = [];
   files: IFile[] = [];
 
-  constructor(private http: HttpClient) {
-  }
+  constructor(private http: HttpClient) {}
 
   //Authorization
   signIn(signIn: ISignInRequest) {
     return this.http.post<ISignIn>(`${this.url}/signin`,
-      signIn, {headers: this.headers})
+      signIn)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -40,7 +37,7 @@ export class ApiServices {
 
   signUp(signUp: ISignUpRequest) {
     return this.http.post<ISignUp>(`${this.url}/signup`,
-      signUp, {headers: this.headers})
+      signUp)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -51,8 +48,7 @@ export class ApiServices {
 
   //Users
   getUsers() {
-    return this.http.get<IUser[]>(`${this.url}/users`,
-      {headers: this.headers})
+    return this.http.get<IUser[]>(`${this.url}/users`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -62,8 +58,7 @@ export class ApiServices {
   }
 
   getUserById(id: string) {
-    return this.http.get<IUser>(`${this.url}/users/${id}`,
-      {headers: this.headers})
+    return this.http.get<IUser>(`${this.url}/users/${id}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -73,8 +68,7 @@ export class ApiServices {
   }
 
   updateUser(id: string | null, user: IUserRequest) {
-    return this.http.put<IUser>(`${this.url}/users/${id}`,
-      user, {headers: this.headers})
+    return this.http.put<IUser>(`${this.url}/users/${id}`, user)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -84,8 +78,7 @@ export class ApiServices {
   }
 
   deleteUser(id: string) {
-    return this.http.delete<IUser>(`${this.url}/users/${id}`,
-      {headers: this.headers})
+    return this.http.delete<IUser>(`${this.url}/users/${id}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -96,8 +89,7 @@ export class ApiServices {
 
   //Boards
   getBoards() {
-    return this.http.get<IBoard[]>(`${this.url}/boards`,
-      {headers: this.headers})
+    return this.http.get<IBoard[]>(`${this.url}/boards`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -107,8 +99,7 @@ export class ApiServices {
   }
 
   getBoardById(id: string) {
-    return this.http.get<IBoard>(`${this.url}/boards/${id}`,
-      {headers: this.headers})
+    return this.http.get<IBoard>(`${this.url}/boards/${id}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -118,8 +109,7 @@ export class ApiServices {
   }
 
   createBoard(board: IBoardRequest) {
-    return this.http.post<IBoard>(`${this.url}/boards`,
-      board, {headers: this.headers})
+    return this.http.post<IBoard>(`${this.url}/boards`, board)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -129,8 +119,7 @@ export class ApiServices {
   }
 
   updateBoard(board: IBoardRequest, id: string) {
-    return this.http.put<IBoard>(`${this.url}/boards/${id}`,
-      board, {headers: this.headers})
+    return this.http.put<IBoard>(`${this.url}/boards/${id}`, board)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -140,8 +129,7 @@ export class ApiServices {
   }
 
   deleteBoard(id: string) {
-    return this.http.delete<IBoard>(`${this.url}/boards/${id}`,
-      {headers: this.headers})
+    return this.http.delete<IBoard>(`${this.url}/boards/${id}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -152,8 +140,7 @@ export class ApiServices {
 
   //Columns
   getColumns(boardId: string) {
-    return this.http.get<IColumn[]>(`${this.url}/boards/${boardId}/columns`,
-      {headers: this.headers})
+    return this.http.get<IColumn[]>(`${this.url}/boards/${boardId}/columns`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -163,8 +150,7 @@ export class ApiServices {
   }
 
   getColumnById(boardId: string, columnId: string) {
-    return this.http.get<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`,
-      {headers: this.headers})
+    return this.http.get<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -174,8 +160,7 @@ export class ApiServices {
   }
 
   createColumn(column: IColumnRequest, boardId: string) {
-    return this.http.post<IColumn>(`${this.url}/boards/${boardId}/columns`,
-      column, {headers: this.headers})
+    return this.http.post<IColumn>(`${this.url}/boards/${boardId}/columns`, column)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -185,8 +170,7 @@ export class ApiServices {
   }
 
   updateColumn(boardId: string, columnId: string, column: IColumnRequest) {
-    return this.http.put<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`,
-      column, {headers: this.headers})
+    return this.http.put<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`, column)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -196,8 +180,7 @@ export class ApiServices {
   }
 
   deleteColumn(boardId: string, columnId: string) {
-    return this.http.delete<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`,
-      {headers: this.headers})
+    return this.http.delete<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -208,8 +191,7 @@ export class ApiServices {
 
   //Tasks
   getTasks(boardId: string, columnId: string) {
-    return this.http.get<ITask[]>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`,
-      {headers: this.headers})
+    return this.http.get<ITask[]>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -219,8 +201,7 @@ export class ApiServices {
   }
 
   getTaskById(boardId: string, columnId: string, taskId: string) {
-    return this.http.get<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
-      {headers: this.headers})
+    return this.http.get<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -230,8 +211,7 @@ export class ApiServices {
   }
 
   createTask(boardId: string, columnId: string, task: ITaskRequest) {
-    return this.http.post<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`,
-      task, {headers: this.headers})
+    return this.http.post<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`, task)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -241,8 +221,7 @@ export class ApiServices {
   }
 
   updateTask(boardId: string, columnId: string, taskId: string, task: ITaskRequestUpdate) {
-    return this.http.put<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
-      task, {headers: this.headers})
+    return this.http.put<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`, task)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -252,8 +231,7 @@ export class ApiServices {
   }
 
   deleteTask(boardId: string, columnId: string, taskId: string) {
-    return this.http.delete<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
-      {headers: this.headers})
+    return this.http.delete<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -264,8 +242,7 @@ export class ApiServices {
 
   //Files
   uploadFile(file: IFileUpload) {
-    return this.http.post<IFile>(`${this.url}/file`,
-      file, {headers: this.headers})
+    return this.http.post<IFile>(`${this.url}/file`, file)
       .pipe(
         catchError((err => {
           console.error(err);
@@ -275,8 +252,7 @@ export class ApiServices {
   }
 
   downloadFile(taskId: string, fileName: string) {
-    return this.http.get<IFile>(`${this.url}/file/${taskId}/${fileName}`,
-      {headers: this.headers})
+    return this.http.get<IFile>(`${this.url}/file/${taskId}/${fileName}`)
       .pipe(
         catchError((err => {
           console.error(err);
