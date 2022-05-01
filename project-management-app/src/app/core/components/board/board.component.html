@@ -2,16 +2,101 @@
 <div class="middle-container board">
   <mat-card class="board__column">
     <div class="column__header">
-      <mat-card-title class="header__title"><b>{{ "column name" | titlecase }}</b></mat-card-title>
+      <mat-card-title *ngIf="!isTitleEditMode" 
+                      (click)="openTitleEdit()" 
+                      class="header__title">
+                      <b>Column name</b>
+                    </mat-card-title>
+      <mat-form-field *ngIf="isTitleEditMode"
+                      class="header__input">
+        <mat-label>{{ "BOARD.EDIT_COLUMN_NAME" | translate }}</mat-label>
+        <input matInput 
+               type="text" 
+               value="column name">
+        <button matSuffix mat-icon-button>
+          <mat-icon (click)="closeTitleEdit()">done</mat-icon>
+        </button>
+        <button matSuffix mat-icon-button>
+          <mat-icon (click)="closeTitleEdit()">close</mat-icon>
+        </button>
+      </mat-form-field>
       <mat-card-actions class="header__actions">
-          <mat-icon color="primary"
-                    class="actions__btn create">create</mat-icon>
           <mat-icon color="primary"
                     class="actions__btn delete">delete</mat-icon>
       </mat-card-actions>
     </div>
-    <div class="column__tasks"></div>
-    <div class="column__footer"></div>
+    <div class="column__tasks">
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+      <div class="tasks__task" draggable="true">
+        <p class="task__text">Сделать что-то как-то куда-то</p>
+        <mat-icon color="primary"
+                  class="task__btn">close</mat-icon>
+      </div>
+    </div>
+    <div class="column__footer">
+      <mat-icon color="primary"
+                class="footer__icon">add</mat-icon>
+      <p class="footer__text">{{ "BOARD.ADD_TASK" | translate }}</p>
+    </div>
   </mat-card>
   
   <mat-card class="board__column add-column" routerLink="board-id">

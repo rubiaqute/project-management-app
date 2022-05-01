@@ -58,6 +58,8 @@
     "CREATE": "Create a new one"
   },
   "BOARD": {
-    "ADD": "Add new column"
+    "ADD": "Add new column",
+    "EDIT_COLUMN_NAME": "Column name",
+    "ADD_TASK": "Add task"
   }
 }
