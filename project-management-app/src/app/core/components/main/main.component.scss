@@ -2,6 +2,8 @@
 @import "../../../../assets/styles/keyframes.scss";
 
 .page-title {
+  margin: 0;
+  height: $board-title-height;
   text-align: center;
 }
 .boards {
@@ -10,15 +12,16 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
+  height: calc($main-height - $board-title-height);
   padding: $padding-default;
   gap: 1vw;
   &__board {
-    position: relative;
     width: 15vw;
     height: 20vh;
-    padding: $padding-default;
+    padding: 0 1vw;
     cursor: pointer;
     transition: 0.3s;
+    overflow: hidden;
     &:hover {
       transform: translateY(2%);
       box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 3px -3px,
@@ -27,10 +30,10 @@
     }
     .board {
       &__title {
-        width: calc(100% - 48px);
         font-size: 1.5rem;
         overflow: hidden;
         text-overflow: ellipsis;
+        white-space: nowrap;
       }
       &__description {
         font-size: 1.3rem;
@@ -38,13 +41,10 @@
         text-overflow: ellipsis;
       }
       &__actions {
-        position: absolute;
-        top: 5%;
-        right: 5%;
         display: flex;
         align-items: center;
-        justify-content: center;
-        padding: 0;
+        justify-content: flex-end;
+        margin: 0;
         .actions {
           &__btn {
             &.create:hover {

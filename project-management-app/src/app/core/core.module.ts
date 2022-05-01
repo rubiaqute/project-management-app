@@ -10,6 +10,7 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { MainComponent } from './components/main/main.component';
+import { BoardComponent } from './components/board/board.component';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -18,7 +19,7 @@ export function HttpLoaderFactory(http: HttpClient) {
 
 
 @NgModule({
-  declarations: [DashboardComponent, FooterComponent, HeaderComponent, MainComponent],
+  declarations: [DashboardComponent, FooterComponent, HeaderComponent, MainComponent, BoardComponent],
   imports: [
     FormsModule,
     MaterialModule,
