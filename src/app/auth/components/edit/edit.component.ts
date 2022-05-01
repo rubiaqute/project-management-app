@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
 import {IUserRequest} from "../../../core/models/api.models";
 import {ApiServices} from "../../../core/services/api-services";
 import {Router} from "@angular/router";
@@ -19,7 +19,8 @@ export class EditComponent implements OnInit, OnDestroy {
 
   constructor(private fb: FormBuilder,
               private router: Router,
-              private apiService: ApiServices) {}
+              private apiService: ApiServices) {
+  }
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
@@ -27,7 +28,6 @@ export class EditComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordValidator]],
     });
-    //this.subs = this.signUpForm.valueChanges.subscribe((val) => (console.log(val)));
   }
 
   ngOnDestroy(): void {
@@ -40,7 +40,7 @@ export class EditComponent implements OnInit, OnDestroy {
     const minLength = /^.{8,}$/.test(control.value);
 
     if (!hasNumber)
-      return { invalidPassword: "AUTH.REGISTER.PASSWORD_NO_NUMBERS" };
+      return {invalidPassword: "AUTH.REGISTER.PASSWORD_NO_NUMBERS"};
     if (!hasLetter)
       return {
         invalidPassword:
@@ -71,7 +71,7 @@ export class EditComponent implements OnInit, OnDestroy {
       login: this.email?.value,
       password: this.password?.value,
     }
-    this.apiService.updateUser(localStorage.getItem('id'), body).subscribe((data:any) => {
+    this.apiService.updateUser(localStorage.getItem('id'), body).subscribe((data: any) => {
       console.log(data);
       //Here you can insert the window "Profile changed successfully"
     })

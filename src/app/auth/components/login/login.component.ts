@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {catchError, Subscription} from 'rxjs';
+import {Subscription} from 'rxjs';
 import {ApiServices} from "../../../core/services/api-services";
-import {ISignInRequest, IUser, IUserError} from "../../../core/models/api.models";
+import {ISignInRequest, IUser} from "../../../core/models/api.models";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 
@@ -23,7 +23,8 @@ export class LoginComponent implements OnInit, OnDestroy {
   constructor(private fb: FormBuilder,
               private router: Router,
               private apiService: ApiServices,
-              private authService: AuthService) {}
+              private authService: AuthService) {
+  }
 
   ngOnInit(): void {
     this.loginForm = this.fb.group({
@@ -69,12 +70,16 @@ export class LoginComponent implements OnInit, OnDestroy {
       password: this.password?.value,
     }
     this.apiService.signIn(body).subscribe((data: any) => {
-      this.authService.setInfo(data?.token);
-      this.apiService.getUsers().subscribe((data:IUser[]) => {
-        const currentUser = data.find((user: IUser) => user.login === body.login)
-        localStorage.setItem('id', <string>currentUser?.id)
-      })
-      this.router.navigateByUrl('/main');
-    });
+        this.authService.setInfo(data?.token);
+        this.apiService.getUsers().subscribe((data: IUser[]) => {
+          const currentUser = data.find((user: IUser) => user.login === body.login)
+          localStorage.setItem('id', <string>currentUser?.id)
+        })
+        this.router.navigateByUrl('/main');
+      },
+      (error) => {
+        console.log(error);
+        //Here you can insert the window "Incorrectly entered email or login"
+      });
   }
 }

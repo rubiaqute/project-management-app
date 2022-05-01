@@ -6,9 +6,6 @@ import {Subject} from "rxjs";
 export class AuthService {
   public token$ = new Subject<any>();
 
-  constructor() {
-  }
-
   setInfo(token: string): void {
     localStorage.setItem('token', token)
     this.token$.next(token)
