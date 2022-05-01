@@ -5,4 +5,15 @@ import { Component } from '@angular/core';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss']
 })
-export class BoardComponent {}
+export class BoardComponent {
+  public isTitleEditMode: boolean = false;
+
+  public openTitleEdit() {
+    this.isTitleEditMode = true;
+  }
+
+  public closeTitleEdit() {
+    this.isTitleEditMode = false;
+  }
+
+}
