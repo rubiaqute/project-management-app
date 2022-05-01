@@ -17,6 +17,9 @@
   overflow-x: auto;
   &__column {
     position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-width: 15vw;
     width: 15vw;
     height: 100%;
@@ -24,34 +27,100 @@
     .column {
       &__header {
         display: flex;
-        align-items: center;
+        align-items: flex-start;
         justify-content: space-between;
         .header{
           &__title {
+            align-self: center;
             font-size: 1.5rem;
             overflow: hidden;
+            white-space: nowrap;
             text-overflow: ellipsis;
+            cursor: pointer;
+            &:hover {
+              text-decoration: underline;
+            }
+          }
+          &__input {
+            width: 12vw;
           }
           &__actions {
             display: flex;
             align-items: center;
             justify-content: flex-end;
             padding: 0;
+            opacity: 0;
             .actions {
               &__btn {
                 width: 24px;
                 height: 24px;
-                &.create:hover {
-                  -webkit-animation: vibrate 0.3s linear infinite both;
-                          animation: vibrate 0.3s linear infinite both;
-                          
-                }
-                &.delete:hover {
+                cursor: pointer;
+                &:hover {
                   -webkit-animation: jello-horizontal 0.9s both;
                           animation: jello-horizontal 0.9s both;
                           
                 }
               }
+            }
+          }
+        }
+      }
+      &__tasks {
+        padding: 3%;
+        flex-grow: 1;
+        overflow-y: auto;
+        box-shadow: inset 0px 6px 3px -3px rgb(0 0 0 / 20%), 
+                    inset 0px 3px 3px 0px rgb(0 0 0 / 14%), 
+                    inset 0px 3px 9px 0px rgb(0 0 0 / 12%);
+        .tasks {
+          &__task {
+            display: flex;
+            align-items: flex-start;
+            justify-content: space-between;
+            border-radius: 5px;
+            border-bottom: 2px solid lightblue;
+            .task {
+              &__btn {
+                cursor: pointer;
+                opacity: 0;
+                &:hover {
+                  -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+                          animation: shake-lr 0.7s cubic-bezier(0.455, 0.030, 0.515, 0.955) both;
+                }
+              }
+            }
+            &:hover{
+              .task {
+                &__btn {
+                  opacity: 1;
+                }
+              }
+            }
+          }
+        }
+      }
+      &__footer {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        cursor: pointer;
+        &:hover {
+          -webkit-animation: pulsate-bck 0.5s ease-in-out infinite both;
+                  animation: pulsate-bck 0.5s ease-in-out infinite both;
+        }
+        .footer {
+          &__text {
+            margin: 0;
+          }
+        }
+      }
+    }
+    &:hover {
+      .column {
+        &__header {
+          .header {
+            &__actions {
+              opacity: 1;
             }
           }
         }
@@ -66,7 +135,8 @@
     cursor: pointer;
     transition: 0.3s;
     &:hover {
-      transform: translateY(2%);
+      // transform: translateY(2%);
+      transform: scale(0.95);
       box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 3px -3px,
                   rgba(0, 0, 0, 0.14) 0px 3px 3px 0px,
                   rgba(0, 0, 0, 0.12) 0px 3px 9px 0px;
