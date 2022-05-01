@@ -2,13 +2,7 @@
   <mat-card class="sign-up">
     <form [formGroup]="signUpForm">
       <mat-card-title>{{ "MENU.LINKS.EDIT_PROFILE" | translate | titlecase }}</mat-card-title>
-      <mat-form-field class="sign-up__input" appearance="fill">
-        <mat-label>{{ "AUTH.REGISTER.NAME" | translate }}</mat-label>
-        <input matInput type="text" [(ngModel)]="nameValue" formControlName="name">
-        <mat-error *ngIf="name?.invalid && name?.touched">
-          <span *ngIf="name?.errors?.['required']">{{ "AUTH.REGISTER.FIRST_NAME_REQUIRED" | translate }}</span>
-        </mat-error>
-      </mat-form-field>
+
       <mat-form-field class="sign-up__input" appearance="fill">
         <mat-label>{{ "AUTH.REGISTER.EMAIL" | translate }}</mat-label>
         <input matInput type="email" [(ngModel)]="emailValue" formControlName="email">
@@ -17,6 +11,15 @@
           <ng-template #other>{{ "AUTH.REGISTER.EMAIL_INVALID" | translate }}</ng-template>
         </mat-error>
       </mat-form-field>
+
+      <mat-form-field class="sign-up__input" appearance="fill">
+        <mat-label>{{ "AUTH.REGISTER.NAME" | translate }}</mat-label>
+        <input matInput type="text" [(ngModel)]="nameValue" formControlName="name">
+        <mat-error *ngIf="name?.invalid && name?.touched">
+          <span *ngIf="name?.errors?.['required']">{{ "AUTH.REGISTER.NAME_REQUIRED" | translate }}</span>
+        </mat-error>
+      </mat-form-field>
+
       <mat-form-field class="sign-up__input" appearance="fill">
         <mat-label>{{ "AUTH.REGISTER.PASSWORD" | translate }}</mat-label>
         <input matInput

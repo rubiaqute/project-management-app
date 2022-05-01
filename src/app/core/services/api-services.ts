@@ -7,10 +7,11 @@ import {
   ISignIn, ISignInRequest,
   ISignUp, ISignUpRequest,
   ITask, ITaskRequest, ITaskRequestUpdate,
-  IUser, IUserRequest
+  IUser, IUserRequest, IUserError
 } from "../models/api.models";
 import {HttpClient, HttpHeaders} from "@angular/common/http";
 import {environment} from "../../../environments/environment.prod";
+import {catchError} from "rxjs";
 
 @Injectable({providedIn: 'root'})
 
@@ -22,12 +23,13 @@ export class ApiServices {
   columns: IColumn[] = [];
   files: IFile[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) {
+  }
 
   //Authorization
   signIn(signIn: ISignInRequest) {
     return this.http.post<ISignIn>(`${this.url}/signin`,
-      signIn, {headers: this.headers})
+      signIn, {headers: this.headers});
   }
 
   signUp(signUp: ISignUpRequest) {
@@ -121,12 +123,12 @@ export class ApiServices {
 
   createTask(boardId: string, columnId: string, task: ITaskRequest) {
     return this.http.post<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`,
-      task,{headers: this.headers})
+      task, {headers: this.headers})
   }
 
   updateTask(boardId: string, columnId: string, taskId: string, task: ITaskRequestUpdate) {
     return this.http.put<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`,
-      task,{headers: this.headers})
+      task, {headers: this.headers})
   }
 
   deleteTask(boardId: string, columnId: string, taskId: string) {
@@ -137,7 +139,7 @@ export class ApiServices {
   //Files
   uploadFile(file: IFileUpload) {
     return this.http.post<IFile>(`${this.url}/file`,
-      file,{headers: this.headers})
+      file, {headers: this.headers})
   }
 
   downloadFile(taskId: string, fileName: string) {

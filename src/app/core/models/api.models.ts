@@ -29,6 +29,11 @@ export interface IUserRequest {
   password: string,
 }
 
+export interface IUserError {
+  statusCode: number,
+  message: string,
+}
+
 export interface IBoard {
   id: string,
   title: string,

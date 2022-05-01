@@ -3,6 +3,7 @@ import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from
 import { Subscription } from 'rxjs';
 import {IUserRequest} from "../../../core/models/api.models";
 import {ApiServices} from "../../../core/services/api-services";
+import {Router} from "@angular/router";
 
 @Component({
   selector: 'app-sign-up',
@@ -17,11 +18,12 @@ export class EditComponent implements OnInit, OnDestroy {
   private subs: Subscription | undefined;
 
   constructor(private fb: FormBuilder,
+              private router: Router,
               private apiService: ApiServices) {}
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
-      name: [''],
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordValidator]],
     });
@@ -71,6 +73,8 @@ export class EditComponent implements OnInit, OnDestroy {
     }
     this.apiService.updateUser(localStorage.getItem('id'), body).subscribe((data:any) => {
       console.log(data);
+      //Here you can insert the window "Profile changed successfully"
     })
+    this.router.navigateByUrl('/main');
   }
 }

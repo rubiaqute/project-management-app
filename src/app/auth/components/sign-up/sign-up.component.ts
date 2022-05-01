@@ -27,7 +27,6 @@ export class SignUpComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordValidator]],
     });
-    //this.subs = this.signUpForm.valueChanges.subscribe((val) => (console.log(val)));
   }
 
   ngOnDestroy(): void {

@@ -1,8 +1,8 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
+import {catchError, Subscription} from 'rxjs';
 import {ApiServices} from "../../../core/services/api-services";
-import {ISignInRequest, IUser} from "../../../core/models/api.models";
+import {ISignInRequest, IUser, IUserError} from "../../../core/models/api.models";
 import {AuthService} from "../../services/auth.service";
 import {Router} from "@angular/router";
 
@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit, OnDestroy {
   public token: string = 'fake';
   public loginForm!: FormGroup;
   private subs: Subscription | undefined;
+  public errorMessage = '';
 
   constructor(private fb: FormBuilder,
               private router: Router,
