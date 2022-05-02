@@ -1,5 +1,6 @@
 @use "@angular/material" as mat;
 @import "~@angular/material/theming";
+@import url('https://fonts.googleapis.com/css2?family=Rubik:ital,wght@1,700&display=swap');
 @import "./assets/styles/constants.scss";
 @include mat.core();
 $themes-primary: mat.define-palette(
@@ -103,4 +104,17 @@ body {
   align-items: flex-start;
   justify-content: center;
   height: 100%;
+}
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+  background-color: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: transparent;
+  border-radius: 9em;
+  box-shadow: inset 1px 1px 10px #d64925;
+}
+::-webkit-scrollbar-thumb:hover {
+  box-shadow: inset 3px 3px 10px #f31212;
 }
