@@ -1,0 +1,61 @@
+<div class="middle-container">
+  <mat-card class="sign-up">
+    <form [formGroup]="signUpForm">
+      <mat-card-title *ngIf="logOut">{{ "MENU.LINKS.EDIT_PROFILE" | translate | titlecase }}</mat-card-title>
+      <mat-card-title *ngIf="!logOut">{{ "AUTH.REGISTER.TITLE" | translate | titlecase }}</mat-card-title>
+
+      <mat-form-field class="sign-up__input" appearance="fill">
+        <mat-label>{{ "AUTH.REGISTER.EMAIL" | translate }}</mat-label>
+        <input matInput type="email" [(ngModel)]="emailValue" formControlName="email">
+        <mat-error *ngIf="email?.invalid && email?.touched">
+          <span *ngIf="email?.errors?.['required']; else other">{{ "AUTH.LOGIN.EMAIL_REQUIRED" | translate }}</span>
+          <ng-template #other>{{ "AUTH.REGISTER.EMAIL_INVALID" | translate }}</ng-template>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="sign-up__input" appearance="fill">
+        <mat-label>{{ "AUTH.REGISTER.NAME" | translate }}</mat-label>
+        <input matInput type="text" [(ngModel)]="nameValue" formControlName="name">
+        <mat-error *ngIf="name?.invalid && name?.touched">
+          <span *ngIf="name?.errors?.['required']">{{ "AUTH.REGISTER.NAME_REQUIRED" | translate }}</span>
+        </mat-error>
+      </mat-form-field>
+
+      <mat-form-field class="sign-up__input" appearance="fill">
+        <mat-label>{{ "AUTH.REGISTER.PASSWORD" | translate }}</mat-label>
+        <input matInput
+               [type]="isPasswordHide ? 'password' : 'text'"
+               formControlName="password">
+        <mat-error *ngIf="password?.invalid && password?.touched">
+          <span
+            *ngIf="password?.errors?.['required']; else other">{{ "AUTH.REGISTER.PASSWORD_REQUIRED" | translate }}</span>
+          <ng-template #other>
+            {{ signUpForm.get('password')?.getError('invalidPassword') | translate }}
+          </ng-template>
+        </mat-error>
+        <mat-icon matSuffix
+                  class="suffix"
+                  (click)="isPasswordHide = !isPasswordHide">
+          {{ isPasswordHide ? 'visibility_off' : 'visibility' }}
+        </mat-icon>
+      </mat-form-field>
+      <p *ngIf="!logOut" class="subtext">
+        {{ "AUTH.REGISTER.ALREADY_MEMBER" | translate }}
+        <span class="subtext__link" [routerLink]="'/auth/login'">
+                <b>
+                  {{ "AUTH.LOGIN.TITLE" | translate | titlecase }}
+                </b>
+              </span>
+      </p>
+      <button *ngIf="logOut"
+              (click)="edit()"
+              class="sign-up__btn" mat-raised-button color="primary" type="submit"
+              [disabled]="signUpForm.invalid">{{ "MENU.LINKS.EDIT" | translate }}</button>
+      <button *ngIf="!logOut"
+              (click)="signup()"
+              class="sign-up__btn" mat-raised-button color="primary" type="submit"
+              [disabled]="signUpForm.invalid">{{ "AUTH.REGISTER.TITLE" | translate }}</button>
+    </form>
+  </mat-card>
+</div>
+

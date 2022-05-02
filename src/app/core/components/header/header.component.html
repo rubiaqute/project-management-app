@@ -17,17 +17,38 @@
         </button>
       </div>
       <div class="unauthorized">
-        <button class="user-controls__btn" 
-                mat-raised-button 
+        <button class="user-controls__btn"
+                mat-raised-button
                 color="accent"
+                *ngIf="!logOut"
                 [routerLink]="'/auth/login'">
           {{ "MENU.LINKS.LOGIN" | translate }}
         </button>
-        <button class="user-controls__btn" 
-                mat-raised-button 
+        <button class="user-controls__btn"
+                mat-raised-button
                 color="accent"
+                *ngIf="!logOut"
                 [routerLink]="'/auth/sign-up'">
           {{ "MENU.LINKS.REGISTER" | translate }}
+        </button>
+        <button class="user-controls__btn"
+                mat-raised-button
+                color="accent"
+                *ngIf="logOut"
+                [routerLink]="'/auth/edit'">
+        {{ "MENU.LINKS.EDIT" | translate }}
+        </button>
+        <button class="user-controls__btn"
+                mat-raised-button
+                color="accent"
+                *ngIf="logOut" (click)="logout()">
+          {{ "MENU.LINKS.LOGOUT" | translate }}
+        </button>
+        <button class="user-controls__btn"
+                mat-raised-button
+                color="accent"
+                *ngIf="logOut" (click)="delete()">
+          {{ "DELETE" | translate }}
         </button>
       </div>
     </div>

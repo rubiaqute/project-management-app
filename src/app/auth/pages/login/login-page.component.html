@@ -12,8 +12,8 @@
       </mat-form-field>
       <mat-form-field class="login__input" appearance="fill">
         <mat-label>{{ "AUTH.LOGIN.PASSWORD" | translate }}</mat-label>
-        <input matInput 
-               [type]="isPasswordHide ? 'password' : 'text'" 
+        <input matInput
+               [type]="isPasswordHide ? 'password' : 'text'"
                formControlName="password">
         <mat-error *ngIf="password?.invalid && password?.touched">
           <span *ngIf="password?.errors?.['required']; else other">{{ "AUTH.LOGIN.PASSWORD_REQUIRED" | translate }}</span>
@@ -22,12 +22,12 @@
           </ng-template>
         </mat-error>
         <mat-icon matSuffix
-                  class="suffix" 
+                  class="suffix"
                   (click)="isPasswordHide = !isPasswordHide">
                   {{ isPasswordHide ? 'visibility_off' : 'visibility' }}
                 </mat-icon>
       </mat-form-field>
-      <button class="login__btn" mat-raised-button color="primary" type="submit" (click)="login(name, token)"
+      <button class="login__btn" mat-raised-button color="primary" type="submit" (click)="login()"
         [disabled]="loginForm.invalid">{{ "AUTH.LOGIN.TITLE" | translate }}</button>
     </form>
   </mat-card>

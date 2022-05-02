@@ -12,7 +12,7 @@ export interface ISignUpRequest extends ISignInRequest {
 }
 
 export interface ISignUp {
-  id: string,
+  id: string | null,
   name: string,
   login: string,
 }
@@ -27,6 +27,11 @@ export interface IUserRequest {
   name: string,
   login: string,
   password: string,
+}
+
+export interface IUserError {
+  statusCode: number,
+  message: string,
 }
 
 export interface IBoard {
