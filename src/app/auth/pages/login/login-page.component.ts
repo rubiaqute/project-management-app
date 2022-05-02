@@ -1,10 +1,10 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {ApiServices} from "../../../core/services/api-services";
-import {ISignInRequest, IUser} from "../../../core/models/api.models";
-import {AuthService} from "../../services/auth.service";
-import {Router} from "@angular/router";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Subscription } from 'rxjs';
+import { ApiServices } from "../../../core/services/api-services";
+import { ISignInRequest, IUser } from "../../../core/models/api.models";
+import { AuthService } from "../../services/auth.service";
+import { Router } from "@angular/router";
 
 @Component({
   selector: 'app-login',
@@ -21,9 +21,9 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   public errorMessage = '';
 
   constructor(private fb: FormBuilder,
-              private router: Router,
-              private apiService: ApiServices,
-              private authService: AuthService) {
+    private router: Router,
+    private apiService: ApiServices,
+    private authService: AuthService) {
   }
 
   ngOnInit(): void {
@@ -43,7 +43,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
     const minLength = /^.{8,}$/.test(control.value);
 
     if (!hasNumber)
-      return {invalidPassword: "AUTH.LOGIN.PASSWORD_NO_NUMBERS"};
+      return { invalidPassword: "AUTH.LOGIN.PASSWORD_NO_NUMBERS" };
     if (!hasLetter)
       return {
         invalidPassword:
@@ -69,14 +69,14 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       login: this.email?.value,
       password: this.password?.value,
     }
-    this.apiService.signIn(body).subscribe((data: any) => {
-        this.authService.setInfo(data?.token);
-        this.apiService.getUsers().subscribe((data: IUser[]) => {
-          const currentUser = data.find((user: IUser) => user.login === body.login)
-          localStorage.setItem('id', <string>currentUser?.id)
-        })
-        this.router.navigateByUrl('/main');
-      },
+    this.apiService.signIn(body).subscribe((res: any) => {
+      this.authService.setToken(res?.token);
+      this.apiService.getUsers().subscribe((users: IUser[]) => {
+        const currentUser = users.find((user: IUser) => user.login === body.login)
+        this.authService.setUser(currentUser!);
+      })
+      this.router.navigateByUrl('/main');
+    },
       (error) => {
         console.log(error);
         //Here you can insert the window "Incorrectly entered email or login"

@@ -2,18 +2,18 @@ import { IBoard, IUser } from "../core/models/api.models"
 
 export const initialMainState: IAppState = {
   activeBoard: null,
+  activeUser: null,
   boards: [],
   isAuthorized: false,
-  token: '',
   users: [],
   isDarkTheme: false
 }
 
 export interface IAppState {
   activeBoard: IBoard | null,
+  activeUser: IUser | null,
   boards: IBoard[];
   isAuthorized: boolean;
-  token: string;
   users: IUser[];
   isDarkTheme: boolean
 }

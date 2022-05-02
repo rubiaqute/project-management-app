@@ -1,10 +1,13 @@
-import {Component, OnDestroy, OnInit} from '@angular/core';
-import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
-import {Subscription} from 'rxjs';
-import {ISignUp, ISignUpRequest, IUserRequest} from "../../../core/models/api.models";
-import {ApiServices} from "../../../core/services/api-services";
-import {Router} from "@angular/router";
-import {AuthService} from "../../services/auth.service";
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable, Subscription } from 'rxjs';
+import { ISignUp, ISignUpRequest, IUser, IUserRequest } from "../../../core/models/api.models";
+import { ApiServices } from "../../../core/services/api-services";
+import { Router } from "@angular/router";
+import { AuthService } from "../../services/auth.service";
+import { Store } from '@ngrx/store';
+import { MainState } from 'src/app/store/store';
+import { activateUser } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-form',
@@ -17,17 +20,19 @@ export class FormComponent implements OnInit, OnDestroy {
   public emailValue: string = '';
   public signUpForm!: FormGroup;
   private subs: Subscription | undefined;
-
-  logOut: boolean = this.authService.loadInfo();
+  isAuthorized!: Observable<boolean>
+  currentUser?: Observable<IUser | null>
 
 
   constructor(private fb: FormBuilder,
-              private router: Router,
-              public authService: AuthService,
-              private apiService: ApiServices) {
+    private router: Router,
+    public authService: AuthService,
+    private apiService: ApiServices,
+    private store: Store<MainState>) {
   }
 
   ngOnInit(): void {
+    this.isAuthorized = this.store.select((state) => state.mainState.isAuthorized)
     this.signUpForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -45,7 +50,7 @@ export class FormComponent implements OnInit, OnDestroy {
     const minLength = /^.{8,}$/.test(control.value);
 
     if (!hasNumber)
-      return {invalidPassword: "AUTH.REGISTER.PASSWORD_NO_NUMBERS"};
+      return { invalidPassword: "AUTH.REGISTER.PASSWORD_NO_NUMBERS" };
     if (!hasLetter)
       return {
         invalidPassword:
@@ -76,8 +81,10 @@ export class FormComponent implements OnInit, OnDestroy {
       login: this.email?.value,
       password: this.password?.value,
     }
-    this.apiService.updateUser(localStorage.getItem('id'), body).subscribe((data: any) => {
-      console.log(data);
+    const userId = JSON.parse(localStorage.getItem('currentUserRubiaqute')!).id
+    this.apiService.updateUser(userId, body).subscribe((user: any) => {
+      this.authService.setUser(user)
+      console.log(user);
       //Here you can insert the window "Profile changed successfully"
     })
     this.router.navigateByUrl('/main');
@@ -89,9 +96,22 @@ export class FormComponent implements OnInit, OnDestroy {
       password: this.password?.value,
       name: this.name?.value,
     }
-    this.logOut = !this.logOut;
     this.apiService.signUp(body).subscribe((data: ISignUp) => {
       this.router.navigateByUrl('/auth/login');
     })
+  }
+  deleteUser() {
+    const user = JSON.parse(localStorage.getItem('currentUserRubiaqute')!)
+    if (user) {
+      this.apiService.deleteUser(user.id).subscribe(() => {
+        console.log('User deleted');
+      },
+        (error) => {
+          console.log(error);
+          //Here you can insert the window "User deleted"
+        });
+      this.authService.clearInfo();
+      setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);
+    }
   }
 }

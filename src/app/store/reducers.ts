@@ -19,6 +19,9 @@ export const reducer = createReducer(
   on(AppActions.selectBoard, (state, { board }) => {
     return { ...state, activeBoard: board };
   }),
+  on(AppActions.activateUser, (state, { activeUser }) => {
+    return { ...state, activeUser };
+  }),
 );
 
 export function appReducer(state: IAppState, action: Action) {

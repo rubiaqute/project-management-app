@@ -9,6 +9,10 @@ export const selectBoard = createAction(
   '[Boards] SELECT BOARD FROM API',
   props<{ board: IBoard }>(),
 );
+export const activateUser = createAction(
+  '[USERS] ACTIVATE USER',
+  props<{ activeUser: IUser | null }>(),
+);
 export const getUsers = createAction(
   '[Users] GET USERS FROM API',
   props<{ users: IUser[] }>(),
