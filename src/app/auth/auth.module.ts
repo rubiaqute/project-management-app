@@ -4,16 +4,16 @@ import {MaterialModule} from '../material/material.module';
 import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {AuthRoutingModule} from './auth-routing.module';
 
-import {LoginComponent} from './pages/login/login.component';
-import {SignUpComponent} from './pages/sign-up/sign-up.component';
+import {LoginPageComponent} from './pages/login/login-page.component';
+import {SignUpPageComponent} from './pages/sign-up/sign-up-page.component';
 import {FormComponent} from "./components/form/form.component";
 import {TranslateLoader, TranslateModule} from '@ngx-translate/core';
 import {HttpLoaderFactory} from '../app.module';
 import {HttpClient} from '@angular/common/http';
-import {EditComponent} from "./pages/edit/edit.component";
+import {EditPageComponent} from "./pages/edit/edit-page.component";
 
 @NgModule({
-  declarations: [LoginComponent, SignUpComponent, EditComponent, FormComponent],
+  declarations: [LoginPageComponent, SignUpPageComponent, EditPageComponent, FormComponent],
   imports: [
     CommonModule,
     MaterialModule,

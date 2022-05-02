@@ -1,9 +1,9 @@
 import {NgModule} from '@angular/core';
 import {RouterModule, Routes} from '@angular/router';
 
-import {LoginComponent} from './pages/login/login.component';
-import {SignUpComponent} from './pages/sign-up/sign-up.component';
-import {EditComponent} from "./pages/edit/edit.component";
+import {LoginPageComponent} from './pages/login/login-page.component';
+import {SignUpPageComponent} from './pages/sign-up/sign-up-page.component';
+import {EditPageComponent} from "./pages/edit/edit-page.component";
 
 const routes: Routes = [
   {
@@ -11,9 +11,9 @@ const routes: Routes = [
     redirectTo: 'login',
     pathMatch: 'full'
   },
-  {path: 'login', component: LoginComponent},
-  {path: 'sign-up', component: SignUpComponent},
-  {path: 'edit', component: EditComponent},
+  {path: 'login', component: LoginPageComponent},
+  {path: 'sign-up', component: SignUpPageComponent},
+  {path: 'edit', component: EditPageComponent},
 ];
 
 @NgModule({
