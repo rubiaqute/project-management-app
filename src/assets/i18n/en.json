@@ -59,5 +59,8 @@
     "TITLE": "Let's look at your boards",
     "NO_BOARDS": "Oops, you don't have boards yet",
     "CREATE": "Create a new one"
+  },
+  "BOARD": {
+    "ADD": "Add new column"
   }
 }
