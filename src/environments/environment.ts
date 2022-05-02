@@ -4,7 +4,6 @@
 
 export const environment = {
   production: false,
-  urlApi: 'https://kanban-rest-api.herokuapp.com',
 };
 
 /*

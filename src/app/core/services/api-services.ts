@@ -10,13 +10,13 @@ import {
   IUser, IUserRequest
 } from "../models/api.models";
 import {HttpClient} from "@angular/common/http";
-import {environment} from "../../../environments/environment";
 import {catchError, throwError} from "rxjs";
+import {constants} from "../constants";
 
 @Injectable({providedIn: 'root'})
 
 export class ApiServices {
-  url = environment.urlApi;
+  url = constants.urlApi;
   boards: IBoard[] = [];
   columns: IColumn[] = [];
   files: IFile[] = [];
