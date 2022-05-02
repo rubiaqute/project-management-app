@@ -1,6 +1,6 @@
-@import "../../../../assets/styles/constants.scss";
+@import "../../../../assets/styles/constants";
 
-.login {
+.sign-up {
   margin-top: 2vh;
   padding: $padding-default;
   width: $authcard-width;
@@ -15,5 +15,15 @@
     margin-left: 100%;
     transform: translateX(-100%);
     padding: 0 3vw;
+  }
+  .subtext {
+    font-size: 1.4rem;
+    text-align: center;
+    &__link {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
   }
 }

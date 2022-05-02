@@ -1,24 +1,29 @@
 import {Component, OnDestroy, OnInit} from '@angular/core';
 import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
 import {Subscription} from 'rxjs';
-import {IUserRequest} from "../../../core/models/api.models";
+import {ISignUp, ISignUpRequest, IUserRequest} from "../../../core/models/api.models";
 import {ApiServices} from "../../../core/services/api-services";
 import {Router} from "@angular/router";
+import {AuthService} from "../../services/auth.service";
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './edit.component.html',
-  styleUrls: ['./edit.components.scss']
+  selector: 'app-form',
+  templateUrl: './form.component.html',
+  styleUrls: ['./form.components.scss']
 })
-export class EditComponent implements OnInit, OnDestroy {
+export class FormComponent implements OnInit, OnDestroy {
   public isPasswordHide: boolean = true;
   public nameValue: string = '';
   public emailValue: string = '';
   public signUpForm!: FormGroup;
   private subs: Subscription | undefined;
 
+  logOut: boolean = this.authService.loadInfo();
+
+
   constructor(private fb: FormBuilder,
               private router: Router,
+              public authService: AuthService,
               private apiService: ApiServices) {
   }
 
@@ -76,5 +81,17 @@ export class EditComponent implements OnInit, OnDestroy {
       //Here you can insert the window "Profile changed successfully"
     })
     this.router.navigateByUrl('/main');
+  }
+
+  signup() {
+    const body: ISignUpRequest = {
+      login: this.email?.value,
+      password: this.password?.value,
+      name: this.name?.value,
+    }
+    this.logOut = !this.logOut;
+    this.apiService.signUp(body).subscribe((data: ISignUp) => {
+      this.router.navigateByUrl('/auth/login');
+    })
   }
 }

@@ -1,16 +1,16 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
-import { Subscription } from 'rxjs';
-import {ISignInRequest, ISignUp, ISignUpRequest} from "../../../core/models/api.models";
+import {Component, OnDestroy, OnInit} from '@angular/core';
+import {AbstractControl, FormBuilder, FormControl, FormGroup, Validators} from '@angular/forms';
+import {Subscription} from 'rxjs';
+import {IUserRequest} from "../../../core/models/api.models";
 import {ApiServices} from "../../../core/services/api-services";
 import {Router} from "@angular/router";
 
 @Component({
-  selector: 'app-sign-up',
-  templateUrl: './sign-up.component.html',
-  styleUrls: ['./sign-up.component.scss']
+  selector: 'app-edit',
+  templateUrl: './edit.component.html',
+  styleUrls: ['./edit.components.scss']
 })
-export class SignUpComponent implements OnInit, OnDestroy {
+export class EditComponent implements OnInit, OnDestroy {
   public isPasswordHide: boolean = true;
   public nameValue: string = '';
   public emailValue: string = '';
@@ -23,7 +23,7 @@ export class SignUpComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.signUpForm = this.fb.group({
-      name: [''],
+      name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordValidator]],
     });
@@ -33,17 +33,13 @@ export class SignUpComponent implements OnInit, OnDestroy {
     this.subs?.unsubscribe();
   }
 
-  public signUp(email: string, name: string, lastName: string = ''): void {
-    console.log(email, name, lastName);
-  }
-
   private passwordValidator(control: FormControl): { [key: string]: string } | null {
     const hasNumber = /[0-9]/.test(control.value);
     const hasLetter = /[a-z,A-Z]/.test(control.value);
     const minLength = /^.{8,}$/.test(control.value);
 
     if (!hasNumber)
-      return { invalidPassword: "AUTH.REGISTER.PASSWORD_NO_NUMBERS" };
+      return {invalidPassword: "AUTH.REGISTER.PASSWORD_NO_NUMBERS"};
     if (!hasLetter)
       return {
         invalidPassword:
@@ -68,14 +64,16 @@ export class SignUpComponent implements OnInit, OnDestroy {
     return this.signUpForm.get('password');
   }
 
-  signup() {
-    const body: ISignUpRequest = {
+  edit() {
+    const body: IUserRequest = {
+      name: this.name?.value,
       login: this.email?.value,
       password: this.password?.value,
-      name: this.name?.value,
     }
-    this.apiService.signUp(body).subscribe((data: ISignUp) => {
-      this.router.navigateByUrl('/auth/login');
+    this.apiService.updateUser(localStorage.getItem('id'), body).subscribe((data: any) => {
+      console.log(data);
+      //Here you can insert the window "Profile changed successfully"
     })
+    this.router.navigateByUrl('/main');
   }
 }

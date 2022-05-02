@@ -38,7 +38,7 @@ export class HeaderComponent {
   }
 
   edit() {
-    setTimeout(() => this.router.navigateByUrl('/edit'), 0);
+    setTimeout(() => this.router.navigateByUrl('/form'), 0);
   }
 
   logout() {
