@@ -1,8 +1,10 @@
-<div class="container mat-app-background"
-     [ngClass]="{ 'dark-theme-mode': isDarkTheme }">
-     <app-header (themeChanged)="themeChanged($event)"></app-header>
-     <div class="main">
-      <router-outlet></router-outlet>
-     </div>
-     <app-footer></app-footer>
+<div
+  class="container mat-app-background"
+  [ngClass]="{ 'dark-theme-mode': (isDarkTheme | async) }"
+>
+  <app-header></app-header>
+  <div class="main">
+    <router-outlet></router-outlet>
+  </div>
+  <app-footer></app-footer>
 </div>

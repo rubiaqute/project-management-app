@@ -6,6 +6,7 @@ import { Observable } from "rxjs";
 import { ApiServices } from "../../services/api-services";
 import { Store } from '@ngrx/store';
 import { MainState } from 'src/app/store/store';
+import { toggleDarkTheme } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-header',
@@ -39,8 +40,8 @@ export class HeaderComponent implements OnInit {
     else this.translate.use('en');
   }
 
-  public changeTheme(value: boolean): void {
-    this.themeChanged.emit(value);
+  public changeTheme(): void {
+    this.store.dispatch(toggleDarkTheme({ isDarkTheme: this.isDarkTheme }))
   }
 
   edit() {

@@ -4,9 +4,7 @@
       <mat-slide-toggle (change)="changeLanguage()">
         <mat-icon class="toggles__icon">language</mat-icon>
       </mat-slide-toggle>
-      <mat-slide-toggle
-        (change)="isDarkTheme = !isDarkTheme; changeTheme(isDarkTheme)"
-      >
+      <mat-slide-toggle (change)="isDarkTheme = !isDarkTheme; changeTheme()">
         <mat-icon class="toggles__icon">bedtime</mat-icon>
       </mat-slide-toggle>
     </div>
@@ -14,20 +12,6 @@
       "MENU.TITLE" | translate
     }}</span>
     <div class="user-controls" *ngIf="(isAuthorized | async) === false">
-      <!-- <div class="authorized">
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.BOARDS" | translate }}
-        </button>
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.CREATEBOARD" | translate }}
-        </button>
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.EDIT" | translate }}
-        </button>
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.LOGOUT" | translate }}
-        </button>
-      </div> -->
       <button
         class="user-controls__btn"
         mat-raised-button
