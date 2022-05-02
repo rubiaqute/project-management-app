@@ -74,12 +74,25 @@
                     inset 0px 3px 9px 0px rgb(0 0 0 / 12%);
         .tasks {
           &__task {
+            position: relative;
             display: flex;
             align-items: flex-start;
             justify-content: space-between;
             border-radius: 5px;
             border-bottom: 2px solid lightblue;
             .task {
+              &__executor {
+                position: absolute;
+                bottom: 0;
+                right: 0;
+                width: 24px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                font-style: italic;
+                font-weight: 700;
+                font-family: 'Rubik', sans-serif;
+                color: firebrick;
+              }
               &__btn {
                 cursor: pointer;
                 opacity: 0;
