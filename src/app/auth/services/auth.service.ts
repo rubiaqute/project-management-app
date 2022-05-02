@@ -18,7 +18,8 @@ export class AuthService {
   }
 
   clearInfo(): void {
-    localStorage.removeItem('token')
+    localStorage.removeItem('token');
+    localStorage.removeItem('id');
     this.token$.next(null)
   }
 }

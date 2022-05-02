@@ -50,5 +50,6 @@
       "ALREADY_MEMBER": "Already a member?"
     }
   },
-  "NOT_FOUND": "Oops, something went wrong"
+  "NOT_FOUND": "Oops, something went wrong",
+  "DELETE": "Delete"
 }

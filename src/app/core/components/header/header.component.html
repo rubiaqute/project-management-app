@@ -44,6 +44,12 @@
                 *ngIf="logOut" (click)="logout()">
           {{ "MENU.LINKS.LOGOUT" | translate }}
         </button>
+        <button class="user-controls__btn"
+                mat-raised-button
+                color="accent"
+                *ngIf="logOut" (click)="delete()">
+          {{ "DELETE" | translate }}
+        </button>
       </div>
     </div>
     <div class="toggles">

@@ -77,7 +77,7 @@ export class ApiServices {
       );
   }
 
-  deleteUser(id: string) {
+  deleteUser(id: string | null) {
     return this.http.delete<IUser>(`${this.url}/users/${id}`)
       .pipe(
         catchError((err => {

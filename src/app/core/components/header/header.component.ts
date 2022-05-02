@@ -1,8 +1,10 @@
-import { Component, Output, EventEmitter } from '@angular/core';
-import { TranslateService } from '@ngx-translate/core';
+import {Component, Output, EventEmitter} from '@angular/core';
+import {TranslateService} from '@ngx-translate/core';
 import {AuthService} from "../../../auth/services/auth.service";
 import {Router} from "@angular/router";
 import {Subscription} from "rxjs";
+import {ApiServices} from "../../services/api-services";
+import {IUser} from "../../models/api.models";
 
 @Component({
   selector: 'app-header',
@@ -19,7 +21,9 @@ export class HeaderComponent {
 
   constructor(public translate: TranslateService,
               public authService: AuthService,
-              private router: Router) {}
+              public apiService: ApiServices,
+              private router: Router) {
+  }
 
   ngOnInit(): void {
     this.subs = this.authService.token$.subscribe((token) =>
@@ -42,6 +46,18 @@ export class HeaderComponent {
   }
 
   logout() {
+    this.authService.clearInfo();
+    setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);
+  }
+
+  delete() {
+    this.apiService.deleteUser(localStorage.getItem('id')).subscribe((data: IUser) => {
+        console.log('User deleted');
+      },
+      (error) => {
+        console.log(error);
+        //Here you can insert the window "User deleted"
+      });
     this.authService.clearInfo();
     setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);
   }
