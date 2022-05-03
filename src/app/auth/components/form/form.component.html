@@ -17,7 +17,7 @@
         <mat-label>{{ "AUTH.REGISTER.NAME" | translate }}</mat-label>
         <input matInput type="text" [(ngModel)]="nameValue" formControlName="name">
         <mat-error *ngIf="name?.invalid && name?.touched">
-          <span *ngIf="name?.errors?.['required']">{{ "AUTH.REGISTER.NAME_REQUIRED" | translate }}</span>
+          <span *ngIf="name?.errors?.['required']">{{ "AUTH.REGISTER.FIRST_NAME_REQUIRED" | translate }}</span>
         </mat-error>
       </mat-form-field>
 

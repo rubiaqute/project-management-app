@@ -1,4 +1,4 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit} from '@angular/core';
 import {TranslateService} from '@ngx-translate/core';
 import {AuthService} from "../../../auth/services/auth.service";
 import {Router} from "@angular/router";
@@ -11,7 +11,7 @@ import {IUser} from "../../models/api.models";
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent {
+export class HeaderComponent implements OnInit {
   isDarkTheme: boolean = false;
   langValue: boolean = false;
   logOut: boolean = this.authService.loadInfo();
