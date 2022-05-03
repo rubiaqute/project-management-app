@@ -1,7 +1,5 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { BoardComponent } from './components/board/board.component';
-import { MainComponent } from './components/main/main.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
@@ -14,15 +12,7 @@ const routes: Routes = [
         path: '',
         redirectTo: 'boards',
         pathMatch: 'full'
-      }, 
-      { 
-        path: 'boards', 
-        component: MainComponent
-      }, 
-      { 
-        path: 'boards/board-id', 
-        component: BoardComponent
-      }, 
+      },
       { 
         path: 'auth', 
         loadChildren: () => import('./../auth/auth.module').then(m => m.AuthModule)
@@ -30,6 +20,10 @@ const routes: Routes = [
       { 
         path: 'page-not-found', 
         loadChildren: () => import('./../shared/shared.module').then(m => m.SharedModule)
+      }, 
+      { 
+        path: 'boards', 
+        loadChildren: () => import('./../boards/boards.module').then(m => m.BoardsModule)
       }, 
     ]
   },
