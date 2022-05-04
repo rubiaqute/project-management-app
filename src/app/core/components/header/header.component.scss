@@ -9,6 +9,10 @@
       filter: blur(1px);
     }
   }
+  &__name {
+    margin-right: 1rem;
+    text-decoration: underline;
+  }
   &-container {
     position: relative;
     display: flex;

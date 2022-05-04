@@ -11,6 +11,13 @@
       cursor: pointer;
     }
   }
+  &__double-btns {
+    padding: 0 3vw;
+  }
+  &__btns {
+    display: flex;
+    justify-content: space-between;
+  }
   &__btn {
     margin-left: 100%;
     transform: translateX(-100%);

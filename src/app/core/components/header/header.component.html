@@ -1,64 +1,54 @@
 <header class="header">
   <mat-toolbar class="header-container" color="primary">
-    <span class="header__title" [routerLink]="'/boards'">{{ "MENU.TITLE" | translate }}</span>
-    <div class="user-controls center">
-      <div class="authorized">
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.BOARDS" | translate }}
-        </button>
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.CREATEBOARD" | translate }}
-        </button>
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.EDIT" | translate }}
-        </button>
-        <button class="user-controls__btn" mat-raised-button color="accent">
-          {{ "MENU.LINKS.LOGOUT" | translate }}
-        </button>
-      </div>
-      <div class="unauthorized">
-        <button class="user-controls__btn"
-                mat-raised-button
-                color="accent"
-                *ngIf="!logOut"
-                [routerLink]="'/auth/login'">
-          {{ "MENU.LINKS.LOGIN" | translate }}
-        </button>
-        <button class="user-controls__btn"
-                mat-raised-button
-                color="accent"
-                *ngIf="!logOut"
-                [routerLink]="'/auth/sign-up'">
-          {{ "MENU.LINKS.REGISTER" | translate }}
-        </button>
-        <button class="user-controls__btn"
-                mat-raised-button
-                color="accent"
-                *ngIf="logOut"
-                [routerLink]="'/auth/edit'">
-        {{ "MENU.LINKS.EDIT" | translate }}
-        </button>
-        <button class="user-controls__btn"
-                mat-raised-button
-                color="accent"
-                *ngIf="logOut" (click)="logout()">
-          {{ "MENU.LINKS.LOGOUT" | translate }}
-        </button>
-        <button class="user-controls__btn"
-                mat-raised-button
-                color="accent"
-                *ngIf="logOut" (click)="delete()">
-          {{ "DELETE" | translate }}
-        </button>
-      </div>
-    </div>
     <div class="toggles">
       <mat-slide-toggle (change)="changeLanguage()">
         <mat-icon class="toggles__icon">language</mat-icon>
       </mat-slide-toggle>
-      <mat-slide-toggle (change)="isDarkTheme = !isDarkTheme; changeTheme(isDarkTheme)">
+      <mat-slide-toggle (change)="isDarkTheme = !isDarkTheme; changeTheme()">
         <mat-icon class="toggles__icon">bedtime</mat-icon>
       </mat-slide-toggle>
+    </div>
+    <span class="header__title" [routerLink]="'/boards'">{{
+      "MENU.TITLE" | translate
+    }}</span>
+    <div class="user-controls" *ngIf="(isAuthorized | async) === false">
+      <button
+        class="user-controls__btn"
+        mat-raised-button
+        color="accent"
+        *ngIf="(isAuthorized | async) === false"
+        [routerLink]="'/auth/login'"
+      >
+        {{ "MENU.LINKS.LOGIN" | translate }}
+      </button>
+      <button
+        class="user-controls__btn"
+        mat-raised-button
+        color="accent"
+        *ngIf="(isAuthorized | async) === false"
+        [routerLink]="'/auth/sign-up'"
+      >
+        {{ "MENU.LINKS.REGISTER" | translate }}
+      </button>
+    </div>
+    <div class="user-controls" *ngIf="isAuthorized | async">
+      <span class="header__name">{{ currentUser | async }}</span>
+      <button
+        class="user-controls__btn"
+        mat-mini-fab
+        color="accent"
+        [routerLink]="'/auth/edit'"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        class="user-controls__btn"
+        mat-mini-fab
+        color="accent"
+        (click)="logout()"
+      >
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
     </div>
   </mat-toolbar>
 </header>

@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { AuthGuard } from './guards/auth.guard';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
 
 
@@ -8,23 +9,25 @@ const routes: Routes = [
     path: '',
     component: DashboardComponent,
     children: [
-      { 
+      {
         path: '',
         redirectTo: 'boards',
         pathMatch: 'full'
       },
-      { 
-        path: 'auth', 
+      {
+        path: 'auth',
         loadChildren: () => import('./../auth/auth.module').then(m => m.AuthModule)
-      }, 
-      { 
-        path: 'page-not-found', 
+      },
+      {
+        path: 'page-not-found',
         loadChildren: () => import('./../shared/shared.module').then(m => m.SharedModule)
-      }, 
-      { 
-        path: 'boards', 
+      },
+      {
+        path: 'boards',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
         loadChildren: () => import('./../boards/boards.module').then(m => m.BoardsModule)
-      }, 
+      },
     ]
   },
   {

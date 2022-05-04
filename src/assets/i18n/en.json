@@ -8,7 +8,7 @@
       "EDIT_PROFILE": "Edit profile",
       "LOGOUT": "Logout",
       "LOGIN": "Login",
-      "REGISTER": "Register"
+      "REGISTER": "Sign Up"
     }
   },
   "FOOTER": {
@@ -54,7 +54,7 @@
     "MESSAGE": "Oops, something went wrong",
     "TO_MAIN": "Main page"
   },
-  "DELETE": "Delete",
+  "DELETE": "Delete my profile",
   "BOARDS": {
     "TITLE": "Let's look at your boards",
     "NO_BOARDS": "Oops, you don't have boards yet",
