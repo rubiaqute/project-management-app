@@ -9,7 +9,8 @@ import { MatCardModule } from '@angular/material/card';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
-import { MatGridListModule } from '@angular/material/grid-list';
+import { MatGridListModule } from '@angular/material/grid-list'
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';;
 
 
 
@@ -19,6 +20,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
     CommonModule
   ],
   exports: [
+    MatProgressSpinnerModule,
     MatSidenavModule,
     MatButtonModule,
     MatToolbarModule,

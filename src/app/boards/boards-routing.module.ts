@@ -6,11 +6,11 @@ import { BoardComponent } from './pages/board/board.component';
 
 const routes: Routes = [
   { path: '', component: BoardsComponent },
-  { path: ':id', component: BoardComponent },
+  { path: 'boards/:id', component: BoardComponent },
 ];
 
 @NgModule({
   imports: [RouterModule.forChild(routes)],
   exports: [RouterModule],
 })
-export class BoardsRoutingModule {}
+export class BoardsRoutingModule { }

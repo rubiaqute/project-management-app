@@ -1,22 +1,30 @@
-<h2 class="page-title"><b>{{ "BOARDS.TITLE" | translate}}:</b></h2>
+<h2 class="page-title">
+  <b>{{ "BOARDS.TITLE" | translate }}:</b>
+</h2>
 <div class="middle-container boards">
   <!-- no-boards div will be used with *ngIf="no boards" in future-->
   <!-- <div class="no-boards">
     <h2 class="no-boards__title">{{ "BOARDS.NO_BOARDS" | translate }}</h2>
     <button class="no-boards__btn"
-            type="button" 
-            routerLink="boards/create" 
-            mat-raised-button 
+            type="button"
+            routerLink="boards/create"
+            mat-raised-button
             color="primary">{{ "BOARDS.CREATE" | translate }}</button>
   </div> -->
-  <mat-card class="boards__board" routerLink="board-id">
+  <mat-card
+    class="boards__board"
+    *ngFor="let board of boards"
+    [routerLink]="['/main/boards', board.id]"
+  >
     <mat-card-actions class="board__actions">
-      <mat-icon color="primary"
-                class="actions__btn create">create</mat-icon>
-      <mat-icon color="primary"
-                class="actions__btn delete">delete</mat-icon>
+      <mat-icon color="primary" class="actions__btn create">create</mat-icon>
+      <mat-icon color="primary" class="actions__btn delete">delete</mat-icon>
     </mat-card-actions>
-    <mat-card-title class="board__title"><b>{{ "board name" | titlecase }}</b></mat-card-title>
-    <mat-card-subtitle class="board__description">{{ "board desc" | titlecase }}</mat-card-subtitle>
+    <mat-card-title class="board__title"
+      ><b>{{ board.title | titlecase }}</b></mat-card-title
+    >
+    <mat-card-subtitle class="board__description">{{
+      "board desc" | titlecase
+    }}</mat-card-subtitle>
   </mat-card>
 </div>

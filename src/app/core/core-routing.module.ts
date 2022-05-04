@@ -11,8 +11,9 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        redirectTo: 'boards',
-        pathMatch: 'full'
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        //here will be welcome page component
       },
       {
         path: 'auth',
@@ -23,7 +24,7 @@ const routes: Routes = [
         loadChildren: () => import('./../shared/shared.module').then(m => m.SharedModule)
       },
       {
-        path: 'boards',
+        path: 'main',
         canActivate: [AuthGuard],
         canActivateChild: [AuthGuard],
         loadChildren: () => import('./../boards/boards.module').then(m => m.BoardsModule)
