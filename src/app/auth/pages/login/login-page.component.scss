@@ -17,3 +17,17 @@
     padding: 0 3vw;
   }
 }
+:host {
+  position: relative;
+}
+.spinner-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 100;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}

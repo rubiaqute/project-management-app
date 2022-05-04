@@ -19,6 +19,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   public loginForm!: FormGroup;
   private subs: Subscription | undefined;
   public errorMessage = '';
+  public isLoading = false;
 
   constructor(private fb: FormBuilder,
     private router: Router,
@@ -65,6 +66,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
   }
 
   login(): void {
+    this.isLoading = true
     const body: ISignInRequest = {
       login: this.email?.value,
       password: this.password?.value,
@@ -75,9 +77,11 @@ export class LoginPageComponent implements OnInit, OnDestroy {
         const currentUser = users.find((user: IUser) => user.login === body.login)
         this.authService.setUser(currentUser!);
       })
+      this.isLoading = false
       this.router.navigateByUrl('/main');
     },
       (error) => {
+        this.isLoading = false
         console.log(error);
         //Here you can insert the window "Incorrectly entered email or login"
       });
