@@ -1,0 +1,30 @@
+<mat-card class="column" *ngIf="column">
+  <div class="column__header">
+    <mat-card-title *ngIf="!isTitleEditMode" (click)="switchTitleEdit()" class="header__title">
+      <b>{{ column.title }}</b>
+    </mat-card-title>
+    <mat-form-field *ngIf="isTitleEditMode" class="header__input">
+      <mat-label>{{ "BOARD.EDIT_COLUMN_NAME" | translate }}</mat-label>
+      <input matInput type="text" value="{{ column.title }}">
+      <button matSuffix mat-icon-button>
+        <mat-icon (click)="switchTitleEdit()">done</mat-icon>
+      </button>
+      <button matSuffix mat-icon-button>
+        <mat-icon (click)="switchTitleEdit()">close</mat-icon>
+      </button>
+    </mat-form-field>
+    <mat-card-actions class="header__actions">
+      <mat-icon color="primary" 
+                class="actions__btn delete"
+                (click)="deleteColumn()">delete</mat-icon>
+    </mat-card-actions>
+  </div>
+  <div class="column__tasks">
+    <app-task *ngFor="let task of column.tasks"
+              [task]="task"></app-task>
+  </div>
+  <div class="column__footer">
+    <mat-icon color="primary" class="footer__icon">add</mat-icon>
+    <p class="footer__text">{{ "BOARD.ADD_TASK" | translate }}</p>
+  </div>
+</mat-card>

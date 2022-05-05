@@ -14,6 +14,8 @@ import { EditBoardComponent } from './pages/edit-board/edit-board.component';
 import { NewBoardComponent } from './pages/new-board/new-board.component';
 import { FormBoardComponent } from './components/form-board/form-board.component';
 import { FilterPipe } from "./pipes/filter.pipes";
+import { ColumnComponent } from './components/column/column.component';
+import { TaskComponent } from './components/task/task.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +25,8 @@ import { FilterPipe } from "./pipes/filter.pipes";
     NewBoardComponent,
     FormBoardComponent,
     FilterPipe,
+    ColumnComponent,
+    TaskComponent
   ],
   imports: [
     CommonModule,
