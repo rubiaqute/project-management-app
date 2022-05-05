@@ -1,0 +1,37 @@
+<div class="middle-container">
+  <mat-card class="sign-up" routerLink="board-id">
+    <form [formGroup]="newBoardForm">
+      <mat-card-title>{{
+        "BOARD.CREATE_NEW_BOARD" | translate | titlecase
+        }}
+      </mat-card-title>
+
+      <mat-form-field class="sign-up__input" appearance="fill">
+        <mat-label>{{ "BOARD.TITLE" | translate }}</mat-label>
+        <input
+          matInput
+          type="text"
+          [(ngModel)]="titleValue"
+          formControlName="title"
+        />
+        <mat-error *ngIf="title?.invalid && title?.touched">
+          <span *ngIf="title?.errors?.['required']">{{
+            "BOARD.CREATE_NEW_BOARD" | translate
+            }}</span>
+        </mat-error>
+      </mat-form-field>
+
+      <div class="sign-up__btns">
+        <button
+          class="sign-up__btn"
+          mat-raised-button
+          color="primary"
+          type="submit"
+        >
+          {{ "BOARDS.CREATE" | translate }}
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+

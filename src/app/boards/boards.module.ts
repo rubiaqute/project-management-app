@@ -10,13 +10,19 @@ import { HttpClient } from '@angular/common/http';
 
 import { BoardsComponent } from './pages/boards/boards.component';
 import { BoardComponent } from './pages/board/board.component';
+import { EditBoardComponent } from './pages/edit-board/edit-board.component';
+import { NewBoardComponent } from './pages/new-board/new-board.component';
+import { FormBoardComponent } from './components/form-board/form-board.component';
 
 
 
 @NgModule({
   declarations: [
     BoardsComponent,
-    BoardComponent
+    BoardComponent,
+    EditBoardComponent,
+    NewBoardComponent,
+    FormBoardComponent
   ],
   imports: [
     CommonModule,

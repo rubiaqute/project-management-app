@@ -12,7 +12,7 @@
   justify-content: flex-start;
   flex-wrap: wrap;
   width: 100%;
-  height: calc($main-height - $board-title-height);
+  //height: calc($main-height - $board-title-height);
   padding: $padding-default;
   gap: 1vw;
   &__board {
@@ -56,12 +56,12 @@
             &.create:hover {
               -webkit-animation: vibrate 0.3s linear infinite both;
                       animation: vibrate 0.3s linear infinite both;
-                      
+
             }
             &.delete:hover {
               -webkit-animation: jello-horizontal 0.9s both;
                       animation: jello-horizontal 0.9s both;
-                      
+
             }
           }
         }

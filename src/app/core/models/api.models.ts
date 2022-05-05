@@ -35,7 +35,7 @@ export interface IUserError {
 }
 
 export interface IBoard {
-  id: string,
+  id: string | null,
   title: string,
   columns?: IColumn[],
 }
