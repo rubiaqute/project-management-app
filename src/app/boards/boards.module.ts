@@ -10,13 +10,17 @@ import { HttpClient } from '@angular/common/http';
 
 import { BoardsComponent } from './pages/boards/boards.component';
 import { BoardComponent } from './pages/board/board.component';
+import { ColumnComponent } from './components/column/column.component';
+import { TaskComponent } from './components/task/task.component';
 
 
 
 @NgModule({
   declarations: [
     BoardsComponent,
-    BoardComponent
+    BoardComponent,
+    ColumnComponent,
+    TaskComponent
   ],
   imports: [
     CommonModule,

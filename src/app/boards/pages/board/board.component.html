@@ -1,46 +1,15 @@
-<h3 class="page-title"><b>Board name</b></h3>
-<div class="middle-container board">
-  <mat-card class="board__column">
-    <div class="column__header">
-      <mat-card-title *ngIf="!isTitleEditMode" 
-                      (click)="openTitleEdit()" 
-                      class="header__title">
-                      <b>Column name</b>
-                    </mat-card-title>
-      <mat-form-field *ngIf="isTitleEditMode"
-                      class="header__input">
-        <mat-label>{{ "BOARD.EDIT_COLUMN_NAME" | translate }}</mat-label>
-        <input matInput 
-               type="text" 
-               value="column name">
-        <button matSuffix mat-icon-button>
-          <mat-icon (click)="closeTitleEdit()">done</mat-icon>
-        </button>
-        <button matSuffix mat-icon-button>
-          <mat-icon (click)="closeTitleEdit()">close</mat-icon>
-        </button>
-      </mat-form-field>
-      <mat-card-actions class="header__actions">
-          <mat-icon color="primary"
-                    class="actions__btn delete">delete</mat-icon>
-      </mat-card-actions>
-    </div>
-    <div class="column__tasks">
-      <div class="tasks__task" draggable="true">
-        <p class="task__text">Сделать что-то как-то куда-то Lorem ipsum dolor sit amet, consectetur adipisicing elit. Laboriosam iste quia ratione? Qui, recusandae mollitia?</p>
-        <mat-icon color="primary"
-                  class="task__btn">close</mat-icon>
-        <div class="task__executor" title="Executor - Name">Name</div>
-      </div>
-    </div>
-    <div class="column__footer">
-      <mat-icon color="primary"
-                class="footer__icon">add</mat-icon>
-      <p class="footer__text">{{ "BOARD.ADD_TASK" | translate }}</p>
-    </div>
-  </mat-card>
+<h3 class="page-title"><b>{{ board?.title }}</b></h3>
+<ng-template #loader
+             class="loader">
+  <mat-spinner class="loader__spinner"></mat-spinner>
+</ng-template>
+<div class="middle-container board" *ngIf="board; else loader">
+  <app-column *ngFor="let column of board.columns"
+              [column]="column"
+              [boardId]="board.id"></app-column>
   
-  <mat-card class="board__column add-column" routerLink="board-id">
+  <mat-card class="board__column add-column"
+            (click)="createColumn('test-Ed')">
     <mat-icon color="primary"
               class="add-column__icon">add</mat-icon>
     <p class="add-column__text">{{ "BOARD.ADD" | translate }}</p>

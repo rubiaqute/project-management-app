@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { IBoard, IColumnRequest } from 'src/app/core/models/api.models';
+import { ApiServices } from 'src/app/core/services/api-services';
 
 @Component({
   selector: 'app-board',
@@ -12,9 +14,9 @@ export class BoardComponent implements OnInit {
 
   public subscription: Subscription[] = [];
 
-  public isTitleEditMode: boolean = false;
+  public board: IBoard | undefined;
 
-  constructor(private activateRoute: ActivatedRoute) {}
+  constructor(private activateRoute: ActivatedRoute, private api: ApiServices, private router: Router) {}
 
   ngOnInit(): void {
     this.subscription.push(
@@ -23,13 +25,17 @@ export class BoardComponent implements OnInit {
           (this.id = params['id'])
       )
     );
+
+    this.api.getBoardById(this.id!).subscribe((data) => this.board = data);
   }
 
-  public openTitleEdit() {
-    this.isTitleEditMode = true;
-  }
+  public createColumn(title: string) {
+    const columnRequest: IColumnRequest = {
+      title: title,
+      order: this.board!.columns!.length + 1,
+    }
 
-  public closeTitleEdit() {
-    this.isTitleEditMode = false;
+    this.api.createColumn(columnRequest, this.board!.id)
+      .subscribe((data) => this.board?.columns?.push(data));
   }
 }

@@ -1,0 +1,39 @@
+.task {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 5px;
+  border-bottom: 2px solid lightblue;
+  &__text {
+    width: 80%;
+    word-wrap: break-word;
+  }
+  &__executor {
+    position: absolute;
+    bottom: 0;
+    right: 0;
+    width: 24px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-style: italic;
+    font-weight: 700;
+    font-family: "Rubik", sans-serif;
+    color: firebrick;
+  }
+  &__btn {
+    cursor: pointer;
+    opacity: 0;
+    &:hover {
+      -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+      animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+    }
+  }
+  &:hover {
+    .task {
+      &__btn {
+        opacity: 1;
+      }
+    }
+  }
+}
