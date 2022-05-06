@@ -12,6 +12,8 @@ import { AuthInterceptorService } from "./auth/services/auth-interceptor.service
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import { EffectsModule } from '@ngrx/effects';
+import { GetBoardsEffects } from './store/effects';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -35,6 +37,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       },
       defaultLanguage: 'en'
     }),
+    EffectsModule.forRoot([GetBoardsEffects]),
     StoreModule.forRoot(
       {},
       {

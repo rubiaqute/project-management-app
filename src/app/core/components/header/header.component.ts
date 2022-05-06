@@ -3,7 +3,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from "../../../auth/services/auth.service";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { ApiServices } from "../../services/api-services";
+import { ApiServices } from "../../services/api-services.service";
 import { Store } from '@ngrx/store';
 import { MainState } from 'src/app/store/store';
 import { toggleDarkTheme } from 'src/app/store/actions';

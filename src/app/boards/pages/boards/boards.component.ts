@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { IBoard } from 'src/app/core/models/api.models';
-import { ApiServices } from 'src/app/core/services/api-services';
+// import { ApiServices } from 'src/app/core/services/api-services';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-boards',
@@ -8,12 +10,13 @@ import { ApiServices } from 'src/app/core/services/api-services';
   styleUrls: ['./boards.component.scss']
 })
 export class BoardsComponent implements OnInit {
-  boards: IBoard[] = []
-
-  constructor(private api: ApiServices) {
+  // boards: IBoard[] = []
+  public boards$: Observable<IBoard[]> = this.apiFacade.boards$;
+  constructor(private apiFacade: ApiFacade) {
 
   }
   ngOnInit(): void {
-    this.api.getBoards().subscribe((data) => this.boards = data)
+    this.apiFacade.loadBoards();
+    // this.api.getBoards().subscribe((data) => this.boards = data)
   }
 }

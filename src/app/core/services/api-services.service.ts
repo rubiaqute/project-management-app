@@ -10,7 +10,7 @@ import {
   IUser, IUserRequest
 } from "../models/api.models";
 import {HttpClient} from "@angular/common/http";
-import {catchError, throwError} from "rxjs";
+import {catchError, map, Observable, throwError} from "rxjs";
 import {constants} from "../constants";
 
 @Injectable({providedIn: 'root'})
@@ -88,14 +88,8 @@ export class ApiServices {
   }
 
   //Boards
-  getBoards() {
-    return this.http.get<IBoard[]>(`${this.url}/boards`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
+  getBoards$(): Observable<IBoard[]> {
+    return this.http.get<IBoard[]>(`${this.url}/boards`);
   }
 
   getBoardById(id: string) {

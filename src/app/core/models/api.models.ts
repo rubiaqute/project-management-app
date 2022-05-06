@@ -88,3 +88,20 @@ export interface IFileUpload {
   taskId: string,
   file: string,
 }
+
+export enum Status {
+  INITIAL = 'Initial',
+  LOADING = 'Loading',
+  SUCCESS = 'Success',
+  FAILURE = 'Failure',
+  IN_PROGRESS = 'InProgress',
+}
+
+export enum AsyncActionStatus {
+  Delete = 'Delete',
+  DeleteError = 'DeleteError',
+  DeleteSuccess = 'DeleteSuccess',
+  Update = 'Update',
+  UpdateError = 'UpdateError',
+  UpdateSuccess = 'UpdateSuccess'
+}
