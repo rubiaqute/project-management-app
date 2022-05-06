@@ -63,6 +63,9 @@
   "BOARD": {
     "ADD": "Add new column",
     "EDIT_COLUMN_NAME": "Column name",
-    "ADD_TASK": "Add task"
+    "ADD_TASK": "Add task",
+    "ADD_COLUMN_MODAL_TITLE": "Column title",
+    "ADD_COLUMN_MODAL_BUTTON": "Create column",
+    "ERROR": "Oops, something went wrong"
   }
 }

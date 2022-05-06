@@ -16,7 +16,17 @@ export class BoardComponent implements OnInit {
 
   public board: IBoard | undefined;
 
-  constructor(private activateRoute: ActivatedRoute, private api: ApiServices, private router: Router) {}
+  public isColumnModalOn: boolean = false;
+
+  public isErrorModalOn: boolean = false;
+
+  public title: string | undefined;
+
+  constructor(
+    private activateRoute: ActivatedRoute,
+    private api: ApiServices,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.subscription.push(
@@ -26,16 +36,29 @@ export class BoardComponent implements OnInit {
       )
     );
 
-    this.api.getBoardById(this.id!).subscribe((data) => this.board = data);
+    this.api.getBoardById(this.id!).subscribe((data) => (this.board = data));
   }
 
-  public createColumn(title: string) {
+  public createColumn(title: string): void {
     const columnRequest: IColumnRequest = {
       title: title,
       order: this.board!.columns!.length + 1,
-    }
+    };
 
-    this.api.createColumn(columnRequest, this.board!.id)
-      .subscribe((data) => this.board?.columns?.push(data));
+    this.api
+      .createColumn(columnRequest, this.board!.id)
+      .subscribe((data) => this.board?.columns?.push(data),
+                 (err) => {
+                  this.switchErrorModal();
+                  });
+  }
+
+  public switchAddColumnModal(): void {
+    this.isColumnModalOn = !this.isColumnModalOn;
+    this.title = '';
+  }
+
+  public switchErrorModal(): void {
+    this.isErrorModalOn = !this.isErrorModalOn;
   }
 }
