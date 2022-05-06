@@ -24,6 +24,6 @@ export class ColumnComponent {
 
   public deleteColumn(): void {
     this.api.deleteColumn(this.boardId, this.column!.id)
-    .subscribe((data) => this.column = undefined);
-  }
+      .subscribe(() => this.column = undefined);
+  } 
 }

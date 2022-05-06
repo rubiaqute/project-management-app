@@ -68,7 +68,10 @@
     "ADD_TASK": "Добавить задание",
     "EDIT_BOARD": "Редактировать доску",
     "NEW_BOARD": "Новая доска",
-    "CREATE_NEW_BOARD": "Создать новую доску"
+    "CREATE_NEW_BOARD": "Создать новую доску",
+    "ADD_COLUMN_MODAL": "Заголовок колонки",
+    "ADD_COLUMN_MODAL_BUTTON": "Создать колонку",
+    "SERVER_WRONG": "Ой, что-то пошло не так"
   },
   "WELCOME": {
     "BOARDS": "Доски",

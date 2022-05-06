@@ -9,6 +9,7 @@
   min-width: 15vw;
   width: 15vw;
   height: calc($main-height - $board-title-height - 8vh);
+  margin: 0 0.5vw;
   padding: 0 1vw;
   &__header {
     display: flex;
