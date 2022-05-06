@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import {
   IBoard, IFile,
   IBoardRequest,
@@ -9,11 +9,11 @@ import {
   ITask, ITaskRequest, ITaskRequestUpdate,
   IUser, IUserRequest
 } from "../models/api.models";
-import {HttpClient} from "@angular/common/http";
-import {catchError, throwError} from "rxjs";
-import {constants} from "../constants";
+import { HttpClient } from "@angular/common/http";
+import { catchError, Observable, throwError } from "rxjs";
+import { constants } from "../constants";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 
 export class ApiServices {
   url = constants.urlApi;
@@ -21,7 +21,7 @@ export class ApiServices {
   columns: IColumn[] = [];
   files: IFile[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   //Authorization
   signIn(signIn: ISignInRequest) {
@@ -57,14 +57,14 @@ export class ApiServices {
       );
   }
 
-  getUserById(id: string) {
+  getUserById$(id: string) {
     return this.http.get<IUser>(`${this.url}/users/${id}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
+    // .pipe(
+    //   catchError((err => {
+    //     console.error(err);
+    //     return throwError(err);
+    //   }))
+    // );
   }
 
   updateUser(id: string | null, user: IUserRequest) {
@@ -88,14 +88,17 @@ export class ApiServices {
   }
 
   //Boards
-  getBoards() {
-    return this.http.get<IBoard[]>(`${this.url}/boards`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
+  // getBoards() {
+  //   return this.http.get<IBoard[]>(`${this.url}/boards`)
+  //     .pipe(
+  //       catchError((err => {
+  //         console.error(err);
+  //         return throwError(err);
+  //       }))
+  //     );
+  // }
+  getBoards$(): Observable<IBoard[]> {
+    return this.http.get<IBoard[]>(`${this.url}/boards`);
   }
 
   getBoardById(id: string) {

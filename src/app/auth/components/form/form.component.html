@@ -1,10 +1,10 @@
 <div class="middle-container">
   <mat-card class="sign-up">
     <form [formGroup]="signUpForm">
-      <mat-card-title *ngIf="isAuthorized | async">{{
+      <mat-card-title *ngIf="activeUser$ | async">{{
         "MENU.LINKS.EDIT_PROFILE" | translate | titlecase
       }}</mat-card-title>
-      <mat-card-title *ngIf="(isAuthorized | async) === false">{{
+      <mat-card-title *ngIf="!!(activeUser$ | async) === false">{{
         "AUTH.REGISTER.TITLE" | translate | titlecase
       }}</mat-card-title>
 
@@ -67,7 +67,7 @@
           {{ isPasswordHide ? "visibility_off" : "visibility" }}
         </mat-icon>
       </mat-form-field>
-      <p *ngIf="(isAuthorized | async) === false" class="subtext">
+      <p *ngIf="!!(activeUser$ | async) === false" class="subtext">
         {{ "AUTH.REGISTER.ALREADY_MEMBER" | translate }}
         <span class="subtext__link" [routerLink]="'/auth/login'">
           <b>
@@ -75,7 +75,7 @@
           </b>
         </span>
       </p>
-      <div class="sign-up__btns" *ngIf="isAuthorized | async">
+      <div class="sign-up__btns" *ngIf="activeUser$ | async">
         <button
           mat-raised-button
           color="accent"
@@ -97,7 +97,7 @@
       </div>
       <button
         class="sign-up__btn"
-        *ngIf="(isAuthorized | async) === false"
+        *ngIf="!!(activeUser$ | async) === false"
         (click)="signup()"
         mat-raised-button
         color="primary"

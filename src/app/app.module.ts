@@ -9,12 +9,15 @@ import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { AuthInterceptorService } from "./auth/services/auth-interceptor.service";
-import { StoreModule } from '@ngrx/store';
+import { ActionReducer, StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
-import {boardsReducer} from "./store/reducers/boards.reducer";
-import {BoardsEffects} from "./store/effects/boards.effects";
-import {EffectsModule} from "@ngrx/effects";
+
+import { BoardsEffects } from "./store/effects/boards.effects";
+import { EffectsModule } from "@ngrx/effects";
+import { GetBoardsEffects } from './store/effects';
+import { appReducer } from './store/reducers';
+import { ApiState } from './store/state';
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -39,7 +42,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'en'
     }),
     StoreModule.forRoot(
-      {boards: boardsReducer },
+      { mainState: appReducer as ActionReducer<ApiState> },
       {
         runtimeChecks: {
           strictStateImmutability: true,
@@ -51,7 +54,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         },
       },
     ),
-    EffectsModule.forRoot([BoardsEffects]),
+    // EffectsModule.forRoot([BoardsEffects]),
+    EffectsModule.forRoot([GetBoardsEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [{

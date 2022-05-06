@@ -7,6 +7,8 @@ import { ApiServices } from "../../services/api-services";
 import { Store } from '@ngrx/store';
 import { MainState } from 'src/app/store/store';
 import { toggleDarkTheme } from 'src/app/store/actions';
+import { IUser } from '../../models/api.models';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-header',
@@ -20,17 +22,15 @@ export class HeaderComponent implements OnInit {
   currentUser!: Observable<string | undefined>
 
   @Output() themeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-
+  public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
   constructor(public translate: TranslateService,
     public authService: AuthService,
     public apiService: ApiServices,
     private router: Router,
-    private store: Store<MainState>) {
+    private apiFacade: ApiFacade) {
   }
 
   ngOnInit(): void {
-    this.isAuthorized = this.store.select((state) => state.mainState.isAuthorized)
-    this.currentUser = this.store.select((state) => state.mainState.activeUser?.name)
     this.authService.initAuth();
   }
 
@@ -41,7 +41,7 @@ export class HeaderComponent implements OnInit {
   }
 
   public changeTheme(): void {
-    this.store.dispatch(toggleDarkTheme({ isDarkTheme: this.isDarkTheme }))
+    // this.store.dispatch(toggleDarkTheme({ isDarkTheme: this.isDarkTheme }))
   }
 
   edit() {

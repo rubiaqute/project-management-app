@@ -7,6 +7,7 @@ import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { Store } from '@ngrx/store';
 import { MainState } from 'src/app/store/store';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-form',
@@ -19,8 +20,7 @@ export class FormComponent implements OnInit, OnDestroy {
   public emailValue: string = '';
   public signUpForm!: FormGroup;
   private subs: Subscription | undefined;
-  isAuthorized!: Observable<boolean>
-  currentUser?: Observable<IUser | null>
+  activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$
   toggleBoard: boolean = true;
 
 
@@ -28,11 +28,10 @@ export class FormComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthService,
     private apiService: ApiServices,
-    private store: Store<MainState>) {
+    private apiFacade: ApiFacade) {
   }
 
   ngOnInit(): void {
-    this.isAuthorized = this.store.select((state) => state.mainState.isAuthorized)
     this.signUpForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],

@@ -1,4 +1,6 @@
-import { createAction, props } from '@ngrx/store';
+/* eslint-disable ngrx/prefer-action-creator */
+import { HttpErrorResponse } from '@angular/common/http';
+import { Action, createAction, props } from '@ngrx/store';
 import { IBoard, IUser } from '../core/models/api.models';
 
 export const getBoards = createAction(
@@ -26,3 +28,71 @@ export const changeAuthorizedStatus = createAction(
   props<{ isAuthorized: boolean }>(),
 );
 
+export enum ApiTypes {
+  GetBoards = '[Boards] GET BOARDS FROM API',
+  GetBoardsSuccess = '[Boards] GET BOARDS FROM API SUCCESS',
+  GetBoardsFailure = '[Boards] GET BOARDS FROM API FAILURE',
+
+  UpdateBoard = '[Boards] UPDATE BOARD FROM API',
+  UpdateBoardSuccess = '[Boards] UPDATE BOARD FROM API SUCCESS',
+  UpdateBoardFailure = '[Boards] UPDATE BOARD FROM API FAILURE',
+
+  GetCurrentUser = '[Users] GET USER FROM API',
+  GetCurrentUserSuccess = '[Users] GET USER FROM API SUCCESS',
+  GetCurrentUserFailure = '[Users] GET USER FROM API FAILURE',
+
+  LogOutUser = '[Users] LOGOUT USER',
+}
+export class GetBoards implements Action {
+  readonly type = ApiTypes.GetBoards;
+  constructor() { }
+}
+export class GetBoardsSuccess implements Action {
+  readonly type = ApiTypes.GetBoardsSuccess;
+  constructor(public payload: IBoard[]) { }
+}
+export class GetBoardsFailure implements Action {
+  readonly type = ApiTypes.GetBoardsFailure;
+  constructor(public payload: HttpErrorResponse) { }
+}
+
+export class UpdateBoard implements Action {
+  readonly type = ApiTypes.UpdateBoard;
+  constructor(public payload: { body: any, id: string }) { }
+}
+export class UpdateBoardSuccess implements Action {
+  readonly type = ApiTypes.UpdateBoardSuccess;
+  constructor(public payload: IBoard) { }
+}
+export class UpdateBoardFailure implements Action {
+  readonly type = ApiTypes.UpdateBoardFailure;
+  constructor(public payload: HttpErrorResponse) { }
+}
+export class GetCurrentUser implements Action {
+  readonly type = ApiTypes.GetCurrentUser;
+  constructor(public payload: { id: string }) { }
+}
+export class GetCurrentUserSuccess implements Action {
+  readonly type = ApiTypes.GetCurrentUserSuccess;
+  constructor(public payload: IUser) { }
+}
+export class GetCurrentUserFailure implements Action {
+  readonly type = ApiTypes.GetCurrentUserFailure;
+  constructor(public payload: HttpErrorResponse) { }
+}
+export class LogOutUser implements Action {
+  readonly type = ApiTypes.LogOutUser;
+  constructor() { }
+}
+
+export type ApiActions =
+  GetBoards |
+  GetBoardsSuccess |
+  GetBoardsFailure |
+  UpdateBoard |
+  UpdateBoardSuccess |
+  UpdateBoardFailure |
+  GetCurrentUser |
+  GetCurrentUserSuccess |
+  GetCurrentUserFailure |
+  LogOutUser;
