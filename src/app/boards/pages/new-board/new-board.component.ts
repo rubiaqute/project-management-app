@@ -1,8 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 import {Subscription} from "rxjs";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute, Router} from "@angular/router";
 import {ApiServices} from "../../../core/services/api-services";
+import {IBoardRequest} from "../../../core/models/api.models";
 
 @Component({
   selector: 'app-new-board',
@@ -20,12 +21,24 @@ export class NewBoardComponent implements OnInit {
               private activateRoute: ActivatedRoute,
               private apiService: ApiServices) {
   }
+
   ngOnInit(): void {
     this.newBoardForm = this.fb.group({
       title: ['', [Validators.required]],
     });
   }
+
   get title(): AbstractControl | null {
     return this.newBoardForm.get('title');
+  }
+
+  createBoard() {
+    const body: IBoardRequest = {
+      title: this.title?.value,
+    }
+    this.apiService.createBoard(body).subscribe(() => {
+      console.log('Board created');
+    })
+    setTimeout(() => this.router.navigateByUrl('/main'), 0);
   }
 }

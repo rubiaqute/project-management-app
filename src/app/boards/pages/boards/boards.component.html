@@ -1,10 +1,26 @@
 <h2 class="page-title">
   <b>{{ "BOARDS.TITLE" | translate }}:</b>
 </h2>
+
+<form class="example-form search">
+  <mat-form-field class="example-full-width search__input" appearance="fill">
+    <mat-label>Search</mat-label>
+    <input
+      #myInput
+      matInput
+      [(ngModel)]="searchStr"
+      name="search"
+      (input)="search(myInput.value)"
+      maxlength="256">
+    <mat-hint align="end">{{myInput.value.length}} / 50</mat-hint>
+  </mat-form-field>
+</form>
+
+
 <div class="middle-container boards">
   <mat-card
     class="boards__board"
-    *ngFor="let board of boards"
+    *ngFor="let board of boards | filterByTitle: title"
     [routerLink]="['/main/boards', board.id]">
     <mat-card-actions class="board__actions">
 
@@ -14,7 +30,7 @@
       </mat-icon>
 
       <mat-icon color="primary" class="actions__btn delete"
-                (click)="deleteBoard()">delete
+                (click)="deleteBoard(board.id)">delete
       </mat-icon>
     </mat-card-actions>
     <mat-card-title

@@ -6,6 +6,14 @@
   height: $board-title-height;
   text-align: center;
 }
+
+.search {
+  text-align: center;
+  &__input {
+    width: 40vw;
+  }
+}
+
 .boards {
   display: flex;
   align-items: flex-start;
