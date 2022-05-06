@@ -12,6 +12,9 @@ import { AuthInterceptorService } from "./auth/services/auth-interceptor.service
 import { StoreModule } from '@ngrx/store';
 import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 import { environment } from '../environments/environment';
+import {boardsReducer} from "./store/reducers/boards.reducer";
+import {BoardsEffects} from "./store/effects/boards.effects";
+import {EffectsModule} from "@ngrx/effects";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -36,7 +39,7 @@ export function HttpLoaderFactory(http: HttpClient) {
       defaultLanguage: 'en'
     }),
     StoreModule.forRoot(
-      {},
+      {boards: boardsReducer },
       {
         runtimeChecks: {
           strictStateImmutability: true,
@@ -48,6 +51,7 @@ export function HttpLoaderFactory(http: HttpClient) {
         },
       },
     ),
+    EffectsModule.forRoot([BoardsEffects]),
     StoreDevtoolsModule.instrument({ maxAge: 25, logOnly: environment.production }),
   ],
   providers: [{

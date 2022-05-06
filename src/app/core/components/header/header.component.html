@@ -10,7 +10,7 @@
     </div>
     <span class="header__title" [routerLink]="''">{{
       "MENU.TITLE" | translate
-    }}</span>
+      }}</span>
     <div class="user-controls" *ngIf="(isAuthorized | async) === false">
       <button
         class="user-controls__btn"
@@ -33,6 +33,14 @@
     </div>
     <div class="user-controls" *ngIf="isAuthorized | async">
       <span class="header__name">{{ currentUser | async }}</span>
+      <button
+        class="user-controls__btn"
+        mat-mini-fab
+        color="accent"
+        [routerLink]="'/main/board/new-board'"
+      >
+        <mat-icon>dashboard</mat-icon>
+      </button>
       <button
         class="user-controls__btn"
         mat-mini-fab

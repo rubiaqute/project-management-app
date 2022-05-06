@@ -7,7 +7,6 @@ import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { Store } from '@ngrx/store';
 import { MainState } from 'src/app/store/store';
-import { activateUser } from 'src/app/store/actions';
 
 @Component({
   selector: 'app-form',
@@ -22,6 +21,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private subs: Subscription | undefined;
   isAuthorized!: Observable<boolean>
   currentUser?: Observable<IUser | null>
+  toggleBoard: boolean = true;
 
 
   constructor(private fb: FormBuilder,
@@ -75,6 +75,7 @@ export class FormComponent implements OnInit, OnDestroy {
     return this.signUpForm.get('password');
   }
 
+
   edit() {
     const body: IUserRequest = {
       name: this.name?.value,
@@ -100,6 +101,7 @@ export class FormComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/auth/login');
     })
   }
+
   deleteUser() {
     const user = JSON.parse(localStorage.getItem('currentUserRubiaqute')!)
     if (user) {
