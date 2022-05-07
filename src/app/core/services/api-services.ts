@@ -132,7 +132,7 @@ export class ApiServices {
   }
 
   deleteBoard(id: string) {
-    return this.http.delete<IBoard>(`${this.url}/boards/${id}`)
+    return this.http.delete(`${this.url}/boards/${id}`)
       .pipe(
         catchError((err => {
           console.error(err);

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Observable } from 'rxjs';
-import { MainState } from 'src/app/store/store';
+import { ApiState } from 'src/app/store/state';
 
 @Component({
   selector: 'app-dashboard',
@@ -11,9 +11,9 @@ import { MainState } from 'src/app/store/store';
 export class DashboardComponent implements OnInit {
   isDarkTheme!: Observable<boolean>;
 
-  constructor(private store: Store<MainState>) { }
+  constructor(private store: Store<ApiState>) { }
   ngOnInit(): void {
-    this.isDarkTheme = this.store.select((state) => state.mainState.isDarkTheme)
+    this.isDarkTheme = this.store.select((state) => state.isDarkTheme)
   }
 
 }

@@ -1,7 +1,7 @@
 /* eslint-disable ngrx/prefer-action-creator */
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action, createAction, props } from '@ngrx/store';
-import { IBoard, IUser } from '../core/models/api.models';
+import { IBoard, IBoardRequest, IUser } from '../core/models/api.models';
 
 export const getBoards = createAction(
   '[Boards] GET BOARDS FROM API',
@@ -37,6 +37,10 @@ export enum ApiTypes {
   UpdateBoardSuccess = '[Boards] UPDATE BOARD FROM API SUCCESS',
   UpdateBoardFailure = '[Boards] UPDATE BOARD FROM API FAILURE',
 
+  DeleteBoard = '[Boards] DELETE BOARD FROM API',
+  DeleteBoardSuccess = '[Boards] DELETE BOARD FROM API SUCCESS',
+  DeleteBoardFailure = '[Boards] DELETE BOARD FROM API FAILURE',
+
   GetCurrentUser = '[Users] GET USER FROM API',
   GetCurrentUserSuccess = '[Users] GET USER FROM API SUCCESS',
   GetCurrentUserFailure = '[Users] GET USER FROM API FAILURE',
@@ -58,7 +62,7 @@ export class GetBoardsFailure implements Action {
 
 export class UpdateBoard implements Action {
   readonly type = ApiTypes.UpdateBoard;
-  constructor(public payload: { body: any, id: string }) { }
+  constructor(public payload: { body: IBoardRequest, id: string }) { }
 }
 export class UpdateBoardSuccess implements Action {
   readonly type = ApiTypes.UpdateBoardSuccess;
@@ -66,6 +70,18 @@ export class UpdateBoardSuccess implements Action {
 }
 export class UpdateBoardFailure implements Action {
   readonly type = ApiTypes.UpdateBoardFailure;
+  constructor(public payload: HttpErrorResponse) { }
+}
+export class DeleteBoard implements Action {
+  readonly type = ApiTypes.DeleteBoard;
+  constructor(public payload: { id: string }) { }
+}
+export class DeleteBoardSuccess implements Action {
+  readonly type = ApiTypes.DeleteBoardSuccess;
+  constructor() { }
+}
+export class DeleteBoardFailure implements Action {
+  readonly type = ApiTypes.DeleteBoardFailure;
   constructor(public payload: HttpErrorResponse) { }
 }
 export class GetCurrentUser implements Action {
@@ -95,4 +111,7 @@ export type ApiActions =
   GetCurrentUser |
   GetCurrentUserSuccess |
   GetCurrentUserFailure |
-  LogOutUser;
+  LogOutUser |
+  DeleteBoard |
+  DeleteBoardFailure |
+  DeleteBoardSuccess

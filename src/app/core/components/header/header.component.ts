@@ -4,9 +4,6 @@ import { AuthService } from "../../../auth/services/auth.service";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { ApiServices } from "../../services/api-services";
-import { Store } from '@ngrx/store';
-import { MainState } from 'src/app/store/store';
-import { toggleDarkTheme } from 'src/app/store/actions';
 import { IUser } from '../../models/api.models';
 import { ApiFacade } from 'src/app/store/facade';
 
@@ -18,11 +15,10 @@ import { ApiFacade } from 'src/app/store/facade';
 export class HeaderComponent implements OnInit {
   isDarkTheme: boolean = false;
   langValue: boolean = false;
-  isAuthorized!: Observable<boolean>
-  currentUser!: Observable<string | undefined>
+  public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
 
   @Output() themeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
-  public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
+
   constructor(public translate: TranslateService,
     public authService: AuthService,
     public apiService: ApiServices,

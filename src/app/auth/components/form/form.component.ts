@@ -5,8 +5,6 @@ import { ISignUp, ISignUpRequest, IUser, IUserRequest } from "../../../core/mode
 import { ApiServices } from "../../../core/services/api-services";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
-import { Store } from '@ngrx/store';
-import { MainState } from 'src/app/store/store';
 import { ApiFacade } from 'src/app/store/facade';
 
 @Component({

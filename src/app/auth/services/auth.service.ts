@@ -2,9 +2,7 @@ import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { Subject } from "rxjs";
 import { IUser } from 'src/app/core/models/api.models';
-import { activateUser, changeAuthorizedStatus } from 'src/app/store/actions';
 import { ApiFacade } from 'src/app/store/facade';
-import { MainState } from 'src/app/store/store';
 
 @Injectable({ providedIn: 'root' })
 

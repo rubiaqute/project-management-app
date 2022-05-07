@@ -1,7 +1,6 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { Status } from '../core/models/api.models';
 import { ApiActions, ApiTypes } from './actions';
-import { IAppState, initialMainState } from './store';
 import * as apiState from './state';
 // export const boardsReducer = createReducer(
 //   initialState,
@@ -33,6 +32,15 @@ export function appReducer(
     case ApiTypes.UpdateBoard: {
       return { ...state, updateBoardStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
     }
+    case ApiTypes.DeleteBoard: {
+      return { ...state, deleteBoardStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+    }
+    case ApiTypes.DeleteBoardSuccess: {
+      return { ...state, deleteBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+    }
+    case ApiTypes.DeleteBoardFailure: {
+      return { ...state, deleteBoardStatus: Status.FAILURE, loadingStatus: Status.FAILURE, loadingError: action.payload };
+    }
     case ApiTypes.GetCurrentUser: {
       return { ...state, getActiveUserStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
     }
@@ -51,14 +59,9 @@ export function appReducer(
       return { ...state, activeUser: null, getActiveUserStatus: Status.INITIAL };
     }
 
-    // case ApiTypes.UpdateBoardSuccess: {
-    //   const newStateUpdate = apiState.ApiAdapter.removeOne(action.payload.id!, state);
-    //   const newState = apiState.ApiAdapter.addOne(
-    //     action.payload,
-    //     newStateUpdate
-    //   )
-    //   return { ...newState, updateBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
-    // }
+    case ApiTypes.UpdateBoardSuccess: {
+      return { ...state, updateBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+    }
 
     case ApiTypes.UpdateBoardFailure: {
       return {

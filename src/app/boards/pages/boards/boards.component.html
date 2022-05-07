@@ -32,7 +32,12 @@
           >edit
         </mat-icon>
 
-        <mat-icon color="primary" class="actions__btn delete">delete </mat-icon>
+        <mat-icon
+          color="primary"
+          class="actions__btn delete"
+          (click)="deleteBoard(board.id, $event)"
+          >delete
+        </mat-icon>
       </mat-card-actions>
       <mat-card-title class="board__title">
         <b>{{ board.title | titlecase }}</b></mat-card-title

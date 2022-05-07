@@ -24,34 +24,29 @@ export class BoardsComponent implements OnInit {
   //   this.subs = this.store.select(selectBoards).subscribe((data: IBoard[]) => {
   //     this.boards = data;
   //   })
-  //   //this.subs = this.boardsService.getSearch().pipe(debounceTime(2000)).subscribe((searchText) => {
-  //     // this.searchCards(searchText);
-  //   //});
+  //
   // }
   // boards: IBoard[] = []
   public boards$: Observable<IBoard[]> = this.apiFacade.boards$;
-  constructor(private apiFacade: ApiFacade) {
+  constructor(private apiFacade: ApiFacade, private router: Router) {
 
   }
   ngOnInit(): void {
     this.apiFacade.loadBoards();
     this.boards$.subscribe((data => console.log(data)))
+    // this.subs = this.boardsService.getSearch().pipe(debounceTime(2000)).subscribe((searchText) => {
+    //   // this.searchCards(searchText);
+    // //});
     // this.api.getBoards().subscribe((data) => this.boards = data)
   }
 
   search(value: string) {
     this.title = value;
   }
+  deleteBoard(id: string | null, e: Event) {
+    e.stopPropagation()
+    if (id) {
+      this.apiFacade.deleteBoardById(id)
+    }
+  }
 }
-//   deleteBoard(id: string | null) {
-//     if (id) {
-//       this.apiService.deleteBoard(id).subscribe(() => {
-//         console.log('Board deleted');
-//       },
-//         (error) => {
-//           console.log(error);
-//         });
-//     }
-//     setTimeout(() => this.router.navigateByUrl('/main'), 0);
-//   }
-// }

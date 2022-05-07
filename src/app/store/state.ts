@@ -8,11 +8,11 @@ export interface ApiState {
   loadingError?: HttpErrorResponse;
   getBoardsStatus: Status;
   updateBoardStatus: Status;
+  deleteBoardStatus: Status;
   boards: IBoard[];
   activeBoard: IBoard | null;
   getActiveUserStatus: Status;
   activeUser: IUser | null,
-  isAuthorized: boolean;
   users: IUser[];
   isDarkTheme: boolean
 }
@@ -22,10 +22,10 @@ export const initialApiState: ApiState = {
   getBoardsStatus: Status.INITIAL,
   updateBoardStatus: Status.INITIAL,
   getActiveUserStatus: Status.INITIAL,
+  deleteBoardStatus: Status.INITIAL,
   boards: [],
   activeBoard: null,
   activeUser: null,
-  isAuthorized: false,
   users: [],
   isDarkTheme: false
 

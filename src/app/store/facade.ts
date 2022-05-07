@@ -6,6 +6,7 @@ import * as apiSelectors from './selectors';
 import * as apiActions from './actions';
 
 import { ApiState } from './state';
+import { IBoardRequest } from '../core/models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiFacade {
@@ -25,7 +26,12 @@ export class ApiFacade {
     this.store.dispatch(new apiActions.GetCurrentUser({ id }));
   }
 
-  updateBoardById(body: any, id: string): void {
+  updateBoardById(body: IBoardRequest, id: string): void {
     this.store.dispatch(new apiActions.UpdateBoard({ body, id }));
+  }
+
+  deleteBoardById(id: string): void {
+    this.store.dispatch(new apiActions.DeleteBoard({ id }));
+    this.store.dispatch(new apiActions.GetBoards());
   }
 }

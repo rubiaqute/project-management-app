@@ -28,7 +28,18 @@ export class GetBoardsEffects {
       switchMap((action: any) =>
         this.apiServices.updateBoard(action.payload.body, action.payload.id).pipe(
           map((board: IBoard) => new apiActions.UpdateBoardSuccess(board)),
-          catchError(err => of(new apiActions.GetBoardsFailure(err))),
+          catchError(err => of(new apiActions.UpdateBoardFailure(err))),
+        )
+      )
+    );
+  });
+  deleteBoard$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(apiActions.ApiTypes.DeleteBoard),
+      switchMap((action: any) =>
+        this.apiServices.deleteBoard(action.payload.id).pipe(
+          map(() => new apiActions.DeleteBoardSuccess()),
+          catchError(err => of(new apiActions.DeleteBoardFailure(err))),
         )
       )
     );
