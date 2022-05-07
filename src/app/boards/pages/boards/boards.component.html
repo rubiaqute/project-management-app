@@ -21,7 +21,7 @@
   <div class="middle-container boards">
     <mat-card
       class="boards__board"
-      *ngFor="let board of boards"
+      *ngFor="let board of boards | filterByTitle: title"
       [routerLink]="['/main/boards', board.id]"
     >
       <mat-card-actions class="board__actions">

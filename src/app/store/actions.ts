@@ -78,7 +78,7 @@ export class DeleteBoard implements Action {
 }
 export class DeleteBoardSuccess implements Action {
   readonly type = ApiTypes.DeleteBoardSuccess;
-  constructor() { }
+  constructor(public payload: string) { }
 }
 export class DeleteBoardFailure implements Action {
   readonly type = ApiTypes.DeleteBoardFailure;

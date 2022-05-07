@@ -32,6 +32,5 @@ export class ApiFacade {
 
   deleteBoardById(id: string): void {
     this.store.dispatch(new apiActions.DeleteBoard({ id }));
-    this.store.dispatch(new apiActions.GetBoards());
   }
 }

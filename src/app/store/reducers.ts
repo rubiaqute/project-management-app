@@ -36,7 +36,8 @@ export function appReducer(
       return { ...state, deleteBoardStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
     }
     case ApiTypes.DeleteBoardSuccess: {
-      return { ...state, deleteBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      const newBoardsState = state.boards.filter((el) => el.id !== action.payload)
+      return { ...state, boards: newBoardsState, deleteBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
     }
     case ApiTypes.DeleteBoardFailure: {
       return { ...state, deleteBoardStatus: Status.FAILURE, loadingStatus: Status.FAILURE, loadingError: action.payload };

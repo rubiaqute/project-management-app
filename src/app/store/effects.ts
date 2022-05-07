@@ -38,7 +38,7 @@ export class GetBoardsEffects {
       ofType(apiActions.ApiTypes.DeleteBoard),
       switchMap((action: any) =>
         this.apiServices.deleteBoard(action.payload.id).pipe(
-          map(() => new apiActions.DeleteBoardSuccess()),
+          map(() => new apiActions.DeleteBoardSuccess(action.payload.id)),
           catchError(err => of(new apiActions.DeleteBoardFailure(err))),
         )
       )
