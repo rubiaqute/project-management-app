@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { IBoard, IColumnRequest } from 'src/app/core/models/api.models';
@@ -9,7 +9,7 @@ import { ApiServices } from 'src/app/core/services/api-services';
   templateUrl: './board.component.html',
   styleUrls: ['./board.component.scss'],
 })
-export class BoardComponent implements OnInit {
+export class BoardComponent implements OnInit, OnDestroy {
   public id: string | undefined;
 
   public subscription: Subscription[] = [];
@@ -36,7 +36,13 @@ export class BoardComponent implements OnInit {
       )
     );
 
-    this.api.getBoardById(this.id!).subscribe((data) => (this.board = data));
+    this.subscription.push(
+      this.api.getBoardById(this.id!)
+        .subscribe((data) => (this.board = data)));
+  }
+
+  ngOnDestroy(): void {
+    this.subscription.forEach(item => item.unsubscribe());
   }
 
   public createColumn(title: string): void {
