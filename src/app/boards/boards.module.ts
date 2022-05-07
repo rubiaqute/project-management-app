@@ -15,8 +15,6 @@ import { NewBoardComponent } from './pages/new-board/new-board.component';
 import { FormBoardComponent } from './components/form-board/form-board.component';
 import {FilterPipe} from "./pipes/filter.pipes";
 
-
-
 @NgModule({
   declarations: [
     BoardsComponent,

@@ -1,0 +1,146 @@
+@import "../../../../assets/styles/constants.scss";
+
+.welcome-wrapper {
+  padding: $padding-default;
+  width: $authcard-width;
+  margin: 0;
+  height: $board-title-height;
+  text-align: center;
+}
+
+.dev,
+.icon {
+  position: absolute;
+  width: 50px;
+  border-radius: 50%;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-name: revertOrbit;
+  -webkit-animation-duration: 50s;
+}
+
+.fav-icon {
+  position: absolute;
+  top: 21vh;
+  right: 8vw;
+}
+
+.dev-first {
+  top: 11%;
+  left: 81%;
+}
+
+.dev-second {
+  top: 20%;
+  left: 0;
+}
+
+.dev-third {
+  top: 84%;
+  left: 72%;
+}
+
+.icon {
+  width: 30px;
+  border-radius: 0;
+}
+
+.icon1 {
+  top: 23%;
+  left: 93%;
+}
+
+.icon2 {
+  top: -1%;
+  left: 81%;
+}
+
+.icon3 {
+  top: 38%;
+  left: -3%;
+}
+
+.icon4 {
+  top: 78%;
+  left: 83%;
+}
+
+.icon5 {
+  top: 93%;
+  left: 33%;
+}
+
+.icon6 {
+  top: -1%;
+  left: 26%;
+}
+
+.icon7 {
+  top: 78%;
+  left: 83%;
+}
+
+.icon8 {
+  top: 16%;
+  left: 5%;
+}
+
+.icon9 {
+  top: 18%;
+  left: 72%;
+}
+
+.icon10 {
+  top: 97%;
+  left: 63%;
+}
+
+.icon11 {
+  top: 85%;
+  left: 63%;
+}
+
+.icon12 {
+  top: 89%;
+  left: 19%;
+}
+
+.icon13 {
+  top: -2%;
+  left: 59%;
+}
+
+.sun {
+  width: 500px;
+  height: 500px;
+  -webkit-border-radius: 25px;
+  -moz-border-radius: 25px;
+  border-radius: 50%;
+  border: 2px dotted gray;
+  position: absolute;
+  -webkit-animation-iteration-count: infinite;
+  -webkit-animation-timing-function: linear;
+  -webkit-animation-name: orbit;
+  -webkit-animation-duration: 50s;
+  top: 20vh;
+  right: 5vw;
+}
+
+@keyframes orbit {
+  from {
+    -webkit-transform: rotate(0deg)
+  }
+  to {
+    -webkit-transform: rotate(360deg)
+  }
+}
+
+@keyframes revertOrbit {
+  from {
+    -webkit-transform: rotate(360deg)
+  }
+  to {
+    -webkit-transform: rotate(0deg)
+  }
+}
+
