@@ -20,6 +20,9 @@
     </mat-form-field>
     <button mat-raised-button color="primary" [disabled]="!title!.trim()" (click)="createColumn(title!.trim())"
       (click)="switchAddColumnModal()">{{ "BOARD.ADD_COLUMN_MODAL_BUTTON" | translate }}</button>
+    <button mat-icon-button class="modal__close" (click)="switchAddColumnModal()">
+      <mat-icon color="primary">close</mat-icon>
+    </button>
   </mat-card>
 </div>
 
@@ -31,5 +34,8 @@
          alt="img: server wrong"
          draggable="false">
     <p>{{ "BOARD.ERROR" | translate }}</p>
+    <button mat-icon-button class="modal__close" (click)="switchErrorModal()">
+      <mat-icon color="primary">close</mat-icon>
+    </button>
   </mat-card>
 </div>

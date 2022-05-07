@@ -1,5 +1,5 @@
 <div class="task" draggable="true">
   <p class="task__text" title="{{ task.description }}">{{ task.title }}</p>
   <mat-icon color="primary" class="task__btn">close</mat-icon>
-  <div class="task__executor" title="Executor - Name">Name</div>
+  <div class="task__executor" title="Executor - {{ executor!.name }}">{{ executor!.name }}</div>
 </div>
