@@ -5,7 +5,7 @@ import { of } from 'rxjs';
 
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { IBoard } from '../../core/models/api.models';
-import { ApiServices } from '../../core/services/api-services';
+import { ApiServices } from '../../core/services/api-services.service';
 import * as boardsActions from '../actions/boards.actions';
 
 @Injectable()

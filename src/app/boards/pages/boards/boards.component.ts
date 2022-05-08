@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { IBoard, Status } from 'src/app/core/models/api.models';
-import { ApiServices } from 'src/app/core/services/api-services';
+import { ApiServices } from 'src/app/core/services/api-services.service';
 import { Router } from "@angular/router";
 import { debounceTime, Observable, Subscription } from "rxjs";
 import { Store } from "@ngrx/store";

@@ -5,7 +5,7 @@ import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { IBoard, IColumn, ITask } from '../../core/models/api.models';
-import { ApiServices } from '../../core/services/api-services';
+import { ApiServices } from '../../core/services/api-services.service';
 import * as activeBoardActions from '../actions/active-board.actions';
 
 @Injectable()

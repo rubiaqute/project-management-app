@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Subscription } from "rxjs";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
-import { ApiServices } from "../../../core/services/api-services";
+import { ApiServices } from "../../../core/services/api-services.service";
 import { IBoardRequest } from "../../../core/models/api.models";
 import { ApiFacade } from 'src/app/store/facade';
 

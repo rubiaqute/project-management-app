@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { ISignUp, ISignUpRequest, IUser, IUserRequest } from "../../../core/models/api.models";
-import { ApiServices } from "../../../core/services/api-services";
+import { ApiServices } from "../../../core/services/api-services.service";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { ApiFacade } from 'src/app/store/facade';
