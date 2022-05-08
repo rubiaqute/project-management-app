@@ -16,6 +16,7 @@ import { FormBoardComponent } from './components/form-board/form-board.component
 import { FilterPipe } from "./pipes/filter.pipes";
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
+import {DragDropModule} from '@angular/cdk/drag-drop';
 
 @NgModule({
   declarations: [
@@ -41,7 +42,8 @@ import { TaskComponent } from './components/task/task.component';
         deps: [HttpClient]
       },
       defaultLanguage: 'en'
-    })
+    }),
+    DragDropModule
   ],
 })
 export class BoardsModule { }

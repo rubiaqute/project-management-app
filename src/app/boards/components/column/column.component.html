@@ -22,11 +22,18 @@
                 (click)="deleteColumn()">delete</mat-icon>
     </mat-card-actions>
   </div>
-  <div class="column__tasks">
-    <app-task *ngFor="let task of tasks"
+  <div class="column__tasks"
+       cdkDropList
+       cdkDropListOrientation="vertical"
+       (cdkDropListDropped)="drop($event)">
+    <app-task class="tasks__list"
+              *ngFor="let task of tasks"
               [task]="task"
               [boardId]="boardId"
-              [columnId]="column.id"></app-task>
+              [columnId]="column.id"
+              cdkDrag>
+      <div class="tasks-custom-placeholder" *cdkDragPlaceholder></div>
+    </app-task>
   </div>
   <div class="column__footer" (click)="switchAddTaskModal()">
     <mat-icon color="primary" class="footer__icon">add</mat-icon>
