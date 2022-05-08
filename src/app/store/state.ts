@@ -40,11 +40,13 @@ export interface ActiveBoardState {
   loadingStatus: Status;
   loadingError?: HttpErrorResponse;
   getActiveBoardStatus: Status;
+  getCreateColumnStatus: Status;
   activeBoard: IBoard | null;
 }
 export const initialActiveBoardState: ActiveBoardState = {
   loadingStatus: Status.INITIAL,
   getActiveBoardStatus: Status.INITIAL,
+  getCreateColumnStatus: Status.INITIAL,
   activeBoard: null,
 }
 

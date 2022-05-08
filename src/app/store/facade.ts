@@ -5,11 +5,11 @@ import { Store } from '@ngrx/store';
 import * as currentUserSelectors from './selectors/current-user.selectors';
 import * as activeBoardSelectors from './selectors/active-board.selectors';
 import * as boardsSelectors from './selectors/boards.selectors';
-import * as currentUserActions from './actions/actions';
-import * as activeBoardActions from './actions/current-user.actions';
+import * as currentUserActions from './actions/current-user.actions';
+import * as activeBoardActions from './actions/active-board.actions';
 import * as boardsActions from './actions/boards.actions';
 
-import { IBoardRequest } from '../core/models/api.models';
+import { IBoardRequest, IColumnRequest } from '../core/models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiFacade {
@@ -43,5 +43,9 @@ export class ApiFacade {
 
   getActiveBoard(id: string): void {
     this.store.dispatch(new activeBoardActions.GetActiveBoard(id));
+  }
+
+  createColumn(column: IColumnRequest, boardId: string): void {
+    this.store.dispatch(new activeBoardActions.CreateColumn({ body: column, id: boardId }));
   }
 }

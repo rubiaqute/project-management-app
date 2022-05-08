@@ -6,7 +6,7 @@ import { of } from 'rxjs';
 import { catchError, map, switchMap } from 'rxjs/operators';
 import { IUser } from '../../core/models/api.models';
 import { ApiServices } from '../../core/services/api-services';
-import * as currentUserActions from '../actions/actions';
+import * as currentUserActions from '../actions/current-user.actions';
 
 @Injectable()
 export class GetCurrentUserEffects {

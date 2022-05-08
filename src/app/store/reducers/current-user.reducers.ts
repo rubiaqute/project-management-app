@@ -1,5 +1,5 @@
 import { Status } from '../../core/models/api.models';
-import { CurrentUserActions, CurrentUserTypes } from '../actions/actions';
+import { CurrentUserActions, CurrentUserTypes } from '../actions/current-user.actions';
 import * as currentUserState from '../state';
 
 export function currentUserReducer(

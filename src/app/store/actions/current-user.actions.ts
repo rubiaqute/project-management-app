@@ -1,30 +1,36 @@
 /* eslint-disable ngrx/prefer-action-creator */
 import { HttpErrorResponse } from '@angular/common/http';
 import { Action } from '@ngrx/store';
-import { IBoard } from '../../core/models/api.models';
+import { IUser } from '../../core/models/api.models';
 
-export enum ActiveBordTypes {
+export enum CurrentUserTypes {
 
-  GetActiveBoard = '[ActiveBoard] GET ACTIVE BOARD FROM API',
-  GetActiveBoardSuccess = '[ActiveBoard] GET ACTIVE BOARD FROM API SUCCESS',
-  GetActiveBoardFailure = '[ActiveBoard] GET ACTIVE BOARD FROM API FAILURE',
+  GetCurrentUser = '[Users] GET USER FROM API',
+  GetCurrentUserSuccess = '[Users] GET USER FROM API SUCCESS',
+  GetCurrentUserFailure = '[Users] GET USER FROM API FAILURE',
+
+  LogOutUser = '[Users] LOGOUT USER',
 }
 
-export class GetActiveBoard implements Action {
-  readonly type = ActiveBordTypes.GetActiveBoard;
-  constructor(public payload: string) { }
+export class GetCurrentUser implements Action {
+  readonly type = CurrentUserTypes.GetCurrentUser;
+  constructor(public payload: { id: string }) { }
 }
-export class GetActiveBoardSuccess implements Action {
-  readonly type = ActiveBordTypes.GetActiveBoardSuccess;
-  constructor(public payload: IBoard) { }
+export class GetCurrentUserSuccess implements Action {
+  readonly type = CurrentUserTypes.GetCurrentUserSuccess;
+  constructor(public payload: IUser) { }
 }
-export class GetActiveBoardFailure implements Action {
-  readonly type = ActiveBordTypes.GetActiveBoardFailure;
+export class GetCurrentUserFailure implements Action {
+  readonly type = CurrentUserTypes.GetCurrentUserFailure;
   constructor(public payload: HttpErrorResponse) { }
 }
+export class LogOutUser implements Action {
+  readonly type = CurrentUserTypes.LogOutUser;
+  constructor() { }
+}
 
-
-export type ActiveBoardActions =
-  GetActiveBoard |
-  GetActiveBoardSuccess |
-  GetActiveBoardFailure;
+export type CurrentUserActions =
+  GetCurrentUser |
+  GetCurrentUserSuccess |
+  GetCurrentUserFailure |
+  LogOutUser;

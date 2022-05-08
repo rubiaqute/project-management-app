@@ -28,7 +28,13 @@ export class BoardComponent implements OnInit {
       )
     );
   }
-
+  addColumn() {
+    const column = {
+      title: "Newby",
+      order: 2
+    }
+    this.apiFacade.createColumn(column, this.id!)
+  }
   public openTitleEdit() {
     this.isTitleEditMode = true;
   }
