@@ -14,8 +14,6 @@ import { EditBoardComponent } from './pages/edit-board/edit-board.component';
 import { NewBoardComponent } from './pages/new-board/new-board.component';
 import { FormBoardComponent } from './components/form-board/form-board.component';
 import { FilterPipe } from "./pipes/filter.pipes";
-import { StoreModule } from '@ngrx/store';
-import { appReducer } from '../store/reducers';
 
 
 
@@ -34,7 +32,6 @@ import { appReducer } from '../store/reducers';
     FormsModule,
     ReactiveFormsModule,
     BoardsRoutingModule,
-    StoreModule.forFeature('mainState', appReducer),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

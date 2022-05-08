@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ApiServices} from "../../../core/services/api-services";
-import {IBoardRequest} from "../../../core/models/api.models";
+import { Component, OnInit } from '@angular/core';
+import { Subscription } from "rxjs";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ApiServices } from "../../../core/services/api-services";
+import { IBoardRequest } from "../../../core/models/api.models";
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-new-board',
@@ -17,9 +18,8 @@ export class NewBoardComponent implements OnInit {
   public newBoardForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private router: Router,
-              private activateRoute: ActivatedRoute,
-              private apiService: ApiServices) {
+    private router: Router,
+    private apiFacade: ApiFacade) {
   }
 
   ngOnInit(): void {
@@ -36,9 +36,7 @@ export class NewBoardComponent implements OnInit {
     const body: IBoardRequest = {
       title: this.title?.value,
     }
-    this.apiService.createBoard(body).subscribe(() => {
-      console.log('Board created');
-    })
+    this.apiFacade.createBoard(body);
     setTimeout(() => this.router.navigateByUrl('/main'), 0);
   }
 }

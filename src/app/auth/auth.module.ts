@@ -11,8 +11,6 @@ import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpLoaderFactory } from '../app.module';
 import { HttpClient } from '@angular/common/http';
 import { EditPageComponent } from "./pages/edit/edit-page.component";
-import { StoreModule } from '@ngrx/store';
-import { appReducer } from '../store/reducers';
 
 @NgModule({
   declarations: [LoginPageComponent, SignUpPageComponent, EditPageComponent, FormComponent],
@@ -22,7 +20,6 @@ import { appReducer } from '../store/reducers';
     FormsModule,
     ReactiveFormsModule,
     AuthRoutingModule,
-    StoreModule.forFeature('mainState', appReducer),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

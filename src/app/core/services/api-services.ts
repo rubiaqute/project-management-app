@@ -103,12 +103,6 @@ export class ApiServices {
 
   getBoardById(id: string) {
     return this.http.get<IBoard>(`${this.url}/boards/${id}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   createBoard(board: IBoardRequest) {
