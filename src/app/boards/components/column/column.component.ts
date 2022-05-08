@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
-import { IColumn, IColumnRequest, ITaskRequest, IUser } from 'src/app/core/models/api.models';
-import { ApiServices } from 'src/app/core/services/api-services';
+import { IColumn, IColumnRequest, ITask, ITaskRequest, IUser } from 'src/app/core/models/api.models';
+import { ApiServices } from 'src/app/core/services/api-services.service';
 
 @Component({
   selector: 'app-column',
@@ -14,6 +14,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   @Input()
   public column: IColumn | undefined;
+
+  public tasks: ITask[] = []
+
+  public MAX_TASK_ORDER: number = 0;
   
   public isTitleEditMode: boolean = false;  
 
@@ -22,6 +26,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public description: string | undefined;
 
   public isTaskModalOn: boolean = false;
+
+  public isErrorModalOn: boolean = false;
 
   public subs: Subscription[] = [];
 
@@ -33,6 +39,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.push(this.api.getUsers().subscribe((data) => this.users = data));
+    if (this.column!.tasks) this.tasks = [...this.column!.tasks];
+    this.tasks.sort((a,b) => a.order - b.order);
+    this.MAX_TASK_ORDER = this.tasks.slice(-1)[0] ?
+                          this.tasks.slice(-1)[0].order :
+                          0;
   }
 
   ngOnDestroy(): void {
@@ -69,10 +80,14 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.userExecutor = undefined;
   }
 
+  public switchErrorModal(): void {
+    this.isErrorModalOn = !this.isErrorModalOn;
+  }
+
   public createTask(title: string, description: string): void {
     const taskRequest: ITaskRequest = {
       title: this.title!,
-      order: this.column!.tasks ? this.column!.tasks.length + 1 : 1,
+      order: ++this.MAX_TASK_ORDER,
       description: this.description!,
       userId: this.userExecutor!.id,
     };
@@ -81,6 +96,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
       .createTask(this.boardId,
                   this.column!.id,
                   taskRequest)
-      .subscribe((data) => this.column?.tasks?.push(data));
+      .subscribe((data) => this.tasks.push(data));
   }
 }

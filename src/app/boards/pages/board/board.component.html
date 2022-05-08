@@ -3,7 +3,9 @@
   <mat-spinner class="loader__spinner"></mat-spinner>
 </ng-template>
 <div class="middle-container board" *ngIf="board; else loader">
-  <app-column *ngFor="let column of board.columns" [column]="column" [boardId]="board.id"></app-column>
+  <app-column *ngFor="let column of board.columns"
+              [column]="column"
+              [boardId]="board.id!"></app-column>
 
   <mat-card class="board__column add-column" (click)="switchAddColumnModal()">
     <mat-icon color="primary" class="add-column__icon">add</mat-icon>
