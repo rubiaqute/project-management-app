@@ -1,11 +1,60 @@
-@import "../../../../assets/styles/constants.scss";
+@import "../../../../assets/styles/constants";
 
 .welcome-wrapper {
+  padding: 5% 10vw;
+  width: $welcome-width;
+  margin: 0;
+  height: $main-height;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  row-gap: 6%;
+
+  &__top {
+    display: flex;
+    flex: 0.5 1;
+    column-gap: 10%;
+  }
+
+  &__left {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+  }
+
+  &__right {
+    align-self: center;
+    position: relative;
+  }
+
+  &__center {
+    display: flex;
+    .mat-card-title-group {
+      justify-content: space-around;
+    }
+  }
+
+  &__contscts {
+    display: flex;
+    flex-direction: row;
+
+  }
+}
+
+.watch {
+  margin-top: 2vh;
   padding: $padding-default;
   width: $authcard-width;
-  margin: 0;
-  height: $board-title-height;
-  text-align: center;
+
+  &__btns {
+    justify-content: space-between;
+  }
+
+  &__btn {
+    margin-left: 100%;
+    transform: translateX(-100%);
+    padding: 0 3vw;
+  }
 }
 
 .dev,
@@ -20,9 +69,13 @@
 }
 
 .fav-icon {
+  left: 5vw;
   position: absolute;
-  top: 21vh;
-  right: 8vw;
+  top: 8vh;
+  z-index: 10;
+  display: block;
+
+
 }
 
 .dev-first {
@@ -51,8 +104,8 @@
 }
 
 .icon2 {
-  top: -1%;
-  left: 81%;
+  top: 7%;
+  left: 70%;
 }
 
 .icon3 {
@@ -111,19 +164,17 @@
 }
 
 .sun {
-  width: 500px;
-  height: 500px;
+  width: 450px;
+  height: 450px;
   -webkit-border-radius: 25px;
   -moz-border-radius: 25px;
   border-radius: 50%;
   border: 2px dotted gray;
-  position: absolute;
+  //position: absolute;
   -webkit-animation-iteration-count: infinite;
   -webkit-animation-timing-function: linear;
   -webkit-animation-name: orbit;
   -webkit-animation-duration: 50s;
-  top: 20vh;
-  right: 5vw;
 }
 
 @keyframes orbit {

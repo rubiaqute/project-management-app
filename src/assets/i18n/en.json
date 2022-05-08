@@ -68,5 +68,24 @@
     "EDIT_BOARD": "Edit board",
     "NEW_BOARD": "New board",
     "CREATE_NEW_BOARD": "Create new board"
+  },
+  "WELCOME": {
+    "WATCH_VIDEO": "Watch video",
+    "TMINE": "Task Manager by Inga, Nastassia, Ed",
+    "TITLE": "Create issues, break them into tasks, track relationships, add custom fields, and have conversations. Visualize large projects as spreadsheets or boards, and automate everything with code.",
+    "ABOUT_WORK": "About working on the TMINE project:",
+    "MOSCOW_RUSSIA": "Moscow, Russia",
+    "MINSK_BELARUS": "Minsk, Belarus",
+    "MAHILYOW_BELARUS": "Mahilyow, Belarus",
+    "TEAM_LEADER": "Team leader",
+    "INGA_TASK1": "Code Review",
+    "INGA_TASK2": "Repository initialization, Eslint connection, Prettier, Angular Material, ngx-translate",
+    "INGA_TASK3": "Store connection",
+    "NASTASSIA_TASK1": "Deploy backend to heroku",
+    "NASTASSIA_TASK2": "Writing a service with API requests",
+    "NASTASSIA_TASK3": "Writing an authorization service",
+    "NASTASSIA_TASK4": "Welcome and Edit Profile User Interface",
+    "ED_TASK1": "UI of login page, main page and board page",
+    "ED_TASK2": "Board route"
   }
 }
