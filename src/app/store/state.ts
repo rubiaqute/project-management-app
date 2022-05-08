@@ -18,7 +18,7 @@ export const initialCurrentUserState: CurrentUserState = {
 
 export interface BoardsState {
 
-  loadingStatus: Status;
+  loadingStatus: boolean;
   loadingError?: HttpErrorResponse;
   getBoardsStatus: Status;
   updateBoardStatus: Status;
@@ -28,7 +28,7 @@ export interface BoardsState {
 }
 export const initialBoardsState: BoardsState = {
 
-  loadingStatus: Status.INITIAL,
+  loadingStatus: false,
   getBoardsStatus: Status.INITIAL,
   updateBoardStatus: Status.INITIAL,
   deleteBoardStatus: Status.INITIAL,
@@ -41,12 +41,22 @@ export interface ActiveBoardState {
   loadingError?: HttpErrorResponse;
   getActiveBoardStatus: Status;
   getCreateColumnStatus: Status;
+  getUpdateColumnStatus: Status;
+  getDeleteColumnStatus: Status;
+  getCreateTaskStatus: Status,
+  getUpdateTaskStatus: Status,
+  getDeleteTaskStatus: Status,
   activeBoard: IBoard | null;
 }
 export const initialActiveBoardState: ActiveBoardState = {
   loadingStatus: Status.INITIAL,
   getActiveBoardStatus: Status.INITIAL,
   getCreateColumnStatus: Status.INITIAL,
+  getUpdateColumnStatus: Status.INITIAL,
+  getDeleteColumnStatus: Status.INITIAL,
+  getCreateTaskStatus: Status.INITIAL,
+  getUpdateTaskStatus: Status.INITIAL,
+  getDeleteTaskStatus: Status.INITIAL,
   activeBoard: null,
 }
 

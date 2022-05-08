@@ -107,32 +107,14 @@ export class ApiServices {
 
   createBoard(board: IBoardRequest) {
     return this.http.post<IBoard>(`${this.url}/boards`, board)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   updateBoard(board: IBoardRequest, id: string) {
     return this.http.put<IBoard>(`${this.url}/boards/${id}`, board)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   deleteBoard(id: string) {
     return this.http.delete(`${this.url}/boards/${id}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   //Columns
@@ -158,32 +140,14 @@ export class ApiServices {
 
   createColumn(column: IColumnRequest, boardId: string) {
     return this.http.post<IColumn>(`${this.url}/boards/${boardId}/columns`, column)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   updateColumn(boardId: string, columnId: string, column: IColumnRequest) {
     return this.http.put<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`, column)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   deleteColumn(boardId: string, columnId: string) {
     return this.http.delete<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   //Tasks
@@ -209,32 +173,14 @@ export class ApiServices {
 
   createTask(boardId: string, columnId: string, task: ITaskRequest) {
     return this.http.post<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`, task)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   updateTask(boardId: string, columnId: string, taskId: string, task: ITaskRequestUpdate) {
     return this.http.put<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`, task)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   deleteTask(boardId: string, columnId: string, taskId: string) {
     return this.http.delete<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   //Files

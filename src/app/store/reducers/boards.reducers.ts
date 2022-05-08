@@ -8,61 +8,65 @@ export function boardsReducer(
 ): apiState.BoardsState {
   switch (action.type) {
     case BoardsTypes.GetBoards: {
-      return { ...state, getBoardsStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getBoardsStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case BoardsTypes.GetBoardsSuccess: {
-      return { ...state, boards: action.payload, getBoardsStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, boards: action.payload, getBoardsStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case BoardsTypes.GetBoardsFailure: {
       return {
         ...state,
         getBoardsStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
+        loadingStatus: false,
         loadingError: action.payload
       };
     }
     case BoardsTypes.UpdateBoard: {
-      return { ...state, updateBoardStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+
+      return { ...state, updateBoardStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
     case BoardsTypes.UpdateBoardSuccess: {
-      return { ...state, updateBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      const newBoardsState = Object.assign([], state.boards.filter((el) => el.id !== action.payload.id))
+      newBoardsState.push(action.payload)
+      return { ...state, boards: newBoardsState, updateBoardStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case BoardsTypes.UpdateBoardFailure: {
       return {
         ...state,
         updateBoardStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
+        loadingStatus: false,
         loadingError: action.payload
       };
     }
     case BoardsTypes.CreateBoard: {
-      return { ...state, createBoardStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, createBoardStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
     case BoardsTypes.CreateBoardSuccess: {
-      const newBoards = [...state.boards, action.payload]
-      return { ...state, boards: newBoards, createBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      const newBoards = Object.assign([], state.boards)
+      newBoards.push(action.payload)
+      return { ...state, boards: newBoards, createBoardStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case BoardsTypes.CreateBoardFailure: {
       return {
         ...state,
         createBoardStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
+        loadingStatus: false,
         loadingError: action.payload
       };
     }
     case BoardsTypes.DeleteBoard: {
-      return { ...state, deleteBoardStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, deleteBoardStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
     case BoardsTypes.DeleteBoardSuccess: {
       const newBoardsState = state.boards.filter((el) => el.id !== action.payload)
-      return { ...state, boards: newBoardsState, deleteBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, boards: newBoardsState, deleteBoardStatus: Status.SUCCESS, loadingStatus: false };
     }
     case BoardsTypes.DeleteBoardFailure: {
-      return { ...state, deleteBoardStatus: Status.FAILURE, loadingStatus: Status.FAILURE, loadingError: action.payload };
+      return { ...state, deleteBoardStatus: Status.FAILURE, loadingStatus: false, loadingError: action.payload };
     }
 
     default: {

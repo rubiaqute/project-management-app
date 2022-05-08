@@ -37,7 +37,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public changeTheme(): void {
-    // this.store.dispatch(toggleDarkTheme({ isDarkTheme: this.isDarkTheme }))
+    this.isDarkTheme = !this.isDarkTheme
+    this.themeChanged.emit(this.isDarkTheme)
   }
 
   edit() {

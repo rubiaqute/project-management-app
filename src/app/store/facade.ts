@@ -9,11 +9,12 @@ import * as currentUserActions from './actions/current-user.actions';
 import * as activeBoardActions from './actions/active-board.actions';
 import * as boardsActions from './actions/boards.actions';
 
-import { IBoardRequest, IColumnRequest } from '../core/models/api.models';
+import { IBoardRequest, IColumn, IColumnRequest, ITaskRequest } from '../core/models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiFacade {
   readonly boards$ = this.store.select(boardsSelectors.selectBoards);
+  readonly boardsLoadingStatus$ = this.store.select(boardsSelectors.selectBoardsLoadingStatus)
   readonly activeUser$ = this.store.select(currentUserSelectors.selectCurrentUser);
   readonly activeBoard$ = this.store.select(activeBoardSelectors.selectActiveBoard);
   constructor(private store: Store) {
@@ -47,5 +48,20 @@ export class ApiFacade {
 
   createColumn(column: IColumnRequest, boardId: string): void {
     this.store.dispatch(new activeBoardActions.CreateColumn({ body: column, id: boardId }));
+  }
+  updateColumn(boardId: string, columnId: string, column: IColumnRequest): void {
+    this.store.dispatch(new activeBoardActions.UpdateColumn({ boardId, columnId, column }));
+  }
+  deleteColumn(boardId: string, columnId: string): void {
+    this.store.dispatch(new activeBoardActions.DeleteColumn({ boardId, columnId }));
+  }
+  createTask(boardId: string, columnId: string, task: ITaskRequest): void {
+    this.store.dispatch(new activeBoardActions.CreateTask({ boardId, columnId, task }));
+  }
+  updateTask(boardId: string, columnId: string, taskId: string, task: ITaskRequest): void {
+    this.store.dispatch(new activeBoardActions.UpdateTask({ boardId, columnId, taskId, task }));
+  }
+  deleteTask(boardId: string, columnId: string, taskId: string): void {
+    this.store.dispatch(new activeBoardActions.DeleteTask({ boardId, columnId, taskId }));
   }
 }

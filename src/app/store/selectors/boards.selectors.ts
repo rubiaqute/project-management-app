@@ -8,6 +8,8 @@ export const getBoardsState = createFeatureSelector<BoardsState>(boardsFeatureNa
 
 export const selectBoards = createSelector(getBoardsState, state => state.boards);
 
+export const selectBoardsLoadingStatus = createSelector(getBoardsState, state => state.loadingStatus);
+
 export const getBoardsStatus = createSelector(getBoardsState, state => state.getBoardsStatus);
 
 export const updateBoardStatus = createSelector(getBoardsState, state => state.updateBoardStatus);
