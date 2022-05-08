@@ -13,6 +13,8 @@ import { BoardComponent } from './pages/board/board.component';
 import { ColumnComponent } from './components/column/column.component';
 import { TaskComponent } from './components/task/task.component';
 
+import {DragDropModule} from '@angular/cdk/drag-drop';
+
 
 
 @NgModule({
@@ -35,7 +37,8 @@ import { TaskComponent } from './components/task/task.component';
         deps: [HttpClient]
       },
       defaultLanguage: 'en'
-    })
+    }),
+    DragDropModule
   ],
 })
 export class BoardsModule { }

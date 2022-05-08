@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IColumn, IColumnRequest, ITask, ITaskRequest, IUser } from 'src/app/core/models/api.models';
@@ -17,7 +18,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public tasks: ITask[] = []
 
-  public MAX_TASK_ORDER: number = 0;
+  public MAX_TASK_ORDER: number = -1;
   
   public isTitleEditMode: boolean = false;  
 
@@ -43,7 +44,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.tasks.sort((a,b) => a.order - b.order);
     this.MAX_TASK_ORDER = this.tasks.slice(-1)[0] ?
                           this.tasks.slice(-1)[0].order :
-                          0;
+                          -1;
   }
 
   ngOnDestroy(): void {
@@ -97,5 +98,9 @@ export class ColumnComponent implements OnInit, OnDestroy {
                   this.column!.id,
                   taskRequest)
       .subscribe((data) => this.tasks.push(data));
+  }
+  
+  public drop(event: CdkDragDrop<ITask[]>): void {
+    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
   }
 }

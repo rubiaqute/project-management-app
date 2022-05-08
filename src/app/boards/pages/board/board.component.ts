@@ -1,3 +1,4 @@
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
@@ -16,7 +17,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public board: IBoard | undefined;
 
-  public MAX_COLUMN_ORDER: number = 0;
+  public MAX_COLUMN_ORDER: number = -1;
 
   public isColumnModalOn: boolean = false;
 
@@ -45,7 +46,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.board = data;
           this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
                                   this.board.columns?.slice(-1)[0].order :
-                                  0;
+                                  -1;
         }));
   }
 
@@ -74,5 +75,9 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public switchErrorModal(): void {
     this.isErrorModalOn = !this.isErrorModalOn;
+  }
+
+  public drop(event: CdkDragDrop<IColumn[]>): void {
+    moveItemInArray(this.board?.columns!, event.previousIndex, event.currentIndex);
   }
 }
