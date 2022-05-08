@@ -1,4 +1,4 @@
-import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IColumn, IColumnRequest, ITask, ITaskRequest, IUser } from 'src/app/core/models/api.models';
@@ -101,6 +101,15 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
   
   public drop(event: CdkDragDrop<ITask[]>): void {
-    moveItemInArray(this.tasks, event.previousIndex, event.currentIndex);
+    if (event.previousContainer === event.container) {
+      moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
+    } else {
+      transferArrayItem(
+        event.previousContainer.data,
+        event.container.data,
+        event.previousIndex,
+        event.currentIndex,
+      );
+    }
   }
 }

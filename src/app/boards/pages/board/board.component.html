@@ -6,7 +6,8 @@
      *ngIf="board; else loader"
      cdkDropList 
      cdkDropListOrientation="horizontal"
-     (cdkDropListDropped)="drop($event)">
+     (cdkDropListDropped)="drop($event)"
+     cdkDropListGroup>
   <app-column class="board__column-list"
               *ngFor="let column of board.columns"
               [column]="column"
