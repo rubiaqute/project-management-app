@@ -1,13 +1,13 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IBoard, IColumnRequest } from 'src/app/core/models/api.models';
+import { IBoard, IColumn, IColumnRequest } from 'src/app/core/models/api.models';
 import { ApiServices } from 'src/app/core/services/api-services';
 
 @Component({
   selector: 'app-board',
   templateUrl: './board.component.html',
-  styleUrls: ['./board.component.scss'],
+  styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit, OnDestroy {
   public id: string | undefined;
@@ -15,6 +15,8 @@ export class BoardComponent implements OnInit, OnDestroy {
   public subscription: Subscription[] = [];
 
   public board: IBoard | undefined;
+
+  public MAX_COLUMN_ORDER: number = 0;
 
   public isColumnModalOn: boolean = false;
 
@@ -38,7 +40,13 @@ export class BoardComponent implements OnInit, OnDestroy {
 
     this.subscription.push(
       this.api.getBoardById(this.id!)
-        .subscribe((data) => (this.board = data)));
+        .subscribe((data) => {
+          data?.columns?.sort((a,b) => a.order - b.order);
+          this.board = data;
+          this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
+                                  this.board.columns?.slice(-1)[0].order :
+                                  0;
+        }));
   }
 
   ngOnDestroy(): void {
@@ -48,7 +56,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public createColumn(title: string): void {
     const columnRequest: IColumnRequest = {
       title: title,
-      order: this.board!.columns!.length + 1,
+      order: ++this.MAX_COLUMN_ORDER,
     };
 
     this.api

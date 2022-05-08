@@ -23,8 +23,10 @@
     </mat-card-actions>
   </div>
   <div class="column__tasks">
-    <app-task *ngFor="let task of column.tasks"
-              [task]="task"></app-task>
+    <app-task *ngFor="let task of tasks"
+              [task]="task"
+              [boardId]="boardId"
+              [columnId]="column.id"></app-task>
   </div>
   <div class="column__footer" (click)="switchAddTaskModal()">
     <mat-icon color="primary" class="footer__icon">add</mat-icon>
@@ -61,6 +63,20 @@
       {{ "BOARD.ADD_TASK_MODAL_BUTTON" | translate }}
     </button>
     <button mat-icon-button class="modal__close" (click)="switchAddTaskModal()">
+      <mat-icon color="primary">close</mat-icon>
+    </button>
+  </mat-card>
+</div>
+
+<div class="popup" *ngIf="isErrorModalOn">
+  <div class="popup__overlay" (click)="switchErrorModal()"></div>
+  <mat-card class="popup__modal">
+    <img class="modal__img"
+         src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png" 
+         alt="img: server wrong"
+         draggable="false">
+    <p>{{ "BOARD.ERROR" | translate }}</p>
+    <button mat-icon-button class="modal__close" (click)="switchErrorModal()">
       <mat-icon color="primary">close</mat-icon>
     </button>
   </mat-card>

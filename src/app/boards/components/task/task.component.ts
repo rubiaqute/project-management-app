@@ -10,7 +10,13 @@ import { ApiServices } from 'src/app/core/services/api-services';
 })
 export class TaskComponent implements OnInit, OnDestroy {
   @Input()
-  public task!: ITask;
+  public task!: ITask | undefined;
+
+  @Input()
+  public boardId!: string;
+
+  @Input()
+  public columnId!: string;
 
   public subs: Subscription[] = [];
 
@@ -19,11 +25,20 @@ export class TaskComponent implements OnInit, OnDestroy {
   constructor(private api: ApiServices) {}
 
   ngOnInit(): void {
-    this.api.getUserById(this.task.userId)
-    .subscribe((data) => this.executor = data);
+    this.subs.push(
+      this.api.getUserById(this.task!.userId)
+      .subscribe((data) => this.executor = data)
+      )
   }
 
   ngOnDestroy(): void {
     this.subs.forEach(item => item.unsubscribe());
+  }
+
+  public deleteTask() {
+    this.subs.push(
+      this.api.deleteTask(this.boardId, this.columnId, this.task!.id)
+      .subscribe(() => this.task = undefined)
+    )
   }
 }
