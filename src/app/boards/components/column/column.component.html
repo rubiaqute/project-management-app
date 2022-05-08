@@ -24,6 +24,7 @@
   </div>
   <div class="column__tasks"
        cdkDropList
+       [cdkDropListData]="tasks"
        cdkDropListOrientation="vertical"
        (cdkDropListDropped)="drop($event)">
     <app-task class="tasks__list"
