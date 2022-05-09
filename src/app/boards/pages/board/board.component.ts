@@ -24,10 +24,13 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public title: string | undefined;
 
+  public currentColumn!: IColumn;
+
+  public INDEX_COEFFICIENT: number = 1000;
+
   constructor(
     private activateRoute: ActivatedRoute,
-    private api: ApiServices,
-    private router: Router
+    private api: ApiServices
   ) {}
 
   ngOnInit(): void {
@@ -43,9 +46,10 @@ export class BoardComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           data?.columns?.sort((a,b) => a.order - b.order);
           this.board = data;
+          // this.updateColumnsOrders();
           this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
                                   this.board.columns?.slice(-1)[0].order :
-                                  -1;
+                                  -1 * this.INDEX_COEFFICIENT;
         }));
   }
 
@@ -54,9 +58,11 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   public createColumn(title: string): void {
+    this.MAX_COLUMN_ORDER = this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT;
+
     const columnRequest: IColumnRequest = {
       title: title,
-      order: ++this.MAX_COLUMN_ORDER,
+      order: this.MAX_COLUMN_ORDER,
     };
 
     this.api
@@ -78,5 +84,32 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public drop(event: CdkDragDrop<IColumn[]>): void {
     moveItemInArray(this.board?.columns!, event.previousIndex, event.currentIndex);
+
+    let freeIdx: number = event.currentIndex * this.INDEX_COEFFICIENT;
+    while (this.board?.columns?.find(item => item.order === freeIdx)) freeIdx += 1;
+
+    const columnRequest: IColumnRequest = {
+        title: this.currentColumn.title,
+        order: freeIdx,
+      }
+
+    // this.api.updateColumn(this.board!.id,
+    //                       this.currentColumn.id,
+    //                       columnRequest).subscribe(data => {
+    //                         this.board?.columns?
+    //                       });
+
+    // console.log(event.previousIndex, event.currentIndex, this.currentColumn.order);
+    // console.log(this.board?.columns);
+  }
+
+  public updateColumnsOrders() {
+    this.board?.columns?.forEach((el, index) => {
+      el.order = index * this.INDEX_COEFFICIENT;
+    })
+  }
+
+  public setCurrentColumn(column: IColumn) {
+    this.currentColumn = column; 
   }
 }

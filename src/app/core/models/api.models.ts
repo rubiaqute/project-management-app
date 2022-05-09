@@ -71,6 +71,7 @@ export interface ITask {
 
 export interface ITaskRequest {
   title: string,
+  done: boolean,
   order: number,
   description: string,
   userId: string,
