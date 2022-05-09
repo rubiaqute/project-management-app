@@ -1,51 +1,50 @@
-import {Component, OnInit} from '@angular/core';
-import {IBoard} from 'src/app/core/models/api.models';
-import {ApiServices} from 'src/app/core/services/api-services';
-import {Router} from "@angular/router";
-import {debounceTime, Subscription} from "rxjs";
-import {getBoards} from "../../../store/actions/boards.actions";
-import {Store} from "@ngrx/store";
-import {selectBoards} from "../../../store/selectors";
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { IBoard, Status } from 'src/app/core/models/api.models';
+import { ApiServices } from 'src/app/core/services/api-services.service';
+import { Router } from "@angular/router";
+import { debounceTime, map, Observable, Subscription } from "rxjs";
+import { Store } from "@ngrx/store";
+// import { selectBoards } from "../../../store/selectors";
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-boards',
   templateUrl: './boards.component.html',
-  styleUrls: ['./boards.component.scss']
+  styleUrls: ['./boards.component.scss'],
+
 })
 export class BoardsComponent implements OnInit {
-  boards: IBoard[] = [];
+
   searchStr: string = '';
   subs: Subscription | undefined;
   title: string = '';
+  isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
 
-  constructor(private api: ApiServices,
-              private router: Router,
-              private store: Store,
-              private apiService: ApiServices) {}
+  public boards$: Observable<IBoard[]> = this.apiFacade.boards$.pipe(
+    map((boards: IBoard[]) => [...boards].sort((a, b) => a.title.localeCompare(b.title)))
+  )
+  constructor(private apiFacade: ApiFacade, private router: Router) {
 
+  }
   ngOnInit(): void {
-    setTimeout(() => this.store.dispatch(getBoards()), 0);
-    this.subs = this.store.select(selectBoards).subscribe((data: IBoard[]) => {
-      this.boards = data;
-    })
-    //this.subs = this.boardsService.getSearch().pipe(debounceTime(2000)).subscribe((searchText) => {
-      // this.searchCards(searchText);
-    //});
+    this.apiFacade.loadBoards();
+    // this.boards$.subscribe((data => {
+    //   if (data) {
+    //     this.boards = Object.assign([], data);
+    //     this.boards.sort((a, b) => a.title.localeCompare(b.title))
+    //   }
+    // })
+    // )
+
   }
 
   search(value: string) {
     this.title = value;
   }
-
-  deleteBoard(id: string | null) {
+  deleteBoard(id: string | null, e: Event) {
+    e.stopPropagation()
     if (id) {
-      this.apiService.deleteBoard(id).subscribe(() => {
-          console.log('Board deleted');
-        },
-        (error) => {
-          console.log(error);
-        });
+      this.apiFacade.deleteBoardById(id)
     }
-    setTimeout(() => this.router.navigateByUrl('/main'), 0);
   }
 }

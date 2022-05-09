@@ -3,10 +3,9 @@ import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from "../../../auth/services/auth.service";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
-import { ApiServices } from "../../services/api-services";
-import { Store } from '@ngrx/store';
-import { MainState } from 'src/app/store/store';
-import { toggleDarkTheme } from 'src/app/store/actions';
+import { ApiServices } from "../../services/api-services.service";
+import { IUser } from '../../models/api.models';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-header',
@@ -16,8 +15,7 @@ import { toggleDarkTheme } from 'src/app/store/actions';
 export class HeaderComponent implements OnInit {
   isDarkTheme: boolean = false;
   langValue: boolean = false;
-  isAuthorized!: Observable<boolean>
-  currentUser!: Observable<string | undefined>
+  public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
 
   @Output() themeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -25,12 +23,10 @@ export class HeaderComponent implements OnInit {
     public authService: AuthService,
     public apiService: ApiServices,
     private router: Router,
-    private store: Store<MainState>) {
+    private apiFacade: ApiFacade) {
   }
 
   ngOnInit(): void {
-    this.isAuthorized = this.store.select((state) => state.mainState.isAuthorized)
-    this.currentUser = this.store.select((state) => state.mainState.activeUser?.name)
     this.authService.initAuth();
   }
 
@@ -41,7 +37,8 @@ export class HeaderComponent implements OnInit {
   }
 
   public changeTheme(): void {
-    this.store.dispatch(toggleDarkTheme({ isDarkTheme: this.isDarkTheme }))
+    this.isDarkTheme = !this.isDarkTheme
+    this.themeChanged.emit(this.isDarkTheme)
   }
 
   edit() {

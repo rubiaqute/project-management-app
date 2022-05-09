@@ -1,4 +1,4 @@
-import {Injectable} from "@angular/core";
+import { Injectable } from "@angular/core";
 import {
   IBoard, IFile,
   IBoardRequest,
@@ -9,11 +9,11 @@ import {
   ITask, ITaskRequest, ITaskRequestUpdate,
   IUser, IUserRequest
 } from "../models/api.models";
-import {HttpClient} from "@angular/common/http";
-import {catchError, throwError} from "rxjs";
-import {constants} from "../constants";
+import { HttpClient } from "@angular/common/http";
+import { catchError, Observable, throwError } from "rxjs";
+import { constants } from "../constants";
 
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 
 export class ApiServices {
   url = constants.urlApi;
@@ -21,7 +21,7 @@ export class ApiServices {
   columns: IColumn[] = [];
   files: IFile[] = [];
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient) { }
 
   //Authorization
   signIn(signIn: ISignInRequest) {
@@ -57,14 +57,14 @@ export class ApiServices {
       );
   }
 
-  getUserById(id: string) {
+  getUserById$(id: string) {
     return this.http.get<IUser>(`${this.url}/users/${id}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
+    // .pipe(
+    //   catchError((err => {
+    //     console.error(err);
+    //     return throwError(err);
+    //   }))
+    // );
   }
 
   updateUser(id: string | null, user: IUserRequest) {
@@ -88,54 +88,33 @@ export class ApiServices {
   }
 
   //Boards
-  getBoards() {
-    return this.http.get<IBoard[]>(`${this.url}/boards`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
+  // getBoards() {
+  //   return this.http.get<IBoard[]>(`${this.url}/boards`)
+  //     .pipe(
+  //       catchError((err => {
+  //         console.error(err);
+  //         return throwError(err);
+  //       }))
+  //     );
+  // }
+  getBoards$(): Observable<IBoard[]> {
+    return this.http.get<IBoard[]>(`${this.url}/boards`);
   }
 
   getBoardById(id: string) {
     return this.http.get<IBoard>(`${this.url}/boards/${id}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   createBoard(board: IBoardRequest) {
     return this.http.post<IBoard>(`${this.url}/boards`, board)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   updateBoard(board: IBoardRequest, id: string) {
     return this.http.put<IBoard>(`${this.url}/boards/${id}`, board)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   deleteBoard(id: string) {
-    return this.http.delete<IBoard>(`${this.url}/boards/${id}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
+    return this.http.delete(`${this.url}/boards/${id}`)
   }
 
   //Columns
@@ -161,32 +140,14 @@ export class ApiServices {
 
   createColumn(column: IColumnRequest, boardId: string) {
     return this.http.post<IColumn>(`${this.url}/boards/${boardId}/columns`, column)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   updateColumn(boardId: string, columnId: string, column: IColumnRequest) {
     return this.http.put<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`, column)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   deleteColumn(boardId: string, columnId: string) {
     return this.http.delete<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   //Tasks
@@ -212,32 +173,14 @@ export class ApiServices {
 
   createTask(boardId: string, columnId: string, task: ITaskRequest) {
     return this.http.post<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`, task)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   updateTask(boardId: string, columnId: string, taskId: string, task: ITaskRequestUpdate) {
     return this.http.put<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`, task)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   deleteTask(boardId: string, columnId: string, taskId: string) {
     return this.http.delete<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`)
-      .pipe(
-        catchError((err => {
-          console.error(err);
-          return throwError(err);
-        }))
-      );
   }
 
   //Files

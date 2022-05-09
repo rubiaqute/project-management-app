@@ -1,8 +1,8 @@
 <div
   class="container mat-app-background"
-  [ngClass]="{ 'dark-theme-mode': (isDarkTheme | async) }"
+  [ngClass]="{ 'dark-theme-mode': isDarkTheme }"
 >
-  <app-header></app-header>
+  <app-header (themeChanged)="isDarkTheme = !isDarkTheme"></app-header>
   <div class="main">
     <router-outlet></router-outlet>
   </div>

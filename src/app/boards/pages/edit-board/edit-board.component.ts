@@ -1,9 +1,10 @@
-import {Component, Input, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
-import {ActivatedRoute, Router} from "@angular/router";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ApiServices} from "../../../core/services/api-services";
-import {IBoard, IBoardRequest} from "../../../core/models/api.models";
+import { Component, Input, OnInit } from '@angular/core';
+import { Subscription } from "rxjs";
+import { ActivatedRoute, Router } from "@angular/router";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ApiServices } from "../../../core/services/api-services.service";
+import { IBoard, IBoardRequest } from "../../../core/models/api.models";
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-edit-board',
@@ -14,12 +15,14 @@ export class EditBoardComponent implements OnInit {
   public id: string | undefined;
   public subscription: Subscription[] = [];
   public titleValue: string = '';
+  public descriptionValue: string = '';
   public editBoardForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private router: Router,
-              private activateRoute: ActivatedRoute,
-              private apiService: ApiServices) {
+    private router: Router,
+    private activateRoute: ActivatedRoute,
+    private apiService: ApiServices,
+    private apiFacade: ApiFacade) {
   }
 
   ngOnInit(): void {
@@ -31,10 +34,12 @@ export class EditBoardComponent implements OnInit {
     );
     this.editBoardForm = this.fb.group({
       title: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
     if (this.id) {
       this.apiService.getBoardById(this.id).subscribe((data: IBoard) => {
         this.titleValue = data.title;
+        this.descriptionValue = data.description
       })
     }
   }
@@ -43,19 +48,18 @@ export class EditBoardComponent implements OnInit {
     return this.editBoardForm.get('title');
   }
 
-  getBoard() {
-
+  get description(): AbstractControl | null {
+    return this.editBoardForm.get('description');
   }
 
 
   editBoard() {
     const body: IBoardRequest = {
       title: this.title?.value,
+      description: this.description?.value,
     }
     if (this.id) {
-      this.apiService.updateBoard(body, this.id).subscribe(() => {
-        console.log('Board updated');
-      })
+      this.apiFacade.updateBoardById(body, this.id)
     }
     setTimeout(() => this.router.navigateByUrl('/main'), 0);
   }

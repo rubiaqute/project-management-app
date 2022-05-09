@@ -4,19 +4,18 @@
       <mat-slide-toggle (change)="changeLanguage()">
         <mat-icon class="toggles__icon">language</mat-icon>
       </mat-slide-toggle>
-      <mat-slide-toggle (change)="isDarkTheme = !isDarkTheme; changeTheme()">
+      <mat-slide-toggle (change)="changeTheme()">
         <mat-icon class="toggles__icon">bedtime</mat-icon>
       </mat-slide-toggle>
     </div>
     <span class="header__title" [routerLink]="''">{{
       "MENU.TITLE" | translate
-      }}</span>
-    <div class="user-controls" *ngIf="(isAuthorized | async) === false">
+    }}</span>
+    <div class="user-controls" *ngIf="!!(activeUser$ | async) === false">
       <button
         class="user-controls__btn"
         mat-raised-button
         color="accent"
-        *ngIf="(isAuthorized | async) === false"
         [routerLink]="'/auth/login'"
       >
         {{ "MENU.LINKS.LOGIN" | translate }}
@@ -25,14 +24,13 @@
         class="user-controls__btn"
         mat-raised-button
         color="accent"
-        *ngIf="(isAuthorized | async) === false"
         [routerLink]="'/auth/sign-up'"
       >
         {{ "MENU.LINKS.REGISTER" | translate }}
       </button>
     </div>
-    <div class="user-controls" *ngIf="isAuthorized | async">
-      <span class="header__name">{{ currentUser | async }}</span>
+    <div class="user-controls" *ngIf="activeUser$ | async">
+      <span class="header__name">{{ (activeUser$ | async)!.name }}</span>
       <button
         class="user-controls__btn"
         mat-mini-fab

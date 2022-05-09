@@ -9,7 +9,6 @@ import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
-import { appReducer } from '../store/reducers';
 import { StoreModule } from '@ngrx/store';
 
 export function HttpLoaderFactory(http: HttpClient) {
@@ -25,7 +24,6 @@ export function HttpLoaderFactory(http: HttpClient) {
     MaterialModule,
     CommonModule,
     CoreRoutingModule,
-    StoreModule.forFeature('mainState', appReducer),
     TranslateModule.forChild({
       loader: {
         provide: TranslateLoader,

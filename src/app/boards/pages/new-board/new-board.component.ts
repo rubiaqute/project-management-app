@@ -1,9 +1,10 @@
-import {Component, OnInit} from '@angular/core';
-import {Subscription} from "rxjs";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute, Router} from "@angular/router";
-import {ApiServices} from "../../../core/services/api-services";
-import {IBoardRequest} from "../../../core/models/api.models";
+import { Component, OnInit } from '@angular/core';
+import { of, Subscription } from "rxjs";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute, Router } from "@angular/router";
+import { ApiServices } from "../../../core/services/api-services.service";
+import { IBoardRequest } from "../../../core/models/api.models";
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-new-board',
@@ -14,17 +15,18 @@ export class NewBoardComponent implements OnInit {
   public id: string | undefined;
   public subscription: Subscription[] = [];
   public titleValue: string = '';
+  public descriptionValue: string = '';
   public newBoardForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
-              private router: Router,
-              private activateRoute: ActivatedRoute,
-              private apiService: ApiServices) {
+    private router: Router,
+    private apiFacade: ApiFacade) {
   }
 
   ngOnInit(): void {
     this.newBoardForm = this.fb.group({
       title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
     });
   }
 
@@ -32,13 +34,15 @@ export class NewBoardComponent implements OnInit {
     return this.newBoardForm.get('title');
   }
 
+  get description(): AbstractControl | null {
+    return this.newBoardForm.get('description');
+  }
+
   createBoard() {
     const body: IBoardRequest = {
       title: this.title?.value,
+      description: this.description?.value,
     }
-    this.apiService.createBoard(body).subscribe(() => {
-      console.log('Board created');
-    })
-    setTimeout(() => this.router.navigateByUrl('/main'), 0);
+    of(this.apiFacade.createBoard(body)).subscribe(() => this.router.navigateByUrl('/main'))
   }
 }

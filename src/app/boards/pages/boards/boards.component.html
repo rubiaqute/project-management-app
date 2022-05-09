@@ -1,43 +1,53 @@
-<h2 class="page-title">
-  <b>{{ "BOARDS.TITLE" | translate }}:</b>
-</h2>
+<ng-container *ngIf="boards$ | async as boards">
+  <h2 class="page-title">
+    <b>{{ "BOARDS.TITLE" | translate }}:</b>
+  </h2>
 
-<form class="example-form search">
-  <mat-form-field class="example-full-width search__input" appearance="fill">
-    <mat-label>Search</mat-label>
-    <input
-      #myInput
-      matInput
-      [(ngModel)]="searchStr"
-      name="search"
-      (input)="search(myInput.value)"
-      maxlength="256">
-    <mat-hint align="end">{{myInput.value.length}} / 50</mat-hint>
-  </mat-form-field>
-</form>
+  <form class="example-form search">
+    <mat-form-field class="example-full-width search__input" appearance="fill">
+      <mat-label>Search</mat-label>
+      <input
+        #myInput
+        matInput
+        [(ngModel)]="searchStr"
+        name="search"
+        (input)="search(myInput.value)"
+        maxlength="256"
+      />
+      <mat-hint align="end">{{ myInput.value.length }} / 50</mat-hint>
+    </mat-form-field>
+  </form>
 
+  <div class="middle-container boards">
+    <mat-card
+      class="boards__board"
+      *ngFor="let board of boards | filterByTitle: title"
+      [routerLink]="['/main/boards', board.id]"
+    >
+      <mat-card-actions class="board__actions">
+        <mat-icon
+          [routerLink]="['/main/board/edit-board', board.id]"
+          color="primary"
+          class="actions__btn create"
+          >edit
+        </mat-icon>
 
-<div class="middle-container boards">
-  <mat-card
-    class="boards__board"
-    *ngFor="let board of boards | filterByTitle: title"
-    [routerLink]="['/main/boards', board.id]">
-    <mat-card-actions class="board__actions">
-
-      <mat-icon
-        [routerLink]="['/main/board/edit-board', board.id]"
-        color="primary" class="actions__btn create">edit
-      </mat-icon>
-
-      <mat-icon color="primary" class="actions__btn delete"
-                (click)="deleteBoard(board.id)">delete
-      </mat-icon>
-    </mat-card-actions>
-    <mat-card-title
-      class="board__title">
-      <b>{{ board.title | titlecase }}</b></mat-card-title>
-    <mat-card-subtitle class="board__description">{{
-      "board desc" | titlecase
+        <mat-icon
+          color="primary"
+          class="actions__btn delete"
+          (click)="deleteBoard(board.id, $event)"
+          >delete
+        </mat-icon>
+      </mat-card-actions>
+      <mat-card-title class="board__title">
+        <b>{{ board.title | titlecase }}</b></mat-card-title
+      >
+      <mat-card-subtitle class="board__description">{{
+        board.description | titlecase
       }}</mat-card-subtitle>
-  </mat-card>
+    </mat-card>
+  </div>
+</ng-container>
+<div class="spinner-wrapper transparent-background" *ngIf="isLoading | async">
+  <mat-spinner></mat-spinner>
 </div>
