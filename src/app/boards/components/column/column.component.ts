@@ -88,6 +88,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public createTask(title: string, description: string): void {
     const taskRequest: ITaskRequest = {
       title: this.title!,
+      done: false,
       order: ++this.MAX_TASK_ORDER,
       description: this.description!,
       userId: this.userExecutor!.id,
