@@ -15,6 +15,7 @@ export class EditBoardComponent implements OnInit {
   public id: string | undefined;
   public subscription: Subscription[] = [];
   public titleValue: string = '';
+  public descriptionValue: string = '';
   public editBoardForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -33,10 +34,12 @@ export class EditBoardComponent implements OnInit {
     );
     this.editBoardForm = this.fb.group({
       title: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
     if (this.id) {
       this.apiService.getBoardById(this.id).subscribe((data: IBoard) => {
         this.titleValue = data.title;
+        this.descriptionValue = data.description
       })
     }
   }
@@ -45,10 +48,15 @@ export class EditBoardComponent implements OnInit {
     return this.editBoardForm.get('title');
   }
 
+  get description(): AbstractControl | null {
+    return this.editBoardForm.get('description');
+  }
+
 
   editBoard() {
     const body: IBoardRequest = {
       title: this.title?.value,
+      description: this.description?.value,
     }
     if (this.id) {
       this.apiFacade.updateBoardById(body, this.id)

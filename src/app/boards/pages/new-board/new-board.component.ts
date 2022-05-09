@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { Subscription } from "rxjs";
+import { of, Subscription } from "rxjs";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiServices } from "../../../core/services/api-services.service";
@@ -15,6 +15,7 @@ export class NewBoardComponent implements OnInit {
   public id: string | undefined;
   public subscription: Subscription[] = [];
   public titleValue: string = '';
+  public descriptionValue: string = '';
   public newBoardForm!: FormGroup;
 
   constructor(private fb: FormBuilder,
@@ -25,6 +26,7 @@ export class NewBoardComponent implements OnInit {
   ngOnInit(): void {
     this.newBoardForm = this.fb.group({
       title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
     });
   }
 
@@ -32,11 +34,15 @@ export class NewBoardComponent implements OnInit {
     return this.newBoardForm.get('title');
   }
 
+  get description(): AbstractControl | null {
+    return this.newBoardForm.get('description');
+  }
+
   createBoard() {
     const body: IBoardRequest = {
       title: this.title?.value,
+      description: this.description?.value,
     }
-    this.apiFacade.createBoard(body);
-    setTimeout(() => this.router.navigateByUrl('/main'), 0);
+    of(this.apiFacade.createBoard(body)).subscribe(() => this.router.navigateByUrl('/main'))
   }
 }

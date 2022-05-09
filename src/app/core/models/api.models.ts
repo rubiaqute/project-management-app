@@ -37,11 +37,13 @@ export interface IUserError {
 export interface IBoard {
   id: string | null,
   title: string,
+  description: string,
   columns?: IColumn[],
 }
 
 export interface IBoardRequest {
   title: string,
+  description: string,
 }
 
 export interface IColumn {
