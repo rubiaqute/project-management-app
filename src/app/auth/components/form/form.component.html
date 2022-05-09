@@ -1,13 +1,14 @@
 <div class="middle-container">
   <mat-card class="sign-up">
     <form [formGroup]="signUpForm">
-      <mat-card-title *ngIf="activeUser$ | async">{{
+      <mat-card-title *ngIf="activeUser$ | async; else registerTitle">{{
         "MENU.LINKS.EDIT_PROFILE" | translate | titlecase
       }}</mat-card-title>
-      <mat-card-title *ngIf="!!(activeUser$ | async) === false">{{
-        "AUTH.REGISTER.TITLE" | translate | titlecase
-      }}</mat-card-title>
-
+      <ng-template #registerTitle>
+        <mat-card-title>{{
+          "AUTH.REGISTER.TITLE" | translate | titlecase
+        }}</mat-card-title>
+      </ng-template>
       <mat-form-field class="sign-up__input" appearance="fill">
         <mat-label>{{ "AUTH.REGISTER.EMAIL" | translate }}</mat-label>
         <input
@@ -67,15 +68,10 @@
           {{ isPasswordHide ? "visibility_off" : "visibility" }}
         </mat-icon>
       </mat-form-field>
-      <p *ngIf="!!(activeUser$ | async) === false" class="subtext">
-        {{ "AUTH.REGISTER.ALREADY_MEMBER" | translate }}
-        <span class="subtext__link" [routerLink]="'/auth/login'">
-          <b>
-            {{ "AUTH.LOGIN.TITLE" | translate | titlecase }}
-          </b>
-        </span>
-      </p>
-      <div class="sign-up__btns" *ngIf="activeUser$ | async">
+      <div
+        class="sign-up__btns"
+        *ngIf="activeUser$ | async; else registerButtons"
+      >
         <button
           mat-raised-button
           color="accent"
@@ -95,17 +91,27 @@
           {{ "MENU.LINKS.EDIT" | translate }}
         </button>
       </div>
-      <button
-        class="sign-up__btn"
-        *ngIf="!!(activeUser$ | async) === false"
-        (click)="signup()"
-        mat-raised-button
-        color="primary"
-        type="submit"
-        [disabled]="signUpForm.invalid"
-      >
-        {{ "AUTH.REGISTER.TITLE" | translate }}
-      </button>
+      <ng-template #registerButtons>
+        <p class="subtext">
+          {{ "AUTH.REGISTER.ALREADY_MEMBER" | translate }}
+          <span class="subtext__link" [routerLink]="'/auth/login'">
+            <b>
+              {{ "AUTH.LOGIN.TITLE" | translate | titlecase }}
+            </b>
+          </span>
+        </p>
+
+        <button
+          class="sign-up__btn"
+          (click)="signup()"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [disabled]="signUpForm.invalid"
+        >
+          {{ "AUTH.REGISTER.TITLE" | translate }}
+        </button>
+      </ng-template>
     </form>
   </mat-card>
 </div>
