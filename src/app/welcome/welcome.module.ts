@@ -5,17 +5,19 @@ import { WelcomeComponent } from '../core/pages/welcome/welcome.component';
 import {TranslateModule} from "@ngx-translate/core";
 import {MaterialModule} from "../material/material.module";
 import {MatTabsModule} from "@angular/material/tabs";
+import {MatExpansionModule} from "@angular/material/expansion";
 
 @NgModule({
   declarations: [
     WelcomeComponent
   ],
-  imports: [
-    CommonModule,
-    WelcomeRoutingModule,
-    TranslateModule,
-    MaterialModule,
-    MatTabsModule
-  ]
+    imports: [
+        CommonModule,
+        WelcomeRoutingModule,
+        TranslateModule,
+        MaterialModule,
+        MatTabsModule,
+        MatExpansionModule
+    ]
 })
 export class WelcomeModule { }

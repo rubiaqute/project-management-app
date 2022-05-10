@@ -86,6 +86,18 @@
     "NASTASSIA_TASK3": "Writing an authorization service",
     "NASTASSIA_TASK4": "Welcome and Edit Profile User Interface",
     "ED_TASK1": "UI of login page, main page and board page",
-    "ED_TASK2": "Board route"
+    "ED_TASK2": "Board route",
+    "EXTRA_INFO": "Extra information",
+    "EXTRA1": "Work from anywhere",
+    "EXTRA2": "Participate in the discussion, control the execution of tasks. All this is free in TMINE mobile application.",
+    "EXTRA3": "Use comfortable language",
+    "EXTRA4": "At the moment the application is developed in two languages: Russian and English. You can switch the language in the header.",
+    "EXTRA5": "Choose a design",
+    "EXTRA6": "You can use the app in day or night mode. You can switch the mode in the header",
+    "EXTRA7": "Communication with application developers",
+    "EXTRA8": "If you have any questions or suggestions about the application, you can contact the developers. Contact details are above.",
+    "EXTRA9": "Versatile working environment",
+    "EXTRA10": "TMINE is convenient to use for both small teams and large companies. Its capabilities are suitable for all business sectors."
+
   }
 }
