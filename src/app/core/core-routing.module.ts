@@ -11,9 +11,9 @@ const routes: Routes = [
     children: [
       {
         path: '',
-        canActivate: [AuthGuard],
-        canActivateChild: [AuthGuard],
-        //here will be welcome page component
+        // canActivate: [AuthGuard],
+        // canActivateChild: [AuthGuard],
+        loadChildren: () => import('./../welcome/welcome.module').then(m => m.WelcomeModule)
       },
       {
         path: 'auth',

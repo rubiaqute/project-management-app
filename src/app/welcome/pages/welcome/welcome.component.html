@@ -1,0 +1,307 @@
+<div class="welcome-wrapper">
+  <div class="welcome-wrapper__top">
+    <div class="welcome-wrapper__left">
+      <div>
+        <img src="../../../../assets/images/tmine/TMINE_free-file%20(1).png">
+      </div>
+      <h1>
+        {{ "WELCOME.TMINE" | translate }}
+      </h1>
+      <h2>
+        {{ "WELCOME.TITLE" | translate }}
+      </h2>
+      <div>
+        <button
+          class="watch__btn"
+          mat-raised-button
+          color="primary"
+          type="submit"
+          [routerLink]="['/main']">
+          {{ "WELCOME.BOARDS" | translate }}
+        </button>
+      </div>
+    </div>
+    <div class="welcome-wrapper__right">
+      <div class="logo">
+        <img class="fav-icon" src="../../../../assets/images/tmine/TMINE_free-file.png">
+      </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit">
+          <a href="#" target="_blank">
+            {{ "WELCOME.WATCH_VIDEO" | translate }}
+          </a>
+        </button>
+
+      <div class="sun">
+        <img class="dev dev-first" src="../../../../assets/images/dev1.png">
+        <img class="icon icon1" src="../../../../assets/images/png/team-leader.png">
+        <img class="icon icon2" src="../../../../assets/images/png/fork.png">
+        <img class="dev dev-second" src="../../../../assets/images/dev2.png">
+        <img class="icon icon3" src="../../../../assets/images/png/angularjs.png">
+        <img class="icon icon4" src="../../../../assets/images/png/merge.png">
+        <img class="icon icon5" src="../../../../assets/images/png/board.png">
+        <img class="icon icon6" src="../../../../assets/images/png/task-first.png">
+        <img class="icon icon7" src="../../../../assets/images/png/ok.png">
+        <img class="icon icon8" src="../../../../assets/images/png/like-first.png">
+        <img class="icon icon9" src="../../../../assets/images/png/like-second.png">
+        <img class="icon icon10" src="../../../../assets/images/png/task-second.png">
+        <img class="icon icon11" src="../../../../assets/images/png/message.png">
+        <img class="icon icon12" src="../../../../assets/images/png/github.png">
+        <img class="icon icon13" src="../../../../assets/images/png/gitlab.png">
+        <img class="dev dev-third" src="../../../../assets/images/dev3.png">
+      </div>
+    </div>
+  </div>
+
+
+  <mat-tab-group class="welcome-wrapper__center">
+    <mat-tab label="Inga">
+      <mat-card class="example-card">
+        <mat-card-title-group>
+          <mat-card-subtitle class="welcome-wrapper__contacts">
+            <mat-list role="list">
+              <mat-list-item role="listitem">
+                <mat-card-title>{{ "FOOTER.DEVELOPERS.LIST.INGA" | translate }}</mat-card-title>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon> location_on</mat-icon>
+                <span>{{ "WELCOME.MOSCOW_RUSSIA" | translate }}</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon>smartphone</mat-icon>
+                <span>+7 (910) 436-39-27</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon> mail_outline</mat-icon>
+                <span>rubiaqute@gmail.com</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon>attachment</mat-icon>
+                <a href="https://github.com/rubiaqute"
+                   target="_blank">
+                  github.com/rubiaqute
+                </a>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-subtitle>
+          <img mat-card-xl-image src="../../../../assets/images/dev1.png">
+        </mat-card-title-group>
+        <mat-card-content>
+          <h2>
+            {{ "WELCOME.ABOUT_WORK" | translate }}
+          </h2>
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              <b>{{ "WELCOME.TEAM_LEADER" | translate }}</b>
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.INGA_TASK1" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.INGA_TASK2" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.INGA_TASK3" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.INGA_TASK4" | translate }}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Nastassia">
+      <mat-card class="example-card">
+        <mat-card-title-group>
+          <mat-card-subtitle class="welcome-wrapper__contacts">
+            <mat-list role="list">
+              <mat-list-item role="listitem">
+                <mat-card-title>{{ "FOOTER.DEVELOPERS.LIST.NASTASSIA" | translate }}</mat-card-title>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon> location_on</mat-icon>
+                <span>{{ "WELCOME.MINSK_BELARUS" | translate }}</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon>smartphone</mat-icon>
+                <span>+375(25)926-29-09</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon> mail_outline</mat-icon>
+                <span>batashofa@gmail.com</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon>attachment</mat-icon>
+                <a href="https://github.com/batashofa?tab=repositories"
+                   target="_blank">
+                  github.com/batashofa
+                </a>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-subtitle>
+          <img mat-card-xl-image src="../../../../assets/images/dev2.png">
+        </mat-card-title-group>
+        <mat-card-content>
+          <h2>
+            {{ "WELCOME.ABOUT_WORK" | translate }}
+          </h2>
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.NASTASSIA_TASK1" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.NASTASSIA_TASK2" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.NASTASSIA_TASK3" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.NASTASSIA_TASK4" | translate }}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+
+    <mat-tab label="Ed">
+      <mat-card class="example-card">
+        <mat-card-title-group>
+          <mat-card-subtitle class="welcome-wrapper__contacts">
+            <mat-list role="list">
+              <mat-list-item role="listitem">
+                <mat-card-title>{{ "FOOTER.DEVELOPERS.LIST.ED" | translate }}</mat-card-title>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon> location_on</mat-icon>
+                <span>{{ "WELCOME.MAHILYOW_BELARUS" | translate }}</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon>smartphone</mat-icon>
+                <span>+375(29)619-68-91</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon> mail_outline</mat-icon>
+                <span>kide.da@gmail.com</span>
+              </mat-list-item>
+              <mat-list-item role="listitem">
+                <mat-icon>attachment</mat-icon>
+                <a href="https://github.com/EdChekanov"
+                   target="_blank">
+                  github.com/EdChekanov
+                </a>
+              </mat-list-item>
+            </mat-list>
+          </mat-card-subtitle>
+          <img mat-card-xl-image src="../../../../assets/images/dev3.png">
+        </mat-card-title-group>
+        <mat-card-content>
+          <h2>
+            {{ "WELCOME.ABOUT_WORK" | translate }}
+          </h2>
+          <mat-list role="list">
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.ED_TASK1" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.ED_TASK2" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.ED_TASK3" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.ED_TASK4" | translate }}
+            </mat-list-item>
+          </mat-list>
+        </mat-card-content>
+      </mat-card>
+    </mat-tab>
+  </mat-tab-group>
+
+  <h2>
+    {{ "WELCOME.EXTRA_INFO" | translate }}
+  </h2>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "WELCOME.EXTRA1" | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ "WELCOME.EXTRA2" | translate }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "WELCOME.EXTRA3" | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ "WELCOME.EXTRA4" | translate }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "WELCOME.EXTRA5" | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ "WELCOME.EXTRA6" | translate }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "WELCOME.EXTRA7" | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ "WELCOME.EXTRA8" | translate }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "WELCOME.EXTRA9" | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ "WELCOME.EXTRA10" | translate }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "WELCOME.EXTRA11" | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ "WELCOME.EXTRA12" | translate }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+</div>
+
