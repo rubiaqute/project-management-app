@@ -79,7 +79,7 @@
     "MAHILYOW_BELARUS": "Mahilyow, Belarus",
     "TEAM_LEADER": "Team leader",
     "INGA_TASK1": "Code Review",
-    "INGA_TASK2": "Repository initialization, Eslint connection, Prettier, Angular Material, ngx-translate",
+    "INGA_TASK2": "Repository initialization",
     "INGA_TASK3": "Store connection",
     "NASTASSIA_TASK1": "Deploy backend to heroku",
     "NASTASSIA_TASK2": "Writing a service with API requests",

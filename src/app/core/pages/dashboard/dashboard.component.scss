@@ -11,6 +11,5 @@
   height: 100vh;
   .main {
     height: $main-height;
-    overflow-y: auto;
-  }
+    overflow-x: hidden;  }
 }

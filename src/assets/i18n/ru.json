@@ -79,7 +79,7 @@
     "MAHILYOW_BELARUS": "Могилёв, Беларусь",
     "TEAM_LEADER": "Лидер группы",
     "INGA_TASK1": "Проверка кода",
-    "INGA_TASK2": "Инициализация репозитория, подключение Eslint, Prettier, Angular Material, ngx-translate",
+    "INGA_TASK2": "Инициализация репозитория",
     "INGA_TASK3": "Подключение стора",
     "NASTASSIA_TASK1": "Деплой бэкенда на heroku",
     "NASTASSIA_TASK2": "Написание сервеса с запросами к API",

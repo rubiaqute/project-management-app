@@ -2,12 +2,12 @@
 
 .welcome-wrapper {
   padding: 5% 10vw;
-  width: $welcome-width;
   margin: 0;
   text-align: center;
   display: flex;
   flex-direction: column;
-  row-gap: 6%;
+  row-gap: 5vh;
+
 
   &__top {
     display: flex;
@@ -21,6 +21,10 @@
 
     div {
       width: 100%;
+
+      img {
+        width: 100%;
+      }
     }
   }
 
