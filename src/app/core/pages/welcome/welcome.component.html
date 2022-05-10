@@ -88,7 +88,7 @@
           <mat-list role="list">
             <mat-list-item role="listitem">
               <mat-icon>done</mat-icon>
-              {{ "WELCOME.TEAM_LEADER" | translate }}
+              <b>{{ "WELCOME.TEAM_LEADER" | translate }}</b>
             </mat-list-item>
             <mat-list-item role="listitem">
               <mat-icon>done</mat-icon>
@@ -101,6 +101,10 @@
             <mat-list-item role="listitem">
               <mat-icon>done</mat-icon>
               {{ "WELCOME.INGA_TASK3" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.INGA_TASK4" | translate }}
             </mat-list-item>
           </mat-list>
         </mat-card-content>
@@ -208,6 +212,14 @@
               <mat-icon>done</mat-icon>
               {{ "WELCOME.ED_TASK2" | translate }}
             </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.ED_TASK3" | translate }}
+            </mat-list-item>
+            <mat-list-item role="listitem">
+              <mat-icon>done</mat-icon>
+              {{ "WELCOME.ED_TASK4" | translate }}
+            </mat-list-item>
           </mat-list>
         </mat-card-content>
       </mat-card>
@@ -228,7 +240,6 @@
       <p>{{ "WELCOME.EXTRA2" | translate }}</p>
     </mat-expansion-panel>
   </mat-accordion>
-
   <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
@@ -240,7 +251,6 @@
       <p>{{ "WELCOME.EXTRA4" | translate }}</p>
     </mat-expansion-panel>
   </mat-accordion>
-
   <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
@@ -252,7 +262,6 @@
       <p>{{ "WELCOME.EXTRA6" | translate }}</p>
     </mat-expansion-panel>
   </mat-accordion>
-
   <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
@@ -264,7 +273,6 @@
       <p>{{ "WELCOME.EXTRA8" | translate }}</p>
     </mat-expansion-panel>
   </mat-accordion>
-
   <mat-accordion>
     <mat-expansion-panel (opened)="panelOpenState = true"
                          (closed)="panelOpenState = false">
@@ -274,6 +282,17 @@
         </mat-panel-title>
       </mat-expansion-panel-header>
       <p>{{ "WELCOME.EXTRA10" | translate }}</p>
+    </mat-expansion-panel>
+  </mat-accordion>
+  <mat-accordion>
+    <mat-expansion-panel (opened)="panelOpenState = true"
+                         (closed)="panelOpenState = false">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          {{ "WELCOME.EXTRA11" | translate }}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+      <p>{{ "WELCOME.EXTRA12" | translate }}</p>
     </mat-expansion-panel>
   </mat-accordion>
 </div>

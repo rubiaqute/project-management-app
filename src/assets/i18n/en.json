@@ -81,12 +81,15 @@
     "INGA_TASK1": "Code Review",
     "INGA_TASK2": "Repository initialization",
     "INGA_TASK3": "Store connection",
+    "INGA_TASK4": "Fixing developer bugs",
     "NASTASSIA_TASK1": "Deploy backend to heroku",
     "NASTASSIA_TASK2": "Writing a service with API requests",
     "NASTASSIA_TASK3": "Writing an authorization service",
     "NASTASSIA_TASK4": "Welcome and Edit Profile User Interface",
     "ED_TASK1": "UI of login page, main page and board page",
     "ED_TASK2": "Board route",
+    "ED_TASK3": "Functionality of tasks and columns",
+    "ED_TASK4": "Implementation of drag-n-drop functionality for tasks and columns",
     "EXTRA_INFO": "Extra information",
     "EXTRA1": "Work from anywhere",
     "EXTRA2": "Participate in the discussion, control the execution of tasks. All this is free in TMINE mobile application.",
@@ -97,7 +100,9 @@
     "EXTRA7": "Communication with application developers",
     "EXTRA8": "If you have any questions or suggestions about the application, you can contact the developers. Contact details are above.",
     "EXTRA9": "Versatile working environment",
-    "EXTRA10": "TMINE is convenient to use for both small teams and large companies. Its capabilities are suitable for all business sectors."
+    "EXTRA10": "TMINE is convenient to use for both small teams and large companies. Its capabilities are suitable for all business sectors.",
+    "EXTRA11": "Use mobile and desktop version",
+    "EXTRA12": "TMINE is designed with an adaptive layout, which allows you to use it on any device (mobile phones, tablets, laptops and computers). Minimum page width - 320px."
 
   }
 }
