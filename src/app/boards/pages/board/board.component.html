@@ -1,9 +1,9 @@
 <h3 class="page-title"><b>{{ board?.title }}</b></h3>
-<ng-template #loader class="loader">
+<div *ngIf="isLoaderOn" class="loader">
   <mat-spinner class="loader__spinner"></mat-spinner>
-</ng-template>
+</div>
 <div class="middle-container board" 
-     *ngIf="board; else loader"
+     *ngIf="board"
      cdkDropList 
      cdkDropListOrientation="horizontal"
      (cdkDropListDropped)="drop($event)"
@@ -22,7 +22,8 @@
 </div>
 
 <div class="popup" *ngIf="isColumnModalOn">
-  <div class="popup__overlay" (click)="switchAddColumnModal()"></div>
+  <div class="popup__overlay"
+       (click)="switchAddColumnModal()"></div>
   <mat-card class="popup__modal">
     <mat-form-field>
       <mat-label>{{ "BOARD.ADD_COLUMN_MODAL_TITLE" | translate }}</mat-label>

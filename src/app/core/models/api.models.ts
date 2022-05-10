@@ -60,6 +60,7 @@ export interface IColumnRequest {
 
 export interface ITask {
   id: string,
+  done: boolean,
   title: string,
   order: number,
   description: string,

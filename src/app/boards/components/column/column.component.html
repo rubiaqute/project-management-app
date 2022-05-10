@@ -24,14 +24,15 @@
   </div>
   <div class="column__tasks"
        cdkDropList
-       [cdkDropListData]="tasks"
+       [cdkDropListData]="column.tasks!"
        cdkDropListOrientation="vertical"
        (cdkDropListDropped)="drop($event)">
     <app-task class="tasks__list"
-              *ngFor="let task of tasks"
+              *ngFor="let task of column.tasks"
               [task]="task"
               [boardId]="boardId"
               [columnId]="column.id"
+              (cdkDragStarted)="setCurrentTask(task)"
               cdkDrag>
       <div class="tasks-custom-placeholder" *cdkDragPlaceholder></div>
     </app-task>
