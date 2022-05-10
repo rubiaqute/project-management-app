@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { WelcomeRoutingModule } from './welcome-routing.module';
-import { WelcomeComponent } from '../core/pages/welcome/welcome.component';
+import { WelcomeComponent } from './pages/welcome/welcome.component';
 import {TranslateModule} from "@ngx-translate/core";
 import {MaterialModule} from "../material/material.module";
 import {MatTabsModule} from "@angular/material/tabs";
