@@ -23,11 +23,15 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public isErrorModalOn: boolean = false;
 
+  public isLoaderOn: boolean = false;
+
   public title: string | undefined;
 
   public currentColumn!: IColumn;
 
-  public INDEX_COEFFICIENT: number = 1000;
+  public INDEX_COEFFICIENT: number = 1000000;
+
+  public dropCounter: number = 0;
 
   constructor(
     private activateRoute: ActivatedRoute,
@@ -42,6 +46,8 @@ export class BoardComponent implements OnInit, OnDestroy {
       )
     );
 
+    this.isLoaderOn = true;
+
     this.subscription.push(
       this.api.getBoardById(this.id!)
         .subscribe((data) => {
@@ -51,6 +57,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
                                   this.board.columns?.slice(-1)[0].order :
                                   0 * this.INDEX_COEFFICIENT;
+          this.isLoaderOn = false;
         }));
   }
 
@@ -86,35 +93,71 @@ export class BoardComponent implements OnInit, OnDestroy {
   public drop(event: CdkDragDrop<IColumn[]>): void {
     moveItemInArray(this.board?.columns!, event.previousIndex, event.currentIndex);
 
-    if (event.previousIndex !== event.currentIndex) {
-      let freeIdx: number = (event.currentIndex + 1) * this.INDEX_COEFFICIENT;
+    // this.dropCounter++;
 
-      while (this.board?.columns?.find(item => item.order === freeIdx)) {
-        (event.previousIndex < event.currentIndex) ?
-          freeIdx += 1 :
-          freeIdx -= 1
-      } 
-  
+    // if (this.dropCounter > 5) {
+    //   this.board!.columns!.forEach((column, idx) => {
+    //     const nextColumn = this.board!.columns![idx + 1];
+    //     if (nextColumn) {
+    //       if ((nextColumn.order - column.order) < (this.INDEX_COEFFICIENT / 2)) {
+    //         const request: IColumnRequest = {
+    //           title: column.title,
+    //           order: ,
+    //         }
+            
+    //       this.isLoaderOn = true;
+    
+    //       this.api.updateColumn(this.board!.id,
+    //                             column.id,
+    //                             request)
+    //         .subscribe(
+    //           (data) => {
+    //             this.board?.columns?.splice(event.currentIndex, 1, data)
+    //             this.isLoaderOn = false;
+    //           },
+    //           (err) => {
+    //             this.switchErrorModal();
+    //             this.isLoaderOn = false;
+    //           });
+    //       }
+    //     }
+    //   })
+    // }
+
+    if (event.previousIndex !== event.currentIndex) {
+      const nextItem: number = this.board!.columns![event.currentIndex + 1] ?
+                              this.board!.columns![event.currentIndex + 1].order :
+                              this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT * 2;
+      const prevItem: number = this.board!.columns![event.currentIndex - 1] ?
+                              this.board!.columns![event.currentIndex - 1].order :
+                              0;
+      let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
+
       const columnRequest: IColumnRequest = {
           title: this.currentColumn.title,
           order: freeIdx,
         }
-  
+        
+      this.isLoaderOn = true;
+
       this.api.updateColumn(this.board!.id,
                             this.currentColumn.id,
-                            columnRequest).subscribe(data => {
-                                  this.board?.columns?.splice(event.currentIndex, 1, data);
-                            });
-  
-      // console.log(event.previousIndex, event.currentIndex, this.currentColumn.order);
-      // console.log(this.board?.columns);
-      console.log(freeIdx);
+                            columnRequest)
+        .subscribe(
+          (data) => {
+            this.board?.columns?.splice(event.currentIndex, 1, data)
+            this.isLoaderOn = false;
+          },
+          (err) => {
+            this.switchErrorModal();
+            this.isLoaderOn = false;
+          });
     }
   }
 
   public updateColumnsOrders() {
     this.board?.columns?.forEach((el, index) => {
-      el.order = index * this.INDEX_COEFFICIENT;
+      el.order = (index + 1) * this.INDEX_COEFFICIENT;
     })
   }
 
