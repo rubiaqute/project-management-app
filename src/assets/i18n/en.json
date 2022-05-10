@@ -70,6 +70,7 @@
     "CREATE_NEW_BOARD": "Create new board"
   },
   "WELCOME": {
+    "BOARDS": "Boards",
     "WATCH_VIDEO": "Watch video",
     "TMINE": "Task Manager by Inga, Nastassia, Ed",
     "TITLE": "Create issues, break them into tasks, track relationships, add custom fields, and have conversations. Visualize large projects as spreadsheets or boards, and automate everything with code.",
