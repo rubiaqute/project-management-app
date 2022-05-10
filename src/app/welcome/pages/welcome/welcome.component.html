@@ -10,14 +10,14 @@
       <h2>
         {{ "WELCOME.TITLE" | translate }}
       </h2>
-      <div class="watch__btns">
+      <div>
         <button
           class="watch__btn"
           mat-raised-button
           color="primary"
           type="submit"
-        >
-          {{ "WELCOME.WATCH_VIDEO" | translate }}
+          [routerLink]="['/main']">
+          {{ "BOARD.CREATE_NEW_BOARD" | translate }}
         </button>
       </div>
     </div>
@@ -25,6 +25,15 @@
       <div class="logo">
         <img class="fav-icon" src="../../../../assets/images/tmine/TMINE_free-file.png">
       </div>
+
+        <button
+          mat-raised-button
+          color="primary"
+          type="submit">
+          <a href="#" target="_blank">
+            {{ "WELCOME.WATCH_VIDEO" | translate }}
+          </a>
+        </button>
 
       <div class="sun">
         <img class="dev dev-first" src="../../../../assets/images/dev1.png">
@@ -45,7 +54,6 @@
         <img class="dev dev-third" src="../../../../assets/images/dev3.png">
       </div>
     </div>
-
   </div>
 
 
