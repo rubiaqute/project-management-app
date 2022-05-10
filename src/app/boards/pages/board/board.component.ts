@@ -16,7 +16,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public board!: IBoard;
 
-  public MAX_COLUMN_ORDER: number = -1;
+  public MAX_COLUMN_ORDER: number = 0;
 
   public isColumnModalOn: boolean = false;
 
@@ -49,7 +49,7 @@ export class BoardComponent implements OnInit, OnDestroy {
           // this.updateColumnsOrders();
           this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
                                   this.board.columns?.slice(-1)[0].order :
-                                  -1 * this.INDEX_COEFFICIENT;
+                                  0 * this.INDEX_COEFFICIENT;
         }));
   }
 
@@ -85,22 +85,30 @@ export class BoardComponent implements OnInit, OnDestroy {
   public drop(event: CdkDragDrop<IColumn[]>): void {
     moveItemInArray(this.board?.columns!, event.previousIndex, event.currentIndex);
 
-    let freeIdx: number = event.currentIndex * this.INDEX_COEFFICIENT;
-    while (this.board?.columns?.find(item => item.order === freeIdx)) freeIdx += 1;
+    if (event.previousIndex !== event.currentIndex) {
+      let freeIdx: number = (event.currentIndex + 1) * this.INDEX_COEFFICIENT;
 
-    const columnRequest: IColumnRequest = {
-        title: this.currentColumn.title,
-        order: freeIdx,
-      }
-
-    // this.api.updateColumn(this.board!.id,
-    //                       this.currentColumn.id,
-    //                       columnRequest).subscribe(data => {
-    //                         this.board?.columns?
-    //                       });
-
-    // console.log(event.previousIndex, event.currentIndex, this.currentColumn.order);
-    // console.log(this.board?.columns);
+      while (this.board?.columns?.find(item => item.order === freeIdx)) {
+        (event.previousIndex < event.currentIndex) ?
+          freeIdx += 1 :
+          freeIdx -= 1
+      } 
+  
+      const columnRequest: IColumnRequest = {
+          title: this.currentColumn.title,
+          order: freeIdx,
+        }
+  
+      this.api.updateColumn(this.board!.id,
+                            this.currentColumn.id,
+                            columnRequest).subscribe(data => {
+                                  this.board?.columns?.splice(event.currentIndex, 1, data);
+                            });
+  
+      // console.log(event.previousIndex, event.currentIndex, this.currentColumn.order);
+      // console.log(this.board?.columns);
+      console.log(freeIdx);
+    }
   }
 
   public updateColumnsOrders() {
