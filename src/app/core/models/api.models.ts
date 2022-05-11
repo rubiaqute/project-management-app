@@ -111,3 +111,8 @@ export enum AsyncActionStatus {
   UpdateError = 'UpdateError',
   UpdateSuccess = 'UpdateSuccess'
 }
+
+export interface DialogData {
+  name: string;
+  isConfirmed: boolean;
+}

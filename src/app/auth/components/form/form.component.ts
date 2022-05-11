@@ -6,6 +6,8 @@ import { ApiServices } from "../../../core/services/api-services.service";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
 import { ApiFacade } from 'src/app/store/facade';
+import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-form',
@@ -26,7 +28,8 @@ export class FormComponent implements OnInit, OnDestroy {
     private router: Router,
     public authService: AuthService,
     private apiService: ApiServices,
-    private apiFacade: ApiFacade) {
+    private apiFacade: ApiFacade,
+    public dialog: MatDialog) {
   }
 
   ngOnInit(): void {
@@ -39,6 +42,16 @@ export class FormComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
+  }
+
+  openDialog(): void {
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      data: { name: 'CONFIRMATION.PROFILE', isConfirmed: false },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.deleteUser()
+    });
   }
 
   private passwordValidator(control: FormControl): { [key: string]: string } | null {

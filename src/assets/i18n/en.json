@@ -118,5 +118,10 @@
     "EXTRA10": "TMINE is convenient to use for both small teams and large companies. Its capabilities are suitable for all business sectors.",
     "EXTRA11": "Use mobile and desktop version",
     "EXTRA12": "TMINE is designed with an adaptive layout, which allows you to use it on any device (mobile phones, tablets, laptops and computers). Minimum page width - 320px."
+  },
+  "CONFIRMATION": {
+    "TITLE": "Are you sure you want to delete",
+    "BOARD": "board",
+    "PROFILE": "your profile"
   }
 }
