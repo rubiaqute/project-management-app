@@ -32,7 +32,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public prevColumn: IColumn | undefined;
 
-  public INDEX_COEFFICIENT: number = 1000000;
+  public INDEX_COEFFICIENT: number = 100000000;
 
   public dropCounter: number = 0;
 
@@ -56,7 +56,6 @@ export class BoardComponent implements OnInit, OnDestroy {
         .subscribe((data) => {
           data?.columns?.sort((a,b) => a.order - b.order);
           this.board = data;
-          // this.updateColumnsOrders();
           this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
                                   this.board.columns?.slice(-1)[0].order :
                                   0 * this.INDEX_COEFFICIENT;
@@ -96,37 +95,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   public drop(event: CdkDragDrop<IColumn[]>): void {
     moveItemInArray(this.board?.columns!, event.previousIndex, event.currentIndex);
 
-    // this.dropCounter++;
-
-    // if (this.dropCounter > 5) {
-    //   this.board!.columns!.forEach((column, idx) => {
-    //     const nextColumn = this.board!.columns![idx + 1];
-    //     if (nextColumn) {
-    //       if ((nextColumn.order - column.order) < (this.INDEX_COEFFICIENT / 2)) {
-    //         const request: IColumnRequest = {
-    //           title: column.title,
-    //           order: ,
-    //         }
-            
-    //       this.isLoaderOn = true;
-    
-    //       this.api.updateColumn(this.board!.id,
-    //                             column.id,
-    //                             request)
-    //         .subscribe(
-    //           (data) => {
-    //             this.board?.columns?.splice(event.currentIndex, 1, data)
-    //             this.isLoaderOn = false;
-    //           },
-    //           (err) => {
-    //             this.switchErrorModal();
-    //             this.isLoaderOn = false;
-    //           });
-    //       }
-    //     }
-    //   })
-    // }
-
     if (event.previousIndex !== event.currentIndex) {
       const nextItem: number = this.board!.columns![event.currentIndex + 1] ?
                               this.board!.columns![event.currentIndex + 1].order :
@@ -141,30 +109,28 @@ export class BoardComponent implements OnInit, OnDestroy {
           order: freeIdx,
         }
         
-      this.isLoaderOn = true;
+      this.swithLoader();
 
       this.api.updateColumn(this.board!.id!,
                             this.currentColumn.id,
                             columnRequest)
         .subscribe(
           (data) => {
-            this.board?.columns?.splice(event.currentIndex, 1, data)
-            this.isLoaderOn = false;
+            this.board?.columns?.splice(event.currentIndex, 1, data);
+            this.swithLoader();
           },
           (err) => {
             this.switchErrorModal();
-            this.isLoaderOn = false;
+            this.swithLoader();
           });
     }
   }
 
-  public updateColumnsOrders() {
-    this.board?.columns?.forEach((el, index) => {
-      el.order = (index + 1) * this.INDEX_COEFFICIENT;
-    })
-  }
-
   public setCurrentColumn(column: IColumn) {
     this.currentColumn = column; 
+  }
+
+  public swithLoader() {
+    this.isLoaderOn = !this.isLoaderOn;
   }
 }

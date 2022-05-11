@@ -76,7 +76,8 @@
     "COLUMN_NO_TITLE": "Нет заголовка",
     "ADD_TASK_MODAL_TITLE": "Тескт задачи",
     "ADD_TASK_MODAL_DESCRIPTION": "Описание задачи",
-    "ADD_TASK_MODAL_BUTTON": "Создать задачу"
+    "ADD_TASK_MODAL_BUTTON": "Создать задачу",
+    "EDIT_TASK_MODAL_BUTTON": "Изменить задачу"
   },
   "WELCOME": {
     "BOARDS": "Доски",

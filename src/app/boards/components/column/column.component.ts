@@ -34,7 +34,9 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public description: string | undefined;
 
-  public isTaskModalOn: boolean = false;
+  public isAddTaskModalOn: boolean = false;
+
+  public isEditTaskModalOn: boolean = false;
 
   public isErrorModalOn: boolean = false;
 
@@ -57,9 +59,9 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.column!.tasks 
       ? this.column!.tasks
       : [];
-    this.column!.tasks!.sort((a,b) => a.order - b.order);
-    this.MAX_TASK_ORDER = this.column!.tasks!.slice(-1)[0]
-                            ? this.column!.tasks!.slice(-1)[0].order
+    this.column!.tasks?.sort((a,b) => a.order - b.order);
+    this.MAX_TASK_ORDER = this.column!.tasks?.slice(-1)[0]
+                            ? this.column!.tasks?.slice(-1)[0].order
                             : 0;
   }
 
@@ -73,8 +75,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public deleteColumn(): void {
-    this.api.deleteColumn(this.boardId, this.column!.id)
-      .subscribe(() => this.column = undefined);
+    this.subs.push(this.api.deleteColumn(this.boardId, this.column!.id)
+      .subscribe(() => this.column = undefined));
   } 
 
   public setColumnTitle(newTitle: string): void {
@@ -83,15 +85,17 @@ export class ColumnComponent implements OnInit, OnDestroy {
       title: newTitle,
       order: this.column!.order
     }
-    this.api.updateColumn(this.boardId,
+    this.subs.push(this.api.updateColumn(this.boardId,
                           this.column!.id,
                           columnRequest)
-      .subscribe((data) => this.column = data);
+      .subscribe((data) => this.column = data));
     this.switchTitleEdit();
   }
 
-  public switchAddTaskModal(): void {
-    this.isTaskModalOn = !this.isTaskModalOn;
+  public switchTaskModal(mode: string = 'edit'): void {
+    mode === 'add' 
+      ? this.isAddTaskModalOn = !this.isAddTaskModalOn
+      : this.isEditTaskModalOn = !this.isEditTaskModalOn;
     this.title = '';
     this.description = '';
     this.userExecutor = undefined;
@@ -112,51 +116,84 @@ export class ColumnComponent implements OnInit, OnDestroy {
       userId: this.userExecutor!.id,
     };
 
-    this.api
+    this.subs.push(this.api
       .createTask(this.boardId,
                   this.column!.id,
                   taskRequest)
-      .subscribe((data) => this.column!.tasks!.push(data));
+      .subscribe((data) => this.column!.tasks!.push(data)));
+  }
+
+  public editTask(title: string, description: string): void {
+    this.MAX_TASK_ORDER = this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT;
+
+    const taskRequest: ITaskRequestUpdate = {
+      title: this.title!,
+      done: this.currentTask!.done,
+      order: this.MAX_TASK_ORDER,
+      description: this.description!,
+      userId: this.userExecutor!.id,
+      boardId: this.boardId,
+      columnId: this.column!.id,
+    };
+
+    const idx = this.column?.tasks?.findIndex((task) => task.id === this.currentTask!.id);
+
+    this.switchLoader();
+    
+    this.subs.push(this.api.updateTask(this.boardId,
+                                       this.column!.id,
+                                       this.currentTask!.id,
+                                       taskRequest)
+      .subscribe(
+      (data) => {
+        this.column!.tasks!.splice(idx!, 1, data);
+        this.switchLoader();
+      },
+      (err) => {
+        this.switchErrorModal();
+        this.switchLoader();
+      }));
   }
   
   public drop(event: CdkDragDrop<ITask[]>): void {
+    
+    const nextItem: number = this.column!.tasks![event.currentIndex + 1]
+                              ? this.column!.tasks![event.currentIndex + 1].order
+                              : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
+    const prevItem: number = this.column!.tasks![event.currentIndex - 1]
+                              ? this.column!.tasks![event.currentIndex - 1].order
+                              : 0;
+    let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
+
+    const taskRequest: ITaskRequestUpdate = {
+    title: this.currentTask!.title,
+    done: this.currentTask!.done,
+    order: freeIdx,
+    description: this.currentTask!.description,
+    userId: this.currentTask!.userId,
+    boardId: this.boardId,
+    columnId: this.column!.id,
+    }
+
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-      if (event.previousIndex !== event.currentIndex) {
-        const nextItem: number = this.column!.tasks![event.currentIndex + 1]
-                                  ? this.column!.tasks![event.currentIndex + 1].order
-                                  : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
-        const prevItem: number = this.column!.tasks![event.currentIndex - 1]
-                                  ? this.column!.tasks![event.currentIndex - 1].order
-                                  : 0;
-        let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
+      if (event.previousIndex !== event.currentIndex) {          
+        this.switchLoader();
   
-        const taskRequest: ITaskRequestUpdate = {
-          title: this.currentTask!.title,
-          done: this.currentTask!.done,
-          order: freeIdx,
-          description: this.currentTask!.description,
-          userId: this.currentTask!.userId,
-          boardId: this.boardId,
-          columnId: this.column!.id,
-        }
-          
-        this.isLoaderOn = true;
-  
-        this.api.updateTask(this.boardId,
+        this.subs.push(this.api.updateTask(this.boardId,
                             this.column!.id,
                             this.currentTask!.id, 
                             taskRequest)
           .subscribe(
             (data) => {
-              this.column!.tasks!.splice(event.currentIndex, 1, data)
-              this.isLoaderOn = false;
+              this.column!.tasks!.splice(event.currentIndex, 1, data);
+              this.switchLoader();
             },
             (err) => {
               this.switchErrorModal();
-              this.isLoaderOn = false;
-            });
+              this.switchLoader();
+            }));
       }
     } else {
       transferArrayItem(
@@ -165,98 +202,35 @@ export class ColumnComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex,
       );
-
-        // console.log(
-        //   event.previousContainer.data,
-        //   event.container.data,
-        //   event.previousIndex,
-        //   event.currentIndex,)
-
-          // console.log(this.column);
-          // console.log(this.prevColumn);
-
-        // this.api.deleteTask(this.boardId, this.prevColumn!.id, this.currentTask!.id)
-        //   .subscribe(() => {
-        //     const currentTaskIdx = this.column!.tasks!.indexOf(this.currentTask!);
-        //     this.column!.tasks!.splice(currentTaskIdx, 1);
-        //   });
-
         
-        const nextItem: number = this.column!.tasks![event.currentIndex + 1]
-                                  ? this.column!.tasks![event.currentIndex + 1].order
-                                  : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
-        const prevItem: number = this.column!.tasks![event.currentIndex - 1]
-                                  ? this.column!.tasks![event.currentIndex - 1].order
-                                  : 0;
-        let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
+        this.switchLoader();
 
-        const taskRequest: ITaskRequestUpdate = {
-          title: this.currentTask!.title,
-          done: this.currentTask!.done,
-          order: freeIdx,
-          description: this.currentTask!.description,
-          userId: this.currentTask!.userId,
-          boardId: this.boardId,
-          columnId: this.column!.id,
-        }
-        
-        this.isLoaderOn = true;
-
-        this.api.updateTask(this.boardId,
+        this.subs.push(this.api.updateTask(this.boardId,
                             this.prevColumn!.id,
                             this.currentTask!.id,
                             taskRequest)
           .subscribe(
             (data) => {
               this.column!.tasks!.splice(event.currentIndex, 1, data);
-              this.isLoaderOn = false;
+              this.switchLoader();
             },
             (err) => {
               this.switchErrorModal();
-              this.isLoaderOn = false;
-            });
-
-        // const nextItem: number = this.column!.tasks![event.currentIndex + 1]
-        //                           ? this.column!.tasks![event.currentIndex + 1].order
-        //                           : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
-        // const prevItem: number = this.column!.tasks![event.currentIndex - 1]
-        //                           ? this.column!.tasks![event.currentIndex - 1].order
-        //                           : 0;
-        // let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
-  
-        // const taskRequest: ITaskRequestUpdate = {
-        //   title: this.currentTask.title,
-        //   done: this.currentTask.done,
-        //   order: freeIdx,
-        //   description: this.currentTask.description,
-        //   userId: this.currentTask.userId,
-        //   boardId: this.boardId,
-        //   columnId: this.column!.id,
-        // }
-          
-        // // this.isLoaderOn = true;
-  
-        // this.api.updateTask(this.boardId,
-        //                     this.column!.id,
-        //                     this.currentTask.id, 
-        //                     taskRequest)
-        //   .subscribe(
-        //     (data) => {
-        //       this.column!.tasks!.splice(event.currentIndex, 1, data)
-        //       // this.isLoaderOn = false;
-        //     },
-        //     (err) => {
-        //       this.switchErrorModal();
-        //       // this.isLoaderOn = false;
-        //     });
+              this.switchLoader();
+            }));
     }
   }
 
   public setCurrentTask(task: ITask): void {
+    this.currentTask = task;
     this.currentTaskChange.emit(task);
   }
 
   public setPrevColumn(column: IColumn): void {
     this.prevColumnChange.emit(column);
+  }
+
+  public switchLoader(): void {
+    this.isLoaderOn = !this.isLoaderOn;
   }
 }
