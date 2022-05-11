@@ -1,3 +1,6 @@
+<div *ngIf="isLoaderOn" class="loader">
+  <mat-spinner class="loader__spinner"></mat-spinner>
+</div>
 <mat-card class="column" *ngIf="column">
   <div class="column__header">
     <mat-card-title *ngIf="!isTitleEditMode" (click)="switchTitleEdit()" class="header__title">
@@ -33,6 +36,7 @@
               [boardId]="boardId"
               [columnId]="column.id"
               (cdkDragStarted)="setCurrentTask(task)"
+              (cdkDragStarted)="setPrevColumn(column)"
               cdkDrag>
       <div class="tasks-custom-placeholder" *cdkDragPlaceholder></div>
     </app-task>

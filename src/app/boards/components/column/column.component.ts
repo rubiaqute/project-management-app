@@ -1,5 +1,5 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
 import { ApiServices } from 'src/app/core/services/api-services.service';
@@ -15,7 +15,19 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   @Input()
   public column!: IColumn | undefined;
-  
+
+  @Output()
+  public currentTaskChange = new EventEmitter<ITask>();
+
+  @Input()
+  public currentTask: ITask | undefined;
+
+  @Output()
+  public prevColumnChange = new EventEmitter<IColumn>();
+
+  @Input()
+  public prevColumn: IColumn | undefined;
+
   public isTitleEditMode: boolean = false;  
 
   public title: string | undefined;
@@ -32,11 +44,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public userExecutor: IUser | undefined;
 
-  public currentTask!: ITask;
-
   public MAX_TASK_ORDER: number = 0;
 
-  public INDEX_COEFFICIENT: number = 1000000;
+  public INDEX_COEFFICIENT: number = 100000000;
+
+  public isLoaderOn: boolean = false;
 
   constructor(private api: ApiServices) {}
 
@@ -121,29 +133,29 @@ export class ColumnComponent implements OnInit, OnDestroy {
         let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
   
         const taskRequest: ITaskRequestUpdate = {
-          title: this.currentTask.title,
-          done: this.currentTask.done,
+          title: this.currentTask!.title,
+          done: this.currentTask!.done,
           order: freeIdx,
-          description: this.currentTask.description,
-          userId: this.currentTask.userId,
+          description: this.currentTask!.description,
+          userId: this.currentTask!.userId,
           boardId: this.boardId,
           columnId: this.column!.id,
         }
           
-        // this.isLoaderOn = true;
+        this.isLoaderOn = true;
   
         this.api.updateTask(this.boardId,
                             this.column!.id,
-                            this.currentTask.id, 
+                            this.currentTask!.id, 
                             taskRequest)
           .subscribe(
             (data) => {
               this.column!.tasks!.splice(event.currentIndex, 1, data)
-              // this.isLoaderOn = false;
+              this.isLoaderOn = false;
             },
             (err) => {
               this.switchErrorModal();
-              // this.isLoaderOn = false;
+              this.isLoaderOn = false;
             });
       }
     } else {
@@ -154,13 +166,55 @@ export class ColumnComponent implements OnInit, OnDestroy {
         event.currentIndex,
       );
 
-      if (event.previousIndex !== event.currentIndex) {
-        this.api.deleteTask(this.boardId, this.column!.id, this.currentTask.id)
-          .subscribe(() => {
-            const currentTaskIdx = this.column!.tasks!.indexOf(this.currentTask);
-            console.log(currentTaskIdx);
-            this.column!.tasks!.splice(currentTaskIdx, 1);
-          });
+        // console.log(
+        //   event.previousContainer.data,
+        //   event.container.data,
+        //   event.previousIndex,
+        //   event.currentIndex,)
+
+          // console.log(this.column);
+          // console.log(this.prevColumn);
+
+        // this.api.deleteTask(this.boardId, this.prevColumn!.id, this.currentTask!.id)
+        //   .subscribe(() => {
+        //     const currentTaskIdx = this.column!.tasks!.indexOf(this.currentTask!);
+        //     this.column!.tasks!.splice(currentTaskIdx, 1);
+        //   });
+
+        
+        const nextItem: number = this.column!.tasks![event.currentIndex + 1]
+                                  ? this.column!.tasks![event.currentIndex + 1].order
+                                  : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
+        const prevItem: number = this.column!.tasks![event.currentIndex - 1]
+                                  ? this.column!.tasks![event.currentIndex - 1].order
+                                  : 0;
+        let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
+
+        const taskRequest: ITaskRequestUpdate = {
+          title: this.currentTask!.title,
+          done: this.currentTask!.done,
+          order: freeIdx,
+          description: this.currentTask!.description,
+          userId: this.currentTask!.userId,
+          boardId: this.boardId,
+          columnId: this.column!.id,
+        }
+        
+        this.isLoaderOn = true;
+
+        this.api.updateTask(this.boardId,
+                            this.prevColumn!.id,
+                            this.currentTask!.id,
+                            taskRequest)
+          .subscribe(
+            (data) => {
+              this.column!.tasks!.splice(event.currentIndex, 1, data);
+              this.isLoaderOn = false;
+            },
+            (err) => {
+              this.switchErrorModal();
+              this.isLoaderOn = false;
+            });
 
         // const nextItem: number = this.column!.tasks![event.currentIndex + 1]
         //                           ? this.column!.tasks![event.currentIndex + 1].order
@@ -195,11 +249,14 @@ export class ColumnComponent implements OnInit, OnDestroy {
         //       this.switchErrorModal();
         //       // this.isLoaderOn = false;
         //     });
-      }
     }
   }
 
   public setCurrentTask(task: ITask): void {
-    this.currentTask = task; 
+    this.currentTaskChange.emit(task);
+  }
+
+  public setPrevColumn(column: IColumn): void {
+    this.prevColumnChange.emit(column);
   }
 }

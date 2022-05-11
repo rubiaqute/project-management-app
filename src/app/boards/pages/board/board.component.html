@@ -13,6 +13,8 @@
               [column]="column"
               [boardId]="board.id!"
               (cdkDragStarted)="setCurrentColumn(column)"
+              [(currentTask)]="currentTask"
+              [(prevColumn)]="prevColumn"
               cdkDrag></app-column>
 
   <mat-card class="board__column add-column" (click)="switchAddColumnModal()">
