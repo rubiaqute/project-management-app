@@ -2,7 +2,7 @@ import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import { IBoard, IColumn, IColumnRequest } from 'src/app/core/models/api.models';
+import { IBoard, IColumn, IColumnRequest, ITask } from 'src/app/core/models/api.models';
 import { ApiServices } from 'src/app/core/services/api-services';
 
 @Component({
@@ -28,6 +28,10 @@ export class BoardComponent implements OnInit, OnDestroy {
   public title: string | undefined;
 
   public currentColumn!: IColumn;
+
+  public currentTask: ITask | undefined;
+
+  public prevColumn: IColumn | undefined;
 
   public INDEX_COEFFICIENT: number = 1000000;
 
