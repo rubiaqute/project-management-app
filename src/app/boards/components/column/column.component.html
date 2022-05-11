@@ -35,20 +35,22 @@
               [task]="task"
               [boardId]="boardId"
               [columnId]="column.id"
+              (click)="setCurrentTask(task)"
+              (click)="switchTaskModal()"
               (cdkDragStarted)="setCurrentTask(task)"
               (cdkDragStarted)="setPrevColumn(column)"
               cdkDrag>
       <div class="tasks-custom-placeholder" *cdkDragPlaceholder></div>
     </app-task>
   </div>
-  <div class="column__footer" (click)="switchAddTaskModal()">
+  <div class="column__footer" (click)="switchTaskModal('add')">
     <mat-icon color="primary" class="footer__icon">add</mat-icon>
     <p class="footer__text">{{ "BOARD.ADD_TASK" | translate }}</p>
   </div>
 </mat-card>
 
-<div class="popup" *ngIf="isTaskModalOn">
-  <div class="popup__overlay" (click)="switchAddTaskModal()"></div>
+<div class="popup" *ngIf="isAddTaskModalOn">
+  <div class="popup__overlay" (click)="switchTaskModal('add')"></div>
   <mat-card class="popup__modal">
     <mat-form-field>
       <mat-label>{{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}</mat-label>
@@ -72,10 +74,44 @@
                          !description!.trim() || 
                          !userExecutor)"
             (click)="createTask(title!.trim(), description!.trim())"
-            (click)="switchAddTaskModal()">
+            (click)="switchTaskModal('add')">
       {{ "BOARD.ADD_TASK_MODAL_BUTTON" | translate }}
     </button>
-    <button mat-icon-button class="modal__close" (click)="switchAddTaskModal()">
+    <button mat-icon-button class="modal__close" (click)="switchTaskModal('add')">
+      <mat-icon color="primary">close</mat-icon>
+    </button>
+  </mat-card>
+</div>
+
+<div class="popup" *ngIf="isEditTaskModalOn">
+  <div class="popup__overlay" (click)="switchTaskModal()"></div>
+  <mat-card class="popup__modal">
+    <mat-form-field>
+      <mat-label>{{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="title">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>{{ "BOARD.ADD_TASK_MODAL_DESCRIPTION" | translate }}</mat-label>
+      <input matInput type="text" [(ngModel)]="description">
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>Users</mat-label>
+      <mat-select [(ngModel)]="userExecutor">
+        <mat-option *ngFor="let user of users" [value]="user">
+          {{user.name}}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+    <button mat-raised-button 
+            color="primary"
+            [disabled]="(!title!.trim() || 
+                         !description!.trim() || 
+                         !userExecutor)"
+            (click)="editTask(title!.trim(), description!.trim())"
+            (click)="switchTaskModal()">
+      {{ "BOARD.EDIT_TASK_MODAL_BUTTON" | translate }}
+    </button>
+    <button mat-icon-button class="modal__close" (click)="switchTaskModal()">
       <mat-icon color="primary">close</mat-icon>
     </button>
   </mat-card>

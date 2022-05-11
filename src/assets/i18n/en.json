@@ -70,6 +70,7 @@
     "COLUMN_NO_TITLE": "No title",
     "ADD_TASK_MODAL_TITLE": "Task text",
     "ADD_TASK_MODAL_DESCRIPTION": "Task description",
-    "ADD_TASK_MODAL_BUTTON": "Create task"
+    "ADD_TASK_MODAL_BUTTON": "Create task",
+    "EDIT_TASK_MODAL_BUTTON": "Edit task"
   }
 }
