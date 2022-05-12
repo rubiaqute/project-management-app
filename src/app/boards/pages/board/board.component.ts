@@ -14,7 +14,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public id: string | undefined;
   public subscription: Subscription[] = [];
 
-  public board!: IBoard;
+  public board: IBoard | undefined;
 
   public MAX_COLUMN_ORDER: number = 0;
 

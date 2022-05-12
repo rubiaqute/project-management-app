@@ -1,7 +1,7 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { ITask, IUser } from 'src/app/core/models/api.models';
-import { ApiServices } from 'src/app/core/services/api-services';
+import { ApiServices } from 'src/app/core/services/api-services.service';
 
 @Component({
   selector: 'app-task',
@@ -26,7 +26,7 @@ export class TaskComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.subs.push(
-      this.api.getUserById(this.task!.userId)
+      this.api.getUserById$(this.task!.userId)
       .subscribe((data) => this.executor = data)
       )
   }
