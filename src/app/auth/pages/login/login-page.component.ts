@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Subscription } from 'rxjs';
-import { ApiServices } from "../../../core/services/api-services";
+import { ApiServices } from "../../../core/services/api-services.service";
 import { ISignInRequest, IUser } from "../../../core/models/api.models";
 import { AuthService } from "../../services/auth.service";
 import { Router } from "@angular/router";

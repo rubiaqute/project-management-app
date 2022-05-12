@@ -2,12 +2,10 @@ import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
 import { ISignUp, ISignUpRequest, IUser, IUserRequest } from "../../../core/models/api.models";
-import { ApiServices } from "../../../core/services/api-services";
+import { ApiServices } from "../../../core/services/api-services.service";
 import { Router } from "@angular/router";
 import { AuthService } from "../../services/auth.service";
-import { Store } from '@ngrx/store';
-import { MainState } from 'src/app/store/store';
-import { activateUser } from 'src/app/store/actions';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-form',
@@ -20,19 +18,18 @@ export class FormComponent implements OnInit, OnDestroy {
   public emailValue: string = '';
   public signUpForm!: FormGroup;
   private subs: Subscription | undefined;
-  isAuthorized!: Observable<boolean>
-  currentUser?: Observable<IUser | null>
+  activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$
+  toggleBoard: boolean = true;
 
 
   constructor(private fb: FormBuilder,
     private router: Router,
     public authService: AuthService,
     private apiService: ApiServices,
-    private store: Store<MainState>) {
+    private apiFacade: ApiFacade) {
   }
 
   ngOnInit(): void {
-    this.isAuthorized = this.store.select((state) => state.mainState.isAuthorized)
     this.signUpForm = this.fb.group({
       name: ['', [Validators.required]],
       email: ['', [Validators.required, Validators.email]],
@@ -75,6 +72,7 @@ export class FormComponent implements OnInit, OnDestroy {
     return this.signUpForm.get('password');
   }
 
+
   edit() {
     const body: IUserRequest = {
       name: this.name?.value,
@@ -100,6 +98,7 @@ export class FormComponent implements OnInit, OnDestroy {
       this.router.navigateByUrl('/auth/login');
     })
   }
+
   deleteUser() {
     const user = JSON.parse(localStorage.getItem('currentUserRubiaqute')!)
     if (user) {

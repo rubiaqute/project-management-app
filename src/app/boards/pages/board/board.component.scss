@@ -11,7 +11,7 @@
   align-items: flex-start;
   justify-content: flex-start;
   width: 100%;
-  height: calc($main-height - $board-title-height);
+  //height: calc($main-height - $board-title-height);
   padding: $padding-default;
   gap: 1vw;
   overflow-x: auto;
@@ -58,7 +58,7 @@
                 &:hover {
                   -webkit-animation: jello-horizontal 0.9s both;
                           animation: jello-horizontal 0.9s both;
-                          
+
                 }
               }
             }
@@ -69,8 +69,8 @@
         padding: 3%;
         flex-grow: 1;
         overflow-y: auto;
-        box-shadow: inset 0px 6px 3px -3px rgb(0 0 0 / 20%), 
-                    inset 0px 3px 3px 0px rgb(0 0 0 / 14%), 
+        box-shadow: inset 0px 6px 3px -3px rgb(0 0 0 / 20%),
+                    inset 0px 3px 3px 0px rgb(0 0 0 / 14%),
                     inset 0px 3px 9px 0px rgb(0 0 0 / 12%);
         .tasks {
           &__task {

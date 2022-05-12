@@ -11,16 +11,13 @@ import {
 } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { map, Observable } from 'rxjs';
-import { MainState } from 'src/app/store/store';
 import { AuthService } from "../../auth/services/auth.service";
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthGuard implements CanActivate, CanActivateChild {
-  constructor(private router: Router,
-    private readonly authService: AuthService,
-    private store: Store<MainState>) { }
+  constructor(private router: Router) { }
 
   canActivateChild(route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean | UrlTree> | Promise<boolean | UrlTree> | boolean | UrlTree {

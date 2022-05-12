@@ -35,13 +35,15 @@ export interface IUserError {
 }
 
 export interface IBoard {
-  id: string,
+  id: string | null,
   title: string,
+  description: string,
   columns?: IColumn[],
 }
 
 export interface IBoardRequest {
   title: string,
+  description: string,
 }
 
 export interface IColumn {
@@ -72,6 +74,8 @@ export interface ITaskRequest {
   order: number,
   description: string,
   userId: string,
+  boardId?: string;
+  columnId?: string
 }
 
 export interface ITaskRequestUpdate extends ITaskRequest {
@@ -87,4 +91,21 @@ export interface IFile {
 export interface IFileUpload {
   taskId: string,
   file: string,
+}
+
+export enum Status {
+  INITIAL = 'Initial',
+  LOADING = 'Loading',
+  SUCCESS = 'Success',
+  FAILURE = 'Failure',
+  IN_PROGRESS = 'InProgress',
+}
+
+export enum AsyncActionStatus {
+  Delete = 'Delete',
+  DeleteError = 'DeleteError',
+  DeleteSuccess = 'DeleteSuccess',
+  Update = 'Update',
+  UpdateError = 'UpdateError',
+  UpdateSuccess = 'UpdateSuccess'
 }

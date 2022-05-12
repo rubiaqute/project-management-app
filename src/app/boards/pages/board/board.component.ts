@@ -9,12 +9,9 @@ import { Subscription } from 'rxjs';
 })
 export class BoardComponent implements OnInit {
   public id: string | undefined;
-
   public subscription: Subscription[] = [];
-
   public isTitleEditMode: boolean = false;
-
-  constructor(private activateRoute: ActivatedRoute) {}
+  constructor(private activateRoute: ActivatedRoute) { }
 
   ngOnInit(): void {
     this.subscription.push(

@@ -1,19 +1,50 @@
-import { Component, OnInit } from '@angular/core';
-import { IBoard } from 'src/app/core/models/api.models';
-import { ApiServices } from 'src/app/core/services/api-services';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { IBoard, Status } from 'src/app/core/models/api.models';
+import { ApiServices } from 'src/app/core/services/api-services.service';
+import { Router } from "@angular/router";
+import { debounceTime, map, Observable, Subscription } from "rxjs";
+import { Store } from "@ngrx/store";
+// import { selectBoards } from "../../../store/selectors";
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-boards',
   templateUrl: './boards.component.html',
-  styleUrls: ['./boards.component.scss']
+  styleUrls: ['./boards.component.scss'],
+
 })
 export class BoardsComponent implements OnInit {
-  boards: IBoard[] = []
 
-  constructor(private api: ApiServices) {
+  searchStr: string = '';
+  subs: Subscription | undefined;
+  title: string = '';
+  isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
+
+  public boards$: Observable<IBoard[]> = this.apiFacade.boards$.pipe(
+    map((boards: IBoard[]) => [...boards].sort((a, b) => a.title.localeCompare(b.title)))
+  )
+  constructor(private apiFacade: ApiFacade, private router: Router) {
 
   }
   ngOnInit(): void {
-    this.api.getBoards().subscribe((data) => this.boards = data)
+    this.apiFacade.loadBoards();
+    // this.boards$.subscribe((data => {
+    //   if (data) {
+    //     this.boards = Object.assign([], data);
+    //     this.boards.sort((a, b) => a.title.localeCompare(b.title))
+    //   }
+    // })
+    // )
+
+  }
+
+  search(value: string) {
+    this.title = value;
+  }
+  deleteBoard(id: string | null, e: Event) {
+    e.stopPropagation()
+    if (id) {
+      this.apiFacade.deleteBoardById(id)
+    }
   }
 }
