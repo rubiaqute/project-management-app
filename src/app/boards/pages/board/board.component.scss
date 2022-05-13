@@ -1,10 +1,14 @@
 @import "../../../../assets/styles/constants.scss";
 @import "../../../../assets/styles/keyframes.scss";
 
-.page-title {
-  margin: 0;
+:where(.page-title,.page-description) {
+  margin: 0 auto;
   height: $board-title-height;
+  max-width: 50%;
   text-align: center;
+}
+.page-description {
+  font-size: 1.2rem;
 }
 .loader {
   position: absolute;
@@ -24,7 +28,7 @@
   display: flex;
   justify-content: flex-start;
   width: 100%;
-  //height: calc($main-height - $board-title-height);
+  height: calc($main-height - $board-title-height * 2);
   padding: $padding-default;
   overflow-x: auto;
   overflow-y: hidden;
@@ -37,7 +41,7 @@
     margin: 0 0.5vw;
     cursor: pointer;
     transition: 0.3s;
-    height: calc($main-height - $board-title-height - 8vh);
+    height: calc($main-height - $board-title-height * 2 - 8vh);
     &:hover {
       transform: scale(0.95);
       box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 3px -3px,

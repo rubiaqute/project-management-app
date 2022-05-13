@@ -22,7 +22,7 @@
   justify-content: space-between;
   min-width: 15vw;
   width: 15vw;
-  height: calc($main-height - $board-title-height - 8vh);
+  height: calc($main-height - $board-title-height * 2 - 8vh);
   margin: 0 0.5vw;
   padding: 0 1vw;
   &__header {
@@ -176,6 +176,25 @@
           -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
           animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
         }
+      }
+    }
+    .taskDetails {
+      padding: 0 2vw;
+      &__title {
+        align-self: flex-start;
+      }
+      &__description {
+        width: 100%;
+        align-self: flex-end;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-style: italic;
+      }
+      &__done {
+        align-self: flex-start;
+      }
+      &__executor {
+        align-self: flex-end;
       }
     }
   }

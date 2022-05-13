@@ -36,6 +36,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public isAddTaskModalOn: boolean = false;
 
+  public isTaskDetailsModalOn: boolean = false;
+
   public isEditTaskModalOn: boolean = false;
 
   public isErrorModalOn: boolean = false;
@@ -92,17 +94,25 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.switchTitleEdit();
   }
 
-  public switchTaskModal(mode: string = 'edit'): void {
+  public switchTaskModal(evt: Event, mode: string = 'edit'): void {
+    evt.stopPropagation();
     mode === 'add' 
       ? this.isAddTaskModalOn = !this.isAddTaskModalOn
       : this.isEditTaskModalOn = !this.isEditTaskModalOn;
     this.title = '';
     this.description = '';
     this.userExecutor = undefined;
+    this.isTaskDetailsModalOn = false;
   }
 
-  public switchErrorModal(): void {
+  public switchErrorModal(evt: Event): void {
+    evt.stopPropagation();
     this.isErrorModalOn = !this.isErrorModalOn;
+  }
+
+  public switchTaskDetailsModal(evt: Event): void {
+    evt.stopPropagation();
+    this.isTaskDetailsModalOn = !this.isTaskDetailsModalOn;
   }
 
   public createTask(title: string, description: string): void {
@@ -148,10 +158,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
       (data) => {
         this.column!.tasks!.splice(idx!, 1, data);
         this.switchLoader();
-      },
-      (err) => {
-        this.switchErrorModal();
-        this.switchLoader();
       }));
   }
   
@@ -189,10 +195,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
             (data) => {
               this.column!.tasks!.splice(event.currentIndex, 1, data);
               this.switchLoader();
-            },
-            (err) => {
-              this.switchErrorModal();
-              this.switchLoader();
             }));
       }
     } else {
@@ -213,10 +215,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
             (data) => {
               this.column!.tasks!.splice(event.currentIndex, 1, data);
               this.switchLoader();
-            },
-            (err) => {
-              this.switchErrorModal();
-              this.switchLoader();
             }));
     }
   }
@@ -224,6 +222,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public setCurrentTask(task: ITask): void {
     this.currentTask = task;
     this.currentTaskChange.emit(task);
+    this.subs.push(
+      this.api.getUserById$(task.userId)
+      .subscribe((data) => this.userExecutor = data)
+      )
   }
 
   public setPrevColumn(column: IColumn): void {
