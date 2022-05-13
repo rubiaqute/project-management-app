@@ -1,7 +1,7 @@
 @import "../../../../assets/styles/constants";
 
 .welcome-wrapper {
-  padding: 5% 10vw;
+  padding: 5% 20vw;
   margin: 0;
   text-align: center;
   display: flex;
@@ -222,6 +222,7 @@
 
 @media (max-width: 600px) {
   .welcome-wrapper {
+    padding: 5% 10vw;
     &__center {
       .mat-card-title-group {
         flex-direction: column;

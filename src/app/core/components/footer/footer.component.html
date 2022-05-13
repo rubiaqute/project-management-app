@@ -2,7 +2,7 @@
   <mat-toolbar class="footer-bar" color="primary">
     <mat-toolbar-row class="footer-container">
       <a class="footer__item rsschool" href="https://rs.school/angular/" target="_blank"></a>
-      <p class="footer__item center">2022</p>
+      <div class="footer__item center">2022</div>
       <div class="developers">
         <p class="developers__title footer__item">{{ "FOOTER.DEVELOPERS.TITLE" | translate }}:</p>
         <ul class="developers__list">
@@ -22,6 +22,26 @@
             </a>
           </li>
         </ul>
+      </div>
+      <div class="developers-hidden">
+        <button mat-button [matMenuTriggerFor]="animals">Developers:</button>
+        <mat-menu #animals="matMenu">
+          <button mat-menu-item>
+            <a class="item__link" href="http://github.com/rubiaqute" target="_blank">
+              {{ "FOOTER.DEVELOPERS.LIST.INGA" | translate }}
+            </a>
+          </button>
+          <button mat-menu-item>
+            <a class="item__link" href="https://github.com/batashofa" target="_blank">
+              {{ "FOOTER.DEVELOPERS.LIST.NASTASSIA" | translate }}
+            </a>
+          </button>
+          <button mat-menu-item>
+            <a class="item__link" href="https://github.com/EdChekanov" target="_blank">
+              {{ "FOOTER.DEVELOPERS.LIST.ED" | translate }}
+            </a>
+          </button>
+        </mat-menu>
       </div>
     </mat-toolbar-row>
   </mat-toolbar>

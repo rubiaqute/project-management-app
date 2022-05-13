@@ -47,3 +47,21 @@
   display: flex;
   justify-content: center;
 }
+
+@media (max-width: 1000px) {
+  .sign-up {
+    width: 40%;
+  }
+}
+
+@media (max-width: 800px) {
+  .sign-up {
+    width: 50%;
+  }
+}
+
+@media (max-width: 500px) {
+  .sign-up {
+    width: 70%;
+  }
+}
