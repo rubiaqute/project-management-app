@@ -62,7 +62,7 @@
       <input matInput type="text" [(ngModel)]="description">
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Users</mat-label>
+      <mat-label>{{ "BOARD.USERS" | translate }}</mat-label>
       <mat-select [(ngModel)]="userExecutor">
         <mat-option *ngFor="let user of users" [value]="user">
           {{user.name}}
@@ -96,7 +96,7 @@
       <input matInput type="text" [(ngModel)]="description">
     </mat-form-field>
     <mat-form-field>
-      <mat-label>Users</mat-label>
+      <mat-label>{{ "BOARD.USERS" | translate }}</mat-label>
       <mat-select [(ngModel)]="userExecutor">
         <mat-option *ngFor="let user of users" [value]="user">
           {{user.name}}

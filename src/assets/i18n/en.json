@@ -80,7 +80,8 @@
     "DONE": "Done",
     "YES": "Yes",
     "NO": "No",
-    "EXECUTOR": "Executor"
+    "EXECUTOR": "Executor",
+    "USERS": "Users"
   },
   "WELCOME": {
     "BOARDS": "Boards",
