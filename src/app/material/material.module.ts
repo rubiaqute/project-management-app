@@ -12,6 +12,7 @@ import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list'
 import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
 import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -19,6 +20,7 @@ import { MatSelectModule } from '@angular/material/select';
     CommonModule
   ],
   exports: [
+    MatCheckboxModule,
     MatSelectModule,
     MatProgressSpinnerModule,
     MatSidenavModule,

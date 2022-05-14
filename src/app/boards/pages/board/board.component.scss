@@ -3,26 +3,14 @@
 
 :where(.page-title,.page-description) {
   margin: 0 auto;
-  height: $board-title-height;
   max-width: 50%;
+  max-height: $board-title-height;
   text-align: center;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 .page-description {
   font-size: 1.2rem;
-}
-.loader {
-  position: absolute;
-  top: 0;
-  left: 0;
-  height: 100vh;
-  width: 100vw;
-  z-index: 999;
-  &__spinner {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-  }
 }
 .board {
   display: flex;

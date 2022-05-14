@@ -33,24 +33,25 @@
     <app-task class="tasks__list"
               *ngFor="let task of column.tasks"
               [task]="task"
+              (taskChange)="setCurrentTask($event)"
               [boardId]="boardId"
               [columnId]="column.id"
               (click)="setCurrentTask(task)"
-              (click)="switchTaskDetailsModal($event)"
+              (click)="switchTaskDetailsModal()"
               (cdkDragStarted)="setCurrentTask(task)"
               (cdkDragStarted)="setPrevColumn(column)"
               cdkDrag>
       <div class="tasks-custom-placeholder" *cdkDragPlaceholder></div>
     </app-task>
   </div>
-  <div class="column__footer" (click)="switchTaskModal($event,'add')">
+  <div class="column__footer" (click)="switchTaskModal('add')">
     <mat-icon color="primary" class="footer__icon">add</mat-icon>
     <p class="footer__text">{{ "BOARD.ADD_TASK" | translate }}</p>
   </div>
 </mat-card>
 
 <div class="popup" *ngIf="isAddTaskModalOn">
-  <div class="popup__overlay" (click)="switchTaskModal($event,'add')"></div>
+  <div class="popup__overlay" (click)="switchTaskModal('add')"></div>
   <mat-card class="popup__modal">
     <mat-form-field>
       <mat-label>{{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}</mat-label>
@@ -74,17 +75,17 @@
                          !description!.trim() || 
                          !userExecutor)"
             (click)="createTask(title!.trim(), description!.trim())"
-            (click)="switchTaskModal($event,'add')">
+            (click)="switchTaskModal('add')">
       {{ "BOARD.ADD_TASK_MODAL_BUTTON" | translate }}
     </button>
-    <button mat-icon-button class="modal__close" (click)="switchTaskModal($event,'add')">
+    <button mat-icon-button class="modal__close" (click)="switchTaskModal('add')">
       <mat-icon color="primary">close</mat-icon>
     </button>
   </mat-card>
 </div>
 
 <div class="popup" *ngIf="isEditTaskModalOn">
-  <div class="popup__overlay" (click)="switchTaskModal($event)"></div>
+  <div class="popup__overlay" (click)="switchTaskModal()"></div>
   <mat-card class="popup__modal">
     <mat-form-field>
       <mat-label>{{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}</mat-label>
@@ -108,31 +109,31 @@
                          !description!.trim() || 
                          !userExecutor)"
             (click)="editTask(title!.trim(), description!.trim())"
-            (click)="switchTaskModal($event)">
+            (click)="switchTaskModal()">
       {{ "BOARD.EDIT_TASK_MODAL_BUTTON" | translate }}
     </button>
-    <button mat-icon-button class="modal__close" (click)="switchTaskModal($event)">
+    <button mat-icon-button class="modal__close" (click)="switchTaskModal()">
       <mat-icon color="primary">close</mat-icon>
     </button>
   </mat-card>
 </div>
 
 <div class="popup" *ngIf="isErrorModalOn">
-  <div class="popup__overlay" (click)="switchErrorModal($event)"></div>
+  <div class="popup__overlay" (click)="switchErrorModal()"></div>
   <mat-card class="popup__modal">
     <img class="modal__img"
          src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png" 
          alt="img: server wrong"
          draggable="false">
     <p>{{ "BOARD.ERROR" | translate }}</p>
-    <button mat-icon-button class="modal__close" (click)="switchErrorModal($event)">
+    <button mat-icon-button class="modal__close" (click)="switchErrorModal()">
       <mat-icon color="primary">close</mat-icon>
     </button>
   </mat-card>
 </div>
 
 <div class="popup" *ngIf="isTaskDetailsModalOn">
-  <div class="popup__overlay" (click)="switchTaskDetailsModal($event)"></div>
+  <div class="popup__overlay" (click)="switchTaskDetailsModal()"></div>
   <mat-card class="popup__modal taskDetails">
     <h2 class="taskDetails__title">{{ currentTask?.title }}</h2>
     <h4 class="taskDetails__description" title="{{ currentTask?.description }}">
@@ -147,8 +148,8 @@
     </h2>
     <button mat-raised-button
             color="primary"
-            (click)="switchTaskModal($event)">Edit task</button>
-    <button mat-icon-button class="modal__close" (click)="switchTaskDetailsModal($event)">
+            (click)="switchTaskModal()">Edit task</button>
+    <button mat-icon-button class="modal__close" (click)="switchTaskDetailsModal()">
       <mat-icon color="primary">close</mat-icon>
     </button>
   </mat-card>

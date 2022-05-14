@@ -94,8 +94,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.switchTitleEdit();
   }
 
-  public switchTaskModal(evt: Event, mode: string = 'edit'): void {
-    evt.stopPropagation();
+  public switchTaskModal(mode: string = 'edit'): void {
     mode === 'add' 
       ? this.isAddTaskModalOn = !this.isAddTaskModalOn
       : this.isEditTaskModalOn = !this.isEditTaskModalOn;
@@ -105,13 +104,11 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.isTaskDetailsModalOn = false;
   }
 
-  public switchErrorModal(evt: Event): void {
-    evt.stopPropagation();
+  public switchErrorModal(): void {
     this.isErrorModalOn = !this.isErrorModalOn;
   }
 
-  public switchTaskDetailsModal(evt: Event): void {
-    evt.stopPropagation();
+  public switchTaskDetailsModal(): void {
     this.isTaskDetailsModalOn = !this.isTaskDetailsModalOn;
   }
 

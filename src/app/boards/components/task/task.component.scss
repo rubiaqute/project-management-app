@@ -3,6 +3,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: space-between;
+  flex-wrap: wrap;
   min-height: 10vh;
   border-radius: 5px;
   border-bottom: 2px solid lightblue;
@@ -23,6 +24,11 @@
     font-weight: 700;
     font-family: "Rubik", sans-serif;
     color: firebrick;
+  }
+  &__checkbox {
+    font-weight: 700;
+    font-family: "Rubik", sans-serif;
+    text-decoration: underline;
   }
   &__btn {
     cursor: pointer;

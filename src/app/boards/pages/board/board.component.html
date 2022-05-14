@@ -1,5 +1,5 @@
-<h3 class="page-title"><b>{{ board?.title }}</b></h3>
-<h4 class="page-description"><b>{{ board?.description }}</b></h4>
+<h3 class="page-title" title="{{ board?.title }}"><b>{{ board?.title }}</b></h3>
+<h4 class="page-description" title="{{ board?.description }}">{{ board?.description }}</h4>
 <div *ngIf="isLoaderOn" class="loader">
   <mat-spinner class="loader__spinner"></mat-spinner>
 </div>
