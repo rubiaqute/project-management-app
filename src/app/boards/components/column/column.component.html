@@ -139,16 +139,18 @@
     <h4 class="taskDetails__description" title="{{ currentTask?.description }}">
       {{ currentTask?.description }}
     </h4>
-    <h3 class="taskDetails__done">done: 
+    <h3 class="taskDetails__done">{{ "BOARD.DONE" | translate }}: 
       <span style="color: red;
-                   font-weight: bold;">{{ currentTask?.done ? 'Yes' : 'No' }}</span>
+                   font-weight: bold;">{{ currentTask?.done 
+                                            ? ("BOARD.YES" | translate)
+                                            : ("BOARD.NO" | translate) }}</span>
     </h3>
-    <h2 class="taskDetails__executor">executor: 
+    <h2 class="taskDetails__executor">{{ "BOARD.EXECUTOR" | translate }}: 
       <span style="color: red;">{{ userExecutor?.name }}</span>
     </h2>
     <button mat-raised-button
             color="primary"
-            (click)="switchTaskModal()">Edit task</button>
+            (click)="switchTaskModal()">{{ "BOARD.EDIT_TASK_MODAL_BUTTON" | translate }}</button>
     <button mat-icon-button class="modal__close" (click)="switchTaskDetailsModal()">
       <mat-icon color="primary">close</mat-icon>
     </button>

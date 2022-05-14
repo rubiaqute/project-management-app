@@ -76,7 +76,11 @@
     "ADD_TASK_MODAL_TITLE": "Task text",
     "ADD_TASK_MODAL_DESCRIPTION": "Task description",
     "ADD_TASK_MODAL_BUTTON": "Create task",
-    "EDIT_TASK_MODAL_BUTTON": "Edit task"
+    "EDIT_TASK_MODAL_BUTTON": "Edit task",
+    "DONE": "Done",
+    "YES": "Yes",
+    "NO": "No",
+    "EXECUTOR": "Executor"
   },
   "WELCOME": {
     "BOARDS": "Boards",

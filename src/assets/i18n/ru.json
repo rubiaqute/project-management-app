@@ -77,7 +77,11 @@
     "ADD_TASK_MODAL_TITLE": "Тескт задачи",
     "ADD_TASK_MODAL_DESCRIPTION": "Описание задачи",
     "ADD_TASK_MODAL_BUTTON": "Создать задачу",
-    "EDIT_TASK_MODAL_BUTTON": "Изменить задачу"
+    "EDIT_TASK_MODAL_BUTTON": "Изменить задачу",
+    "DONE": "Выполнено",
+    "YES": "Да",
+    "NO": "Нет",
+    "EXECUTOR": "Исполнитель"
   },
   "WELCOME": {
     "BOARDS": "Доски",
