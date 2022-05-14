@@ -20,7 +20,6 @@ export function activeBoardReducer(
         ...state,
         getActiveBoardStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
     case ActiveBordTypes.CreateColumn: {
@@ -40,7 +39,6 @@ export function activeBoardReducer(
         ...state,
         getCreateColumnStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
 
@@ -70,7 +68,6 @@ export function activeBoardReducer(
         ...state,
         getUpdateColumnStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
 
@@ -90,7 +87,6 @@ export function activeBoardReducer(
         ...state,
         getDeleteColumnStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
 
@@ -122,7 +118,6 @@ export function activeBoardReducer(
         ...state,
         getUpdateTaskStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
     case ActiveBordTypes.UpdateTask: {
@@ -153,7 +148,6 @@ export function activeBoardReducer(
         ...state,
         getUpdateTaskStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
     case ActiveBordTypes.DeleteTask: {
@@ -183,7 +177,6 @@ export function activeBoardReducer(
         ...state,
         getDeleteTaskStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
 

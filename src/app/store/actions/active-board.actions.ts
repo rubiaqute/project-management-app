@@ -44,7 +44,7 @@ export class GetActiveBoardSuccess implements Action {
 }
 export class GetActiveBoardFailure implements Action {
   readonly type = ActiveBordTypes.GetActiveBoardFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 export class CreateColumn implements Action {
   readonly type = ActiveBordTypes.CreateColumn;
@@ -56,7 +56,7 @@ export class CreateColumnSuccess implements Action {
 }
 export class CreateColumnFailure implements Action {
   readonly type = ActiveBordTypes.CreateColumnFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 export class UpdateColumn implements Action {
   readonly type = ActiveBordTypes.UpdateColumn;
@@ -68,7 +68,7 @@ export class UpdateColumnSuccess implements Action {
 }
 export class UpdateColumnFailure implements Action {
   readonly type = ActiveBordTypes.UpdateColumnFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 export class DeleteColumn implements Action {
   readonly type = ActiveBordTypes.DeleteColumn;
@@ -80,7 +80,7 @@ export class DeleteColumnSuccess implements Action {
 }
 export class DeleteColumnFailure implements Action {
   readonly type = ActiveBordTypes.DeleteColumnFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 export class CreateTask implements Action {
   readonly type = ActiveBordTypes.CreateTask;
@@ -92,7 +92,7 @@ export class CreateTaskSuccess implements Action {
 }
 export class CreateTaskFailure implements Action {
   readonly type = ActiveBordTypes.CreateTaskFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 export class UpdateTask implements Action {
   readonly type = ActiveBordTypes.UpdateTask;
@@ -104,7 +104,7 @@ export class UpdateTaskSuccess implements Action {
 }
 export class UpdateTaskFailure implements Action {
   readonly type = ActiveBordTypes.UpdateTaskFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 export class DeleteTask implements Action {
   readonly type = ActiveBordTypes.DeleteTask;
@@ -116,7 +116,7 @@ export class DeleteTaskSuccess implements Action {
 }
 export class DeleteTaskFailure implements Action {
   readonly type = ActiveBordTypes.DeleteTaskFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 
 export type ActiveBoardActions =

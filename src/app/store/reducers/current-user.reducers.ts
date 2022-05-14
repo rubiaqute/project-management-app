@@ -19,7 +19,6 @@ export function currentUserReducer(
         ...state,
         activeUserStatus: Status.FAILURE,
         loadingStatus: Status.FAILURE,
-        loadingError: action.payload
       };
     }
     case CurrentUserTypes.LogOutUser: {

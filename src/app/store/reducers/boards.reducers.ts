@@ -20,7 +20,6 @@ export function boardsReducer(
         ...state,
         getBoardsStatus: Status.FAILURE,
         loadingStatus: false,
-        loadingError: action.payload
       };
     }
     case BoardsTypes.UpdateBoard: {
@@ -38,7 +37,6 @@ export function boardsReducer(
         ...state,
         updateBoardStatus: Status.FAILURE,
         loadingStatus: false,
-        loadingError: action.payload
       };
     }
     case BoardsTypes.CreateBoard: {
@@ -55,7 +53,6 @@ export function boardsReducer(
         ...state,
         createBoardStatus: Status.FAILURE,
         loadingStatus: false,
-        loadingError: action.payload
       };
     }
     case BoardsTypes.DeleteBoard: {
@@ -66,7 +63,7 @@ export function boardsReducer(
       return { ...state, boards: newBoardsState, deleteBoardStatus: Status.SUCCESS, loadingStatus: false };
     }
     case BoardsTypes.DeleteBoardFailure: {
-      return { ...state, deleteBoardStatus: Status.FAILURE, loadingStatus: false, loadingError: action.payload };
+      return { ...state, deleteBoardStatus: Status.FAILURE, loadingStatus: false };
     }
 
     default: {

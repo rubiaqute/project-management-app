@@ -4,7 +4,7 @@ import { AuthService } from "../../../auth/services/auth.service";
 import { Router } from "@angular/router";
 import { Observable } from "rxjs";
 import { ApiServices } from "../../services/api-services.service";
-import { IUser } from '../../models/api.models';
+import { IUser, Status } from '../../models/api.models';
 import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
@@ -16,6 +16,7 @@ export class HeaderComponent implements OnInit {
   isDarkTheme: boolean = false;
   langValue: boolean = false;
   public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
+  public loadingStatus$: Observable<Status> = this.apiFacade.loadingStatus$;
 
   @Output() themeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -27,6 +28,12 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
+    this.loadingStatus$.subscribe((status) => {
+      if (status === Status.FAILURE) {
+        this.authService.clearInfo();
+        setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);
+      }
+    })
     this.authService.initAuth();
   }
 

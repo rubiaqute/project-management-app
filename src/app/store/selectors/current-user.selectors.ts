@@ -11,4 +11,6 @@ export const getCurentUserState = createFeatureSelector<CurrentUserState>(curren
 
 export const selectCurrentUser = createSelector(getCurentUserState, state => state.activeUser);
 
+export const selectLoadingStatus = createSelector(getCurentUserState, state => state.loadingStatus);
+
 

@@ -16,7 +16,7 @@ export class GetBoardsRouteEffects {
       switchMap(() =>
         this.apiServices.getBoards$().pipe(
           map((boards: IBoard[]) => new boardsActions.GetBoardsSuccess(boards)),
-          catchError(err => of(new boardsActions.GetBoardsFailure(err))),
+          catchError(err => of(new boardsActions.GetBoardsFailure())),
         )
       )
     );
@@ -28,7 +28,7 @@ export class GetBoardsRouteEffects {
       switchMap((action: any) =>
         this.apiServices.updateBoard(action.payload.body, action.payload.id).pipe(
           map((board: IBoard) => new boardsActions.UpdateBoardSuccess(board)),
-          catchError(err => of(new boardsActions.UpdateBoardFailure(err))),
+          catchError(err => of(new boardsActions.UpdateBoardFailure())),
         )
       )
     );
@@ -40,7 +40,7 @@ export class GetBoardsRouteEffects {
       switchMap((action: any) =>
         this.apiServices.createBoard(action.payload.body).pipe(
           map((board: IBoard) => new boardsActions.CreateBoardSuccess(board)),
-          catchError(err => of(new boardsActions.CreateBoardFailure(err))),
+          catchError(err => of(new boardsActions.CreateBoardFailure())),
         )
       )
     );
@@ -51,7 +51,7 @@ export class GetBoardsRouteEffects {
       switchMap((action: any) =>
         this.apiServices.deleteBoard(action.payload.id).pipe(
           map(() => new boardsActions.DeleteBoardSuccess(action.payload.id)),
-          catchError(err => of(new boardsActions.DeleteBoardFailure(err))),
+          catchError(err => of(new boardsActions.DeleteBoardFailure())),
         )
       )
     );

@@ -16,7 +16,7 @@ export class GetActiveBoardEffects {
       switchMap((action: any) =>
         this.apiServices.getBoardById(action.payload).pipe(
           map((board: IBoard) => new activeBoardActions.GetActiveBoardSuccess(board)),
-          catchError(err => of(new activeBoardActions.GetActiveBoardFailure(err))),
+          catchError(err => of(new activeBoardActions.GetActiveBoardFailure())),
         )
       )
     );
@@ -28,7 +28,7 @@ export class GetActiveBoardEffects {
       switchMap((action: any) =>
         this.apiServices.createColumn(action.payload.body, action.payload.id).pipe(
           map((column: IColumn) => new activeBoardActions.CreateColumnSuccess(column)),
-          catchError(err => of(new activeBoardActions.CreateColumnFailure(err))),
+          catchError(err => of(new activeBoardActions.CreateColumnFailure())),
         )
       )
     );
@@ -40,7 +40,7 @@ export class GetActiveBoardEffects {
       switchMap((action: any) =>
         this.apiServices.updateColumn(action.payload.boardId, action.payload.columnId, action.payload.column).pipe(
           map((column: IColumn) => new activeBoardActions.UpdateColumnSuccess(column)),
-          catchError(err => of(new activeBoardActions.UpdateColumnFailure(err))),
+          catchError(err => of(new activeBoardActions.UpdateColumnFailure())),
         )
       )
     );
@@ -52,7 +52,7 @@ export class GetActiveBoardEffects {
       switchMap((action: any) =>
         this.apiServices.deleteColumn(action.payload.boardId, action.payload.columnId).pipe(
           map(() => new activeBoardActions.DeleteColumnSuccess(action.payload.columnId)),
-          catchError(err => of(new activeBoardActions.DeleteColumnFailure(err))),
+          catchError(err => of(new activeBoardActions.DeleteColumnFailure())),
         )
       )
     );
@@ -63,7 +63,7 @@ export class GetActiveBoardEffects {
       switchMap((action: any) =>
         this.apiServices.createTask(action.payload.boardId, action.payload.columnId, action.payload.task).pipe(
           map((task: ITask) => new activeBoardActions.CreateTaskSuccess({ columnId: action.payload.columnId, task })),
-          catchError(err => of(new activeBoardActions.CreateTaskFailure(err))),
+          catchError(err => of(new activeBoardActions.CreateTaskFailure())),
         )
       )
     );
@@ -74,7 +74,7 @@ export class GetActiveBoardEffects {
       switchMap((action: any) =>
         this.apiServices.updateTask(action.payload.boardId, action.payload.columnId, action.payload.taskId, action.payload.task).pipe(
           map((task: ITask) => new activeBoardActions.UpdateTaskSuccess({ columnId: action.payload.columnId, taskId: action.payload.taskId, task })),
-          catchError(err => of(new activeBoardActions.UpdateTaskFailure(err))),
+          catchError(err => of(new activeBoardActions.UpdateTaskFailure())),
         )
       )
     );
@@ -85,7 +85,7 @@ export class GetActiveBoardEffects {
       switchMap((action: any) =>
         this.apiServices.deleteTask(action.payload.boardId, action.payload.columnId, action.payload.taskId).pipe(
           map(() => new activeBoardActions.DeleteTaskSuccess({ columnId: action.payload.columnId, taskId: action.payload.taskId })),
-          catchError(err => of(new activeBoardActions.DeleteTaskFailure(err))),
+          catchError(err => of(new activeBoardActions.DeleteTaskFailure())),
         )
       )
     );

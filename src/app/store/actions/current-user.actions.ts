@@ -22,7 +22,7 @@ export class GetCurrentUserSuccess implements Action {
 }
 export class GetCurrentUserFailure implements Action {
   readonly type = CurrentUserTypes.GetCurrentUserFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 export class LogOutUser implements Action {
   readonly type = CurrentUserTypes.LogOutUser;

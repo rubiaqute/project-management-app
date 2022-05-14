@@ -30,7 +30,7 @@ export class GetBoardsSuccess implements Action {
 }
 export class GetBoardsFailure implements Action {
   readonly type = BoardsTypes.GetBoardsFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 
 export class CreateBoard implements Action {
@@ -43,7 +43,7 @@ export class CreateBoardSuccess implements Action {
 }
 export class CreateBoardFailure implements Action {
   readonly type = BoardsTypes.CreateBoardFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 
 export class UpdateBoard implements Action {
@@ -56,7 +56,7 @@ export class UpdateBoardSuccess implements Action {
 }
 export class UpdateBoardFailure implements Action {
   readonly type = BoardsTypes.UpdateBoardFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 
 export class DeleteBoard implements Action {
@@ -69,7 +69,7 @@ export class DeleteBoardSuccess implements Action {
 }
 export class DeleteBoardFailure implements Action {
   readonly type = BoardsTypes.DeleteBoardFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
 }
 
 export type BoardsActions =

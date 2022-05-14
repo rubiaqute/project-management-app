@@ -16,6 +16,7 @@ export class ApiFacade {
   readonly boards$ = this.store.select(boardsSelectors.selectBoards);
   readonly boardsLoadingStatus$ = this.store.select(boardsSelectors.selectBoardsLoadingStatus)
   readonly activeUser$ = this.store.select(currentUserSelectors.selectCurrentUser);
+  readonly loadingStatus$ = this.store.select(currentUserSelectors.selectLoadingStatus);
   readonly activeBoard$ = this.store.select(activeBoardSelectors.selectActiveBoard);
   constructor(private store: Store) {
   }

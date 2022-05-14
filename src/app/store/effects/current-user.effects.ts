@@ -16,7 +16,7 @@ export class GetCurrentUserEffects {
       switchMap((action: any) =>
         this.apiServices.getUserById$(action.payload.id).pipe(
           map((user: IUser) => new currentUserActions.GetCurrentUserSuccess(user)),
-          catchError(err => of(new currentUserActions.GetCurrentUserFailure(err))),
+          catchError(err => of(new currentUserActions.GetCurrentUserFailure())),
         )
       )
     );

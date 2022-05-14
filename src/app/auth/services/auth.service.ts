@@ -24,8 +24,9 @@ export class AuthService {
   }
 
   setUser(user: IUser): void {
-    localStorage.setItem('currentUserRubiaqute', JSON.stringify(user))
     this.apiFacade.setUser(user.id)
+    localStorage.setItem('currentUserRubiaqute', JSON.stringify(user))
+
   }
 
   clearInfo(): void {
