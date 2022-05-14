@@ -60,6 +60,7 @@ export interface IColumnRequest {
 
 export interface ITask {
   id: string,
+  done: boolean,
   title: string,
   order: number,
   description: string,
@@ -71,6 +72,7 @@ export interface ITask {
 
 export interface ITaskRequest {
   title: string,
+  done: boolean,
   order: number,
   description: string,
   userId: string,

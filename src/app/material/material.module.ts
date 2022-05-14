@@ -10,7 +10,9 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatListModule } from '@angular/material/list';
 import { MatInputModule } from '@angular/material/input';
 import { MatGridListModule } from '@angular/material/grid-list'
-import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';;
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatSelectModule } from '@angular/material/select';
+import {MatCheckboxModule} from '@angular/material/checkbox';
 
 @NgModule({
   declarations: [],
@@ -18,6 +20,8 @@ import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';;
     CommonModule
   ],
   exports: [
+    MatCheckboxModule,
+    MatSelectModule,
     MatProgressSpinnerModule,
     MatSidenavModule,
     MatButtonModule,

@@ -68,7 +68,20 @@
     "ADD_TASK": "Add task",
     "EDIT_BOARD": "Edit board",
     "NEW_BOARD": "New board",
-    "CREATE_NEW_BOARD": "Create new board"
+    "CREATE_NEW_BOARD": "Create new board",
+    "ADD_COLUMN_MODAL_TITLE": "Column title",
+    "ADD_COLUMN_MODAL_BUTTON": "Create column",
+    "ERROR": "Oops, something went wrong",
+    "COLUMN_NO_TITLE": "No title",
+    "ADD_TASK_MODAL_TITLE": "Task text",
+    "ADD_TASK_MODAL_DESCRIPTION": "Task description",
+    "ADD_TASK_MODAL_BUTTON": "Create task",
+    "EDIT_TASK_MODAL_BUTTON": "Edit task",
+    "DONE": "Done",
+    "YES": "Yes",
+    "NO": "No",
+    "EXECUTOR": "Executor",
+    "USERS": "Users"
   },
   "WELCOME": {
     "BOARDS": "Boards",
@@ -105,6 +118,5 @@
     "EXTRA10": "TMINE is convenient to use for both small teams and large companies. Its capabilities are suitable for all business sectors.",
     "EXTRA11": "Use mobile and desktop version",
     "EXTRA12": "TMINE is designed with an adaptive layout, which allows you to use it on any device (mobile phones, tablets, laptops and computers). Minimum page width - 320px."
-
   }
 }

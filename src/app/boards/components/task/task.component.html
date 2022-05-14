@@ -1,0 +1,18 @@
+<div *ngIf="isLoaderOn" class="loader">
+  <mat-spinner class="loader__spinner"></mat-spinner>
+</div>
+<div class="task" *ngIf="task">
+  <p class="task__text" title="{{ task?.description }}">{{ task?.title }}</p>
+  <div class="task__btn" (click)="deleteTask()">
+        <mat-icon color="primary">close</mat-icon>
+  </div>
+  <mat-checkbox class="task__checkbox"
+                color="primary"
+                (click)="stopPropagation($event)"
+                (change)="switchCompleteFlag()"
+                [checked]="task.done"
+                [disabled]="isUserExecutor">
+                  {{ "BOARD.DONE" | translate }}
+                </mat-checkbox>
+  <div class="task__executor" title="Executor - {{ executor?.name }}">{{ executor?.name }}</div>
+</div>

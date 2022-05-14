@@ -68,7 +68,21 @@
     "ADD_TASK": "Добавить задание",
     "EDIT_BOARD": "Редактировать доску",
     "NEW_BOARD": "Новая доска",
-    "CREATE_NEW_BOARD": "Создать новую доску"
+    "CREATE_NEW_BOARD": "Создать новую доску",
+    "ADD_COLUMN_MODAL": "Заголовок колонки",
+    "ADD_COLUMN_MODAL_BUTTON": "Создать колонку",
+    "SERVER_WRONG": "Ой, что-то пошло не так",
+    "ADD_COLUMN_MODAL_TITLE": "Заголовок колонки",
+    "COLUMN_NO_TITLE": "Нет заголовка",
+    "ADD_TASK_MODAL_TITLE": "Тескт задачи",
+    "ADD_TASK_MODAL_DESCRIPTION": "Описание задачи",
+    "ADD_TASK_MODAL_BUTTON": "Создать задачу",
+    "EDIT_TASK_MODAL_BUTTON": "Изменить задачу",
+    "DONE": "Выполнено",
+    "YES": "Да",
+    "NO": "Нет",
+    "EXECUTOR": "Исполнитель",
+    "USERS": "Пользователи"
   },
   "WELCOME": {
     "BOARDS": "Доски",
