@@ -217,3 +217,40 @@
 .tasks__list {
   transition: none;
 }
+
+
+@media (max-width: 1000px) {
+  .column {
+    width: 18vw;
+  }
+}
+
+@media (max-width 900px) {
+  .column {
+    width: 25vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .column {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .column {
+    width: 37vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .column {
+    width: 40vw;
+  }
+}
+
+@media (max-width: 400px) {
+  .column {
+    width: 45vw;
+  }
+}
