@@ -28,7 +28,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   @Input()
   public prevColumn: IColumn | undefined;
 
-  public isTitleEditMode: boolean = false;  
+  public isTitleEditMode: boolean = false;
 
   public title: string | undefined;
 
@@ -54,17 +54,17 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public isLoaderOn: boolean = false;
 
-  constructor(private api: ApiServices) {}
+  constructor(private api: ApiServices) { }
 
   ngOnInit(): void {
     this.subs.push(this.api.getUsers().subscribe((data) => this.users = data));
-    this.column!.tasks 
-      ? this.column!.tasks
-      : [];
-    this.column!.tasks?.sort((a,b) => a.order - b.order);
+    // this.column!.tasks
+    //   ? this.column!.tasks
+    //   : [];
+    // this.column!.tasks?.sort((a, b) => a.order - b.order);
     this.MAX_TASK_ORDER = this.column!.tasks?.slice(-1)[0]
-                            ? this.column!.tasks?.slice(-1)[0].order
-                            : 0;
+      ? this.column!.tasks?.slice(-1)[0].order
+      : 0;
   }
 
   ngOnDestroy(): void {
@@ -79,7 +79,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public deleteColumn(): void {
     this.subs.push(this.api.deleteColumn(this.boardId, this.column!.id)
       .subscribe(() => this.column = undefined));
-  } 
+  }
 
   public setColumnTitle(newTitle: string): void {
     if (!newTitle || !newTitle.trim()) newTitle = '**';
@@ -88,14 +88,14 @@ export class ColumnComponent implements OnInit, OnDestroy {
       order: this.column!.order
     }
     this.subs.push(this.api.updateColumn(this.boardId,
-                          this.column!.id,
-                          columnRequest)
+      this.column!.id,
+      columnRequest)
       .subscribe((data) => this.column = data));
     this.switchTitleEdit();
   }
 
   public switchTaskModal(mode: string = 'edit'): void {
-    mode === 'add' 
+    mode === 'add'
       ? this.isAddTaskModalOn = !this.isAddTaskModalOn
       : this.isEditTaskModalOn = !this.isEditTaskModalOn;
     this.title = '';
@@ -125,8 +125,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
     this.subs.push(this.api
       .createTask(this.boardId,
-                  this.column!.id,
-                  taskRequest)
+        this.column!.id,
+        taskRequest)
       .subscribe((data) => this.column!.tasks!.push(data)));
   }
 
@@ -146,48 +146,48 @@ export class ColumnComponent implements OnInit, OnDestroy {
     const idx = this.column?.tasks?.findIndex((task) => task.id === this.currentTask!.id);
 
     this.switchLoader();
-    
+
     this.subs.push(this.api.updateTask(this.boardId,
-                                       this.column!.id,
-                                       this.currentTask!.id,
-                                       taskRequest)
+      this.column!.id,
+      this.currentTask!.id,
+      taskRequest)
       .subscribe(
-      (data) => {
-        this.column!.tasks!.splice(idx!, 1, data);
-        this.switchLoader();
-      }));
+        (data) => {
+          this.column!.tasks!.splice(idx!, 1, data);
+          this.switchLoader();
+        }));
   }
-  
+
   public drop(event: CdkDragDrop<ITask[]>): void {
-    
+
     const nextItem: number = this.column!.tasks![event.currentIndex + 1]
-                              ? this.column!.tasks![event.currentIndex + 1].order
-                              : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
+      ? this.column!.tasks![event.currentIndex + 1].order
+      : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
     const prevItem: number = this.column!.tasks![event.currentIndex - 1]
-                              ? this.column!.tasks![event.currentIndex - 1].order
-                              : 0;
+      ? this.column!.tasks![event.currentIndex - 1].order
+      : 0;
     let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
 
     const taskRequest: ITaskRequestUpdate = {
-    title: this.currentTask!.title,
-    done: this.currentTask!.done,
-    order: freeIdx,
-    description: this.currentTask!.description,
-    userId: this.currentTask!.userId,
-    boardId: this.boardId,
-    columnId: this.column!.id,
+      title: this.currentTask!.title,
+      done: this.currentTask!.done,
+      order: freeIdx,
+      description: this.currentTask!.description,
+      userId: this.currentTask!.userId,
+      boardId: this.boardId,
+      columnId: this.column!.id,
     }
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
-      if (event.previousIndex !== event.currentIndex) {          
+      if (event.previousIndex !== event.currentIndex) {
         this.switchLoader();
-  
+
         this.subs.push(this.api.updateTask(this.boardId,
-                            this.column!.id,
-                            this.currentTask!.id, 
-                            taskRequest)
+          this.column!.id,
+          this.currentTask!.id,
+          taskRequest)
           .subscribe(
             (data) => {
               this.column!.tasks!.splice(event.currentIndex, 1, data);
@@ -201,18 +201,18 @@ export class ColumnComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex,
       );
-        
-        this.switchLoader();
 
-        this.subs.push(this.api.updateTask(this.boardId,
-                            this.prevColumn!.id,
-                            this.currentTask!.id,
-                            taskRequest)
-          .subscribe(
-            (data) => {
-              this.column!.tasks!.splice(event.currentIndex, 1, data);
-              this.switchLoader();
-            }));
+      this.switchLoader();
+
+      this.subs.push(this.api.updateTask(this.boardId,
+        this.prevColumn!.id,
+        this.currentTask!.id,
+        taskRequest)
+        .subscribe(
+          (data) => {
+            this.column!.tasks!.splice(event.currentIndex, 1, data);
+            this.switchLoader();
+          }));
     }
   }
 
@@ -221,8 +221,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.currentTaskChange.emit(task);
     this.subs.push(
       this.api.getUserById$(task.userId)
-      .subscribe((data) => this.userExecutor = data)
-      )
+        .subscribe((data) => this.userExecutor = data)
+    )
   }
 
   public setPrevColumn(column: IColumn): void {

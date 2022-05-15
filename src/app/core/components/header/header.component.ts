@@ -16,7 +16,7 @@ export class HeaderComponent implements OnInit {
   isDarkTheme: boolean = false;
   langValue: boolean = false;
   public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
-  public loadingStatus$: Observable<Status> = this.apiFacade.loadingStatus$;
+  public activeUserStatus$: Observable<Status> = this.apiFacade.activeUserStatus$;
 
   @Output() themeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
@@ -28,7 +28,7 @@ export class HeaderComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.loadingStatus$.subscribe((status) => {
+    this.activeUserStatus$.subscribe((status) => {
       if (status === Status.FAILURE) {
         this.authService.clearInfo();
         setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);

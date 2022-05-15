@@ -25,7 +25,7 @@ export const initialBoardsState: BoardsState = {
 }
 
 export interface ActiveBoardState {
-  loadingStatus: Status;
+  loadingStatus: boolean;
   loadingError?: HttpErrorResponse;
   getActiveBoardStatus: Status;
   getCreateColumnStatus: Status;
@@ -37,7 +37,7 @@ export interface ActiveBoardState {
   activeBoard: IBoard | null;
 }
 export const initialActiveBoardState: ActiveBoardState = {
-  loadingStatus: Status.INITIAL,
+  loadingStatus: false,
   getActiveBoardStatus: Status.INITIAL,
   getCreateColumnStatus: Status.INITIAL,
   getUpdateColumnStatus: Status.INITIAL,
