@@ -3,12 +3,14 @@
 .footer {
   height: $header-footer-height;
 
+
   &-container {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: $header-footer-height;
+    transition: background-color 2s ease-in-out;
 
     .rsschool {
       width: 5vw;
@@ -55,7 +57,13 @@
     }
   }
 }
+.footer-active {
+  background-color: #007e8f;
+}
 
+.footer-dark {
+  background-color: #460c0c !important;
+}
 
 @media (max-width: 1200px) {
   .footer {

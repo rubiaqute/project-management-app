@@ -3,7 +3,7 @@
   [ngClass]="{ 'dark-theme-mode': isDarkTheme }"
 >
   <app-header (themeChanged)="isDarkTheme = !isDarkTheme"></app-header>
-  <div class="main" (scroll)="onWindowScroll($event)">
+  <div class="main" (scroll)="onWindowScroll(isDarkTheme)">
     <router-outlet></router-outlet>
   </div>
   <app-footer></app-footer>
