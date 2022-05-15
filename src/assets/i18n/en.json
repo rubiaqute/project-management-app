@@ -62,7 +62,7 @@
   },
   "BOARD": {
     "TITLE": "title",
-    "DESCRIPTION": "descroption",
+    "DESCRIPTION": "description",
     "ADD": "Add new column",
     "EDIT_COLUMN_NAME": "Column name",
     "ADD_TASK": "Add task",
@@ -121,7 +121,9 @@
   },
   "CONFIRMATION": {
     "TITLE": "Are you sure you want to delete",
-    "BOARD": "board",
-    "PROFILE": "your profile"
+    "BOARD": "this board",
+    "PROFILE": "your profile",
+    "COLUMN": "this column",
+    "TASK": "this task"
   }
 }

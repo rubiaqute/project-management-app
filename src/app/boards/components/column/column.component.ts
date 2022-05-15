@@ -1,6 +1,8 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable, Subscription } from 'rxjs';
+import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
 import { IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
 import { ApiFacade } from 'src/app/store/facade';
 
@@ -54,7 +56,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public isLoaderOn: boolean = false;
 
-  constructor(private apiFacade: ApiFacade) { }
+  constructor(private apiFacade: ApiFacade, public dialog: MatDialog) { }
 
   ngOnInit(): void {
     this.MAX_TASK_ORDER = this.column!.tasks?.slice(-1)[0]
@@ -202,5 +204,16 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public switchLoader(): void {
     this.isLoaderOn = !this.isLoaderOn;
+  }
+
+  openDialog(e: Event): void {
+    e.stopPropagation()
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      data: { name: 'CONFIRMATION.COLUMN', isConfirmed: false },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.deleteColumn()
+    });
   }
 }

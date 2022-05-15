@@ -1,8 +1,13 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ActivatedRoute } from '@angular/router';
+import { ofType } from '@ngrx/effects';
+import { ActionsSubject } from '@ngrx/store';
 import { Observable, Subscription } from 'rxjs';
 import { IBoard, IColumn, IColumnRequest, ITask, Status } from 'src/app/core/models/api.models';
+import { ActiveBordTypes } from 'src/app/store/actions/active-board.actions';
+import { BoardsTypes } from 'src/app/store/actions/boards.actions';
 import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
@@ -43,7 +48,8 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private apiFacade: ApiFacade
+    private apiFacade: ApiFacade,
+    private actionsSubj: ActionsSubject
   ) { }
 
   ngOnInit(): void {
@@ -56,10 +62,24 @@ export class BoardComponent implements OnInit, OnDestroy {
       )
     );
     this.apiFacade.getUsers()
-    this.columns$.subscribe((columns) => {
-      this.MAX_COLUMN_ORDER = columns.length ? Math.max(...columns.map((el) => el.order)) : 0
-      this.columnsArray = columns
-    })
+    this.subscription.push(
+      this.columns$.subscribe((columns) => {
+        this.MAX_COLUMN_ORDER = columns.length ? Math.max(...columns.map((el) => el.order)) : 0
+        this.columnsArray = columns
+      })
+    )
+    this.subscription.push(
+      this.actionsSubj.pipe(
+        ofType(ActiveBordTypes.CreateColumnFailure,
+          ActiveBordTypes.CreateTaskFailure,
+          ActiveBordTypes.UpdateColumnFailure,
+          ActiveBordTypes.UpdateTaskFailure,
+          ActiveBordTypes.DeleteTaskFailure,
+          ActiveBordTypes.DeleteColumnFailure)
+      ).subscribe(data => {
+        this.switchErrorModal()
+      })
+    )
 
   }
 

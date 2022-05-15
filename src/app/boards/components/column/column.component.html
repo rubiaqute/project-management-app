@@ -1,7 +1,3 @@
-<!-- <div *ngIf="isLoaderOn" class="loader">
-  <mat-spinner class="loader__spinner"></mat-spinner>
-</div> -->
-
 <mat-card class="column" *ngIf="column">
   <div class="column__header">
     <mat-card-title
@@ -9,7 +5,7 @@
       (click)="switchTitleEdit()"
       class="header__title"
     >
-      <b>{{ column.title }} ord: {{ column.order }}</b>
+      <b>{{ column.title }}</b>
     </mat-card-title>
     <mat-form-field *ngIf="isTitleEditMode" class="header__input">
       <mat-label>{{ "BOARD.EDIT_COLUMN_NAME" | translate }}</mat-label>
@@ -30,7 +26,7 @@
       <mat-icon
         color="primary"
         class="actions__btn delete"
-        (click)="deleteColumn()"
+        (click)="openDialog($event)"
         >delete</mat-icon
       >
     </mat-card-actions>

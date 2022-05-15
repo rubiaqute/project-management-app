@@ -1,5 +1,7 @@
 import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { Observable } from 'rxjs';
+import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
 import { ITask, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
 import { ApiFacade } from 'src/app/store/facade';
 
@@ -24,7 +26,7 @@ export class TaskComponent {
   public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
   public users$: Observable<IUser[]> = this.apiFacade.users$
 
-  constructor(private apiFacade: ApiFacade) { }
+  constructor(private apiFacade: ApiFacade, public dialog: MatDialog) { }
 
   public deleteTask(): void {
     this.apiFacade.deleteTask(this.boardId, this.columnId, this.task!.id)
@@ -50,4 +52,14 @@ export class TaskComponent {
     evt.stopPropagation();
   }
 
+  openDialog(e: Event): void {
+    e.stopPropagation()
+    const dialogRef = this.dialog.open(ConfirmationModalComponent, {
+      data: { name: 'CONFIRMATION.TASK', isConfirmed: false },
+    });
+
+    dialogRef.afterClosed().subscribe(result => {
+      if (result) this.deleteTask()
+    });
+  }
 }
