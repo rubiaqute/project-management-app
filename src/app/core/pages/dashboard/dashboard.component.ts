@@ -1,6 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, HostListener, OnInit} from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Observable } from 'rxjs';
+import {window} from "rxjs";
 
 @Component({
   selector: 'app-dashboard',
@@ -14,5 +14,13 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.isDarkTheme = false
   }
-
+  onWindowScroll($event: any) {
+    let element = document.querySelector('.header-container') as HTMLElement;
+    let main = document.querySelector('.main') as HTMLElement;
+    if (main.scrollTop > 0) {
+      element.classList.add('header-active');
+    } else {
+      element.classList.remove('header-active');
+    }
+  }
 }
