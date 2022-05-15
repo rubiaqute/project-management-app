@@ -3,6 +3,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 import { Subscription } from 'rxjs';
 import { IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
 import { ApiServices } from 'src/app/core/services/api-services.service';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-column',
@@ -14,7 +15,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public boardId!: string;
 
   @Input()
-  public column!: IColumn | undefined;
+  public column!: IColumn;
 
   @Output()
   public currentTaskChange = new EventEmitter<ITask>();
@@ -54,7 +55,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public isLoaderOn: boolean = false;
 
-  constructor(private api: ApiServices) { }
+  constructor(private api: ApiServices, private apiFacase: ApiFacade) { }
 
   ngOnInit(): void {
     this.subs.push(this.api.getUsers().subscribe((data) => this.users = data));
@@ -77,8 +78,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public deleteColumn(): void {
-    this.subs.push(this.api.deleteColumn(this.boardId, this.column!.id)
-      .subscribe(() => this.column = undefined));
+    this.apiFacase.deleteColumn(this.boardId, this.column.id)
   }
 
   public setColumnTitle(newTitle: string): void {
@@ -87,10 +87,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
       title: newTitle,
       order: this.column!.order
     }
-    this.subs.push(this.api.updateColumn(this.boardId,
-      this.column!.id,
-      columnRequest)
-      .subscribe((data) => this.column = data));
+    this.apiFacase.updateColumn(this.boardId, this.column.id, columnRequest)
     this.switchTitleEdit();
   }
 
@@ -123,11 +120,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
       userId: this.userExecutor!.id,
     };
 
-    this.subs.push(this.api
-      .createTask(this.boardId,
-        this.column!.id,
-        taskRequest)
-      .subscribe((data) => this.column!.tasks!.push(data)));
+    this.apiFacase.createTask(this.boardId, this.column.id, taskRequest)
   }
 
   public editTask(title: string, description: string): void {
