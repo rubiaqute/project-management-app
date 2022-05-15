@@ -1,8 +1,7 @@
 import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Observable, Subscription } from 'rxjs';
 import { IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
-import { ApiServices } from 'src/app/core/services/api-services.service';
 import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
@@ -29,6 +28,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
   @Input()
   public prevColumn: IColumn | undefined;
 
+  public users$: Observable<IUser[]> = this.apiFacade.users$
+  public users: IUser[] = []
   public isTitleEditMode: boolean = false;
 
   public title: string | undefined;
@@ -45,8 +46,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public subs: Subscription[] = [];
 
-  public users: IUser[] = []; // NEED TO UP ON MAIN COMP OR SERVICE
-
   public userExecutor: IUser | undefined;
 
   public MAX_TASK_ORDER: number = 0;
@@ -55,17 +54,13 @@ export class ColumnComponent implements OnInit, OnDestroy {
 
   public isLoaderOn: boolean = false;
 
-  constructor(private api: ApiServices, private apiFacase: ApiFacade) { }
+  constructor(private apiFacade: ApiFacade) { }
 
   ngOnInit(): void {
-    this.subs.push(this.api.getUsers().subscribe((data) => this.users = data));
-    // this.column!.tasks
-    //   ? this.column!.tasks
-    //   : [];
-    // this.column!.tasks?.sort((a, b) => a.order - b.order);
     this.MAX_TASK_ORDER = this.column!.tasks?.slice(-1)[0]
       ? this.column!.tasks?.slice(-1)[0].order
       : 0;
+    this.users$.subscribe((data) => this.users = data)
   }
 
   ngOnDestroy(): void {
@@ -78,7 +73,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public deleteColumn(): void {
-    this.apiFacase.deleteColumn(this.boardId, this.column.id)
+    this.apiFacade.deleteColumn(this.boardId, this.column.id)
   }
 
   public setColumnTitle(newTitle: string): void {
@@ -87,18 +82,24 @@ export class ColumnComponent implements OnInit, OnDestroy {
       title: newTitle,
       order: this.column!.order
     }
-    this.apiFacase.updateColumn(this.boardId, this.column.id, columnRequest)
+    this.apiFacade.updateColumn(this.boardId, this.column.id, columnRequest)
     this.switchTitleEdit();
   }
 
   public switchTaskModal(mode: string = 'edit'): void {
-    mode === 'add'
-      ? this.isAddTaskModalOn = !this.isAddTaskModalOn
-      : this.isEditTaskModalOn = !this.isEditTaskModalOn;
-    this.title = '';
-    this.description = '';
-    this.userExecutor = undefined;
-    this.isTaskDetailsModalOn = false;
+    if (mode === 'add') {
+      this.isAddTaskModalOn = !this.isAddTaskModalOn
+      this.title = '';
+      this.description = '';
+      this.userExecutor = undefined;
+      this.isTaskDetailsModalOn = false;
+    } else {
+      this.isEditTaskModalOn = !this.isEditTaskModalOn;
+      this.title = this.currentTask?.title;
+      this.description = this.currentTask?.description;
+      this.isTaskDetailsModalOn = false;
+    }
+
   }
 
   public switchErrorModal(): void {
@@ -120,35 +121,22 @@ export class ColumnComponent implements OnInit, OnDestroy {
       userId: this.userExecutor!.id,
     };
 
-    this.apiFacase.createTask(this.boardId, this.column.id, taskRequest)
+    this.apiFacade.createTask(this.boardId, this.column.id, taskRequest)
   }
 
   public editTask(title: string, description: string): void {
-    this.MAX_TASK_ORDER = this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT;
 
     const taskRequest: ITaskRequestUpdate = {
       title: this.title!,
       done: this.currentTask!.done,
-      order: this.MAX_TASK_ORDER,
+      order: this.currentTask!.order,
       description: this.description!,
       userId: this.userExecutor!.id,
       boardId: this.boardId,
       columnId: this.column!.id,
     };
 
-    const idx = this.column?.tasks?.findIndex((task) => task.id === this.currentTask!.id);
-
-    this.switchLoader();
-
-    this.subs.push(this.api.updateTask(this.boardId,
-      this.column!.id,
-      this.currentTask!.id,
-      taskRequest)
-      .subscribe(
-        (data) => {
-          this.column!.tasks!.splice(idx!, 1, data);
-          this.switchLoader();
-        }));
+    this.apiFacade.updateTask(this.boardId, this.column.id, this.currentTask!.id, taskRequest)
   }
 
   public drop(event: CdkDragDrop<ITask[]>): void {
@@ -161,31 +149,25 @@ export class ColumnComponent implements OnInit, OnDestroy {
       : 0;
     let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
 
-    const taskRequest: ITaskRequestUpdate = {
-      title: this.currentTask!.title,
-      done: this.currentTask!.done,
-      order: freeIdx,
-      description: this.currentTask!.description,
-      userId: this.currentTask!.userId,
-      boardId: this.boardId,
-      columnId: this.column!.id,
-    }
+
 
     if (event.previousContainer === event.container) {
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
       if (event.previousIndex !== event.currentIndex) {
-        this.switchLoader();
-
-        this.subs.push(this.api.updateTask(this.boardId,
+        const taskRequest: ITaskRequestUpdate = {
+          title: this.currentTask!.title,
+          done: this.currentTask!.done,
+          order: freeIdx,
+          description: this.currentTask!.description,
+          userId: this.currentTask!.userId,
+          boardId: this.boardId,
+          columnId: this.column!.id,
+        }
+        this.apiFacade.updateTask(this.boardId,
           this.column!.id,
           this.currentTask!.id,
           taskRequest)
-          .subscribe(
-            (data) => {
-              this.column!.tasks!.splice(event.currentIndex, 1, data);
-              this.switchLoader();
-            }));
       }
     } else {
       transferArrayItem(
@@ -194,28 +176,24 @@ export class ColumnComponent implements OnInit, OnDestroy {
         event.previousIndex,
         event.currentIndex,
       );
-
-      this.switchLoader();
-
-      this.subs.push(this.api.updateTask(this.boardId,
-        this.prevColumn!.id,
-        this.currentTask!.id,
-        taskRequest)
-        .subscribe(
-          (data) => {
-            this.column!.tasks!.splice(event.currentIndex, 1, data);
-            this.switchLoader();
-          }));
+      const orderArray: ITask[] = Object.assign([], this.column.tasks)
+      const taskRequest: ITaskRequest = {
+        title: this.currentTask!.title,
+        done: this.currentTask!.done,
+        order: Math.max(...orderArray.map((el) => el.order)) + this.INDEX_COEFFICIENT,
+        description: this.currentTask!.description,
+        userId: this.currentTask!.userId,
+      }
+      this.apiFacade.deleteTask(this.boardId, this.prevColumn!.id, this.currentTask!.id)
+      this.apiFacade.createTask(this.boardId, this.column.id, taskRequest)
     }
   }
 
-  public setCurrentTask(task: ITask): void {
+  public setCurrentTask(task: ITask,): void {
     this.currentTask = task;
     this.currentTaskChange.emit(task);
-    this.subs.push(
-      this.api.getUserById$(task.userId)
-        .subscribe((data) => this.userExecutor = data)
-    )
+    this.userExecutor = this.users.find((el) => el.id === task.userId)
+
   }
 
   public setPrevColumn(column: IColumn): void {

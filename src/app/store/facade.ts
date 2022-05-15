@@ -1,3 +1,4 @@
+/* eslint-disable ngrx/prefer-action-creator-in-dispatch */
 import { Injectable } from '@angular/core';
 import { Store } from '@ngrx/store';
 
@@ -9,17 +10,19 @@ import * as currentUserActions from './actions/current-user.actions';
 import * as activeBoardActions from './actions/active-board.actions';
 import * as boardsActions from './actions/boards.actions';
 
-import { IBoardRequest, IColumn, IColumnRequest, ITaskRequest } from '../core/models/api.models';
+import { IBoardRequest, IColumnRequest, ITaskRequest } from '../core/models/api.models';
 
 @Injectable({ providedIn: 'root' })
 export class ApiFacade {
   readonly boards$ = this.store.select(boardsSelectors.selectBoards);
   readonly boardsLoadingStatus$ = this.store.select(boardsSelectors.selectBoardsLoadingStatus)
   readonly activeUser$ = this.store.select(currentUserSelectors.selectCurrentUser);
+  readonly users$ = this.store.select(currentUserSelectors.selectUsers);
   readonly activeUserStatus$ = this.store.select(currentUserSelectors.selectActiveUserStatus);
   readonly activeBoard$ = this.store.select(activeBoardSelectors.selectActiveBoard);
   readonly activeBoardLoadingStatus$ = this.store.select(activeBoardSelectors.selectActiveBoardLoadingStatus);
   readonly activeBoardColumns$ = this.store.select(activeBoardSelectors.selectActiveBoardColumns);
+
   constructor(private store: Store) {
   }
 
@@ -32,6 +35,10 @@ export class ApiFacade {
 
   setUser(id: string): void {
     this.store.dispatch(new currentUserActions.GetCurrentUser({ id }));
+  }
+
+  getUsers(): void {
+    this.store.dispatch(new currentUserActions.GetUsers());
   }
 
   createBoard(body: IBoardRequest): void {

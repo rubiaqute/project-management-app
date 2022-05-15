@@ -1,8 +1,7 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { map, Observable, Subscription } from 'rxjs';
-import { ApiServices } from 'src/app/core/services/api-services.service';
+import { ActivatedRoute } from '@angular/router';
+import { Observable, Subscription } from 'rxjs';
 import { IBoard, IColumn, IColumnRequest, ITask, Status } from 'src/app/core/models/api.models';
 import { ApiFacade } from 'src/app/store/facade';
 
@@ -32,7 +31,7 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public title: string | undefined;
 
-  // public currentColumn!: IColumn;
+  public currentColumn!: IColumn;
 
   public currentTask: ITask | undefined;
 
@@ -44,7 +43,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private api: ApiServices,
     private apiFacade: ApiFacade
   ) { }
 
@@ -57,23 +55,12 @@ export class BoardComponent implements OnInit, OnDestroy {
         }
       )
     );
+    this.apiFacade.getUsers()
     this.columns$.subscribe((columns) => {
       this.MAX_COLUMN_ORDER = columns.length ? Math.max(...columns.map((el) => el.order)) : 0
       this.columnsArray = columns
     })
 
-    // this.isLoaderOn = true;
-
-    // this.subscription.push(
-    //   this.api.getBoardById(this.id!)
-    //     .subscribe((data) => {
-    //       data?.columns?.sort((a, b) => a.order - b.order);
-    //       this.board = data;
-    //       this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
-    //         this.board.columns?.slice(-1)[0].order :
-    //         0 * this.INDEX_COEFFICIENT;
-    //       this.isLoaderOn = false;
-    //     }));
   }
 
   ngOnDestroy(): void {
@@ -88,13 +75,6 @@ export class BoardComponent implements OnInit, OnDestroy {
       order,
     };
     this.apiFacade.createColumn(columnRequest, this.id!)
-
-    // this.api
-    //   .createColumn(columnRequest, this.board!.id!)
-    //   .subscribe((data) => this.board?.columns?.push(data),
-    //     (err) => {
-    //       this.switchErrorModal();
-    //     });
   }
 
   public isLoadingActiveBoard(status: Status) {
@@ -109,73 +89,30 @@ export class BoardComponent implements OnInit, OnDestroy {
   public switchErrorModal(): void {
     this.isErrorModalOn = !this.isErrorModalOn;
   }
-  // drop(event: CdkDragDrop<string[]>) {
-  //   const previousIndex = prevIndex
-  //   const currentIndex = event.currentIndex
-  //   let newOrder;
-  //   if (previousIndex > currentIndex) {
-  //     const pivot = this.columnsSorted[currentIndex - 1] ?
-  //       this.columnsSorted[currentIndex - 1].order : this.columnsSorted[currentIndex].order - 1000
-  //     newOrder = Math.round((this.columnsSorted[currentIndex].order + pivot) / 2)
-  //   }
-  //   if (previousIndex < currentIndex) {
-  //     const pivot = this.columnsSorted[currentIndex + 1] ?
-  //       this.columnsSorted[currentIndex + 1].order : this.columnsSorted[currentIndex].order + 1000
-  //     newOrder = Math.round((this.columnsSorted[currentIndex].order + pivot) / 2)
-  //   }
-  //   if (newOrder) {
-  //     console.log(newOrder)
-  //     const column = {
-  //       title: this.columnsSorted[previousIndex].title,
-  //       order: newOrder
-  //     }
-  //     this.apiFacade.updateColumn(this.id!, this.columnsSorted[previousIndex].id, column)
-  //   }
-  // }
+
   public drop(event: CdkDragDrop<IColumn[]>): void {
 
-    const previousIndex = event.previousIndex
-    const currentIndex = event.currentIndex
-    let newOrder;
-    if (previousIndex > currentIndex) {
-      const pivot = this.columnsArray[currentIndex - 1] ?
-        this.columnsArray[currentIndex - 1].order : this.columnsArray[currentIndex].order - this.INDEX_COEFFICIENT
-      newOrder = Math.round((this.columnsArray[currentIndex].order + pivot) / 2)
-    }
-    if (previousIndex < currentIndex) {
-      const pivot = this.columnsArray[currentIndex + 1] ?
-        this.columnsArray[currentIndex + 1].order : this.columnsArray[currentIndex].order + this.INDEX_COEFFICIENT
-      newOrder = Math.round((this.columnsArray[currentIndex].order + pivot) / 2)
-    }
-    if (newOrder) {
-      const column = {
-        title: this.columnsArray[previousIndex].title,
-        order: newOrder
+    moveItemInArray(this.columnsArray, event.previousIndex, event.currentIndex);
+
+    if (event.previousIndex !== event.currentIndex) {
+      const nextItem: number = this.columnsArray[event.currentIndex + 1] ?
+        this.columnsArray[event.currentIndex + 1].order :
+        this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT * 2;
+      const prevItem: number = this.columnsArray[event.currentIndex - 1] ?
+        this.columnsArray[event.currentIndex - 1].order :
+        0;
+      let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
+
+      const columnRequest: IColumnRequest = {
+        title: this.currentColumn.title,
+        order: freeIdx,
       }
-      this.apiFacade.updateColumn(this.id!, this.columnsArray[previousIndex].id, column)
-
-      // this.swithLoader();
-
-      // this.api.updateColumn(this.board!.id!,
-      //   this.currentColumn.id,
-      //   columnRequest)
-      //   .subscribe(
-      //     (data) => {
-      //       this.board?.columns?.splice(event.currentIndex, 1, data);
-      //       this.swithLoader();
-      //     },
-      //     (err) => {
-      //       this.switchErrorModal();
-      //       this.swithLoader();
-      //     });
+      this.apiFacade.updateColumn(this.id!, this.currentColumn.id, columnRequest)
     }
   }
 
-  // public setCurrentColumn(column: IColumn) {
-  //   this.currentColumn = column;
-  // }
+  public setCurrentColumn(column: IColumn) {
+    this.currentColumn = column;
+  }
 
-  // public swithLoader() {
-  //   this.isLoaderOn = !this.isLoaderOn;
-  // }
 }

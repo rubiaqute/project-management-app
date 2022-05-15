@@ -1,14 +1,14 @@
-import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Observable } from 'rxjs';
 import { ITask, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
-import { ApiServices } from 'src/app/core/services/api-services.service';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-task',
   templateUrl: './task.component.html',
   styleUrls: ['./task.component.scss']
 })
-export class TaskComponent implements OnInit, OnDestroy {
+export class TaskComponent {
   @Output()
   public taskChange = new EventEmitter<ITask>();
 
@@ -21,50 +21,19 @@ export class TaskComponent implements OnInit, OnDestroy {
   @Input()
   public columnId!: string;
 
-  public subs: Subscription[] = [];
+  public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
+  public users$: Observable<IUser[]> = this.apiFacade.users$
 
-  public executor: IUser | undefined;
-
-  public isUserExecutor: boolean = true;
-
-  public isLoaderOn: boolean = false;
-
-  constructor(private api: ApiServices) {}
-
-  ngOnInit(): void {
-    this.subs.push(
-      this.api.getUserById$(this.task!.userId)
-      .subscribe((data) => {
-        this.executor = data;
-
-        const userInfo = localStorage.getItem('currentUserRubiaqute');
-        const userInfoParsed = JSON.parse(userInfo!);
-    
-        this.subs.push(
-          this.api.getUserById$(userInfoParsed.id)
-          .subscribe((data) => {
-            const executor = JSON.stringify(this.executor);
-            const user = JSON.stringify(data);
-            if(executor === user) this.isUserExecutor = false;
-          })
-          )
-      })
-      )
-
-  }
-
-  ngOnDestroy(): void {
-    this.subs.forEach(item => item.unsubscribe());
-  }
+  constructor(private apiFacade: ApiFacade) { }
 
   public deleteTask(): void {
-    this.subs.push(
-      this.api.deleteTask(this.boardId, this.columnId, this.task!.id)
-      .subscribe(() => this.task = undefined)
-    )
+    this.apiFacade.deleteTask(this.boardId, this.columnId, this.task!.id)
+  }
+  getExecutorName(users?: IUser[] | null) {
+    return users?.find((el) => el.id === this.task?.userId)?.name
   }
 
-  public switchCompleteFlag():void {
+  public switchCompleteFlag(): void {
     const taskRequest: ITaskRequestUpdate = {
       title: this.task!.title,
       done: !(this.task!.done),
@@ -73,27 +42,12 @@ export class TaskComponent implements OnInit, OnDestroy {
       userId: this.task!.userId,
       boardId: this.boardId,
       columnId: this.columnId
-      }
-
-    this.switchLoader();
-
-    this.subs.push(
-      this.api.updateTask(this.boardId, 
-                          this.columnId,
-                          this.task!.id, 
-                          taskRequest)
-        .subscribe((data) => {
-          this.task = data;
-          this.taskChange.emit(this.task);
-          this.switchLoader();
-        }));
+    }
+    this.apiFacade.updateTask(this.boardId, this.columnId, this.task!.id, taskRequest)
   }
 
   public stopPropagation(evt: Event): void {
     evt.stopPropagation();
   }
 
-  public switchLoader(): void {
-    this.isLoaderOn = !this.isLoaderOn;
-  }
 }

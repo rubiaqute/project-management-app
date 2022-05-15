@@ -46,7 +46,6 @@
       class="tasks__list"
       *ngFor="let task of column.tasks"
       [task]="task"
-      (taskChange)="setCurrentTask($event)"
       [boardId]="boardId"
       [columnId]="column.id"
       (click)="setCurrentTask(task)"
@@ -80,7 +79,7 @@
     <mat-form-field>
       <mat-label>{{ "BOARD.USERS" | translate }}</mat-label>
       <mat-select [(ngModel)]="userExecutor">
-        <mat-option *ngFor="let user of users" [value]="user">
+        <mat-option *ngFor="let user of users$ | async" [value]="user">
           {{ user.name }}
         </mat-option>
       </mat-select>
@@ -120,7 +119,7 @@
     <mat-form-field>
       <mat-label>{{ "BOARD.USERS" | translate }}</mat-label>
       <mat-select [(ngModel)]="userExecutor">
-        <mat-option *ngFor="let user of users" [value]="user">
+        <mat-option *ngFor="let user of users$ | async" [value]="user">
           {{ user.name }}
         </mat-option>
       </mat-select>

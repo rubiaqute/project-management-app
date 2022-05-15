@@ -25,6 +25,7 @@
         *ngFor="let column of columns"
         [column]="column"
         [boardId]="board.id!"
+        (cdkDragStarted)="setCurrentColumn(column)"
         [(currentTask)]="currentTask"
         [(prevColumn)]="prevColumn"
         cdkDrag

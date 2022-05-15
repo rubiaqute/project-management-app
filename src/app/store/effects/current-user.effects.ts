@@ -21,6 +21,17 @@ export class GetCurrentUserEffects {
       )
     );
   });
+  getUsers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(currentUserActions.CurrentUserTypes.GetUsers),
+      switchMap((action: any) =>
+        this.apiServices.getUsers().pipe(
+          map((users: IUser[]) => new currentUserActions.GetUsersSuccess(users)),
+          catchError(err => of(new currentUserActions.GetUsersFailure())),
+        )
+      )
+    );
+  });
 
   constructor(
     private readonly actions$: Actions,

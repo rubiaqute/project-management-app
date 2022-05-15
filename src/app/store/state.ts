@@ -53,9 +53,11 @@ export interface CurrentUserState {
   loadingError?: HttpErrorResponse;
   activeUserStatus: Status;
   activeUser: IUser | null,
+  users: IUser[]
 }
 export const initialCurrentUserState: CurrentUserState = {
   loadingStatus: Status.INITIAL,
   activeUser: null,
   activeUserStatus: Status.INITIAL,
+  users: []
 };

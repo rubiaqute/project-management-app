@@ -21,6 +21,18 @@ export function currentUserReducer(
         loadingStatus: Status.FAILURE,
       };
     }
+    case CurrentUserTypes.GetUsers: {
+      return { ...state, loadingStatus: Status.LOADING };
+    }
+    case CurrentUserTypes.GetUsersSuccess: {
+      return { ...state, users: action.payload, loadingStatus: Status.SUCCESS };
+    }
+    case CurrentUserTypes.GetUsersFailure: {
+      return {
+        ...state,
+        loadingStatus: Status.FAILURE,
+      };
+    }
     case CurrentUserTypes.LogOutUser: {
       return { ...state, activeUser: null, activeUserStatus: Status.INITIAL };
     }
