@@ -8,23 +8,22 @@ export function activeBoardReducer(
 ): apiState.ActiveBoardState {
   switch (action.type) {
     case ActiveBordTypes.GetActiveBoard: {
-      return { ...state, getActiveBoardStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getActiveBoardStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case ActiveBordTypes.GetActiveBoardSuccess: {
-      return { ...state, activeBoard: action.payload, getActiveBoardStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, activeBoard: action.payload, getActiveBoardStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case ActiveBordTypes.GetActiveBoardFailure: {
       return {
         ...state,
         getActiveBoardStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
-        loadingError: action.payload
+        loadingStatus: false,
       };
     }
     case ActiveBordTypes.CreateColumn: {
-      return { ...state, getCreateColumnStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getCreateColumnStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case ActiveBordTypes.CreateColumnSuccess: {
@@ -32,20 +31,19 @@ export function activeBoardReducer(
       if (state.activeBoard?.columns && state.activeBoard?.columns.length) {
         newActiveBoardState!.columns = [...state.activeBoard?.columns, action.payload]
       } else newActiveBoardState!.columns = [action.payload]
-      return { ...state, activeBoard: newActiveBoardState, getCreateColumnStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, activeBoard: newActiveBoardState, getCreateColumnStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case ActiveBordTypes.CreateColumnFailure: {
       return {
         ...state,
         getCreateColumnStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
-        loadingError: action.payload
+        loadingStatus: false,
       };
     }
 
     case ActiveBordTypes.UpdateColumn: {
-      return { ...state, getUpdateColumnStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getUpdateColumnStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case ActiveBordTypes.UpdateColumnSuccess: {
@@ -62,40 +60,38 @@ export function activeBoardReducer(
         } else return el
       })
       newActiveBoardState.columns = Object.assign([], newColumns)
-      return { ...state, activeBoard: newActiveBoardState, getUpdateColumnStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, activeBoard: newActiveBoardState, getUpdateColumnStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case ActiveBordTypes.UpdateColumnFailure: {
       return {
         ...state,
         getUpdateColumnStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
-        loadingError: action.payload
+        loadingStatus: false,
       };
     }
 
     case ActiveBordTypes.DeleteColumn: {
-      return { ...state, getDeleteColumnStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getDeleteColumnStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case ActiveBordTypes.DeleteColumnSuccess: {
       const newActiveBoardState = Object.assign({}, state.activeBoard);
       const updatedColumns = newActiveBoardState.columns?.filter((el) => el.id !== action.payload)
       newActiveBoardState.columns = Object.assign([], updatedColumns)
-      return { ...state, activeBoard: newActiveBoardState, getDeleteColumnStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, activeBoard: newActiveBoardState, getDeleteColumnStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case ActiveBordTypes.DeleteColumnFailure: {
       return {
         ...state,
         getDeleteColumnStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
-        loadingError: action.payload
+        loadingStatus: false,
       };
     }
 
     case ActiveBordTypes.CreateTask: {
-      return { ...state, getCreateTaskStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getCreateTaskStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case ActiveBordTypes.CreateTaskSuccess: {
@@ -114,19 +110,18 @@ export function activeBoardReducer(
         } else return el
       })
       newActiveBoardState.columns = Object.assign([], newColumns)
-      return { ...state, activeBoard: newActiveBoardState, getCreateTaskStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, activeBoard: newActiveBoardState, getCreateTaskStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case ActiveBordTypes.CreateTaskFailure: {
       return {
         ...state,
         getUpdateTaskStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
-        loadingError: action.payload
+        loadingStatus: false,
       };
     }
     case ActiveBordTypes.UpdateTask: {
-      return { ...state, getUpdateTaskStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getUpdateTaskStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case ActiveBordTypes.UpdateTaskSuccess: {
@@ -145,19 +140,18 @@ export function activeBoardReducer(
         } else return el
       })
       newActiveBoardState.columns = Object.assign([], newColumns)
-      return { ...state, activeBoard: newActiveBoardState, getUpdateTaskStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, activeBoard: newActiveBoardState, getUpdateTaskStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case ActiveBordTypes.UpdateTaskFailure: {
       return {
         ...state,
         getUpdateTaskStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
-        loadingError: action.payload
+        loadingStatus: false,
       };
     }
     case ActiveBordTypes.DeleteTask: {
-      return { ...state, getDeleteTaskStatus: Status.IN_PROGRESS, loadingStatus: Status.LOADING };
+      return { ...state, getDeleteTaskStatus: Status.IN_PROGRESS, loadingStatus: true };
     }
 
     case ActiveBordTypes.DeleteTaskSuccess: {
@@ -175,15 +169,14 @@ export function activeBoardReducer(
         } else return el
       })
       newActiveBoardState.columns = Object.assign([], newColumns)
-      return { ...state, activeBoard: newActiveBoardState, getDeleteTaskStatus: Status.SUCCESS, loadingStatus: Status.SUCCESS };
+      return { ...state, activeBoard: newActiveBoardState, getDeleteTaskStatus: Status.SUCCESS, loadingStatus: false };
     }
 
     case ActiveBordTypes.DeleteTaskFailure: {
       return {
         ...state,
         getDeleteTaskStatus: Status.FAILURE,
-        loadingStatus: Status.FAILURE,
-        loadingError: action.payload
+        loadingStatus: false,
       };
     }
 

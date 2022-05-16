@@ -16,7 +16,18 @@ export class GetCurrentUserEffects {
       switchMap((action: any) =>
         this.apiServices.getUserById$(action.payload.id).pipe(
           map((user: IUser) => new currentUserActions.GetCurrentUserSuccess(user)),
-          catchError(err => of(new currentUserActions.GetCurrentUserFailure(err))),
+          catchError(err => of(new currentUserActions.GetCurrentUserFailure())),
+        )
+      )
+    );
+  });
+  getUsers$ = createEffect(() => {
+    return this.actions$.pipe(
+      ofType(currentUserActions.CurrentUserTypes.GetUsers),
+      switchMap((action: any) =>
+        this.apiServices.getUsers().pipe(
+          map((users: IUser[]) => new currentUserActions.GetUsersSuccess(users)),
+          catchError(err => of(new currentUserActions.GetUsersFailure())),
         )
       )
     );

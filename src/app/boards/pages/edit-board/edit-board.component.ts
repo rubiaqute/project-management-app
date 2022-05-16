@@ -1,28 +1,34 @@
-import { Component, Input, OnInit } from '@angular/core';
-import { Subscription } from "rxjs";
+import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Observable, Subscription } from "rxjs";
 import { ActivatedRoute, Router } from "@angular/router";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ApiServices } from "../../../core/services/api-services.service";
 import { IBoard, IBoardRequest } from "../../../core/models/api.models";
 import { ApiFacade } from 'src/app/store/facade';
+import { ActionsSubject } from '@ngrx/store';
+import { ofType } from '@ngrx/effects';
+import { BoardsTypes } from 'src/app/store/actions/boards.actions';
 
 @Component({
   selector: 'app-edit-board',
   templateUrl: './edit-board.component.html',
   styleUrls: ['./edit-board.component.scss']
 })
-export class EditBoardComponent implements OnInit {
+export class EditBoardComponent implements OnInit, OnDestroy {
   public id: string | undefined;
   public subscription: Subscription[] = [];
   public titleValue: string = '';
   public descriptionValue: string = '';
   public editBoardForm!: FormGroup;
+  subsc = new Subscription();
+  isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
 
   constructor(private fb: FormBuilder,
     private router: Router,
     private activateRoute: ActivatedRoute,
     private apiService: ApiServices,
-    private apiFacade: ApiFacade) {
+    private apiFacade: ApiFacade,
+    private actionsSubj: ActionsSubject) {
   }
 
   ngOnInit(): void {
@@ -42,6 +48,11 @@ export class EditBoardComponent implements OnInit {
         this.descriptionValue = data.description
       })
     }
+    this.subsc = this.actionsSubj.pipe(
+      ofType(BoardsTypes.UpdateBoardSuccess)
+    ).subscribe(data => {
+      this.router.navigateByUrl('/main')
+    });
   }
 
   get title(): AbstractControl | null {
@@ -61,6 +72,9 @@ export class EditBoardComponent implements OnInit {
     if (this.id) {
       this.apiFacade.updateBoardById(body, this.id)
     }
-    setTimeout(() => this.router.navigateByUrl('/main'), 0);
+  }
+
+  ngOnDestroy() {
+    this.subsc.unsubscribe();
   }
 }

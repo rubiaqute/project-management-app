@@ -1,10 +1,13 @@
 import { Component, OnInit } from '@angular/core';
-import { of, Subscription } from "rxjs";
+import { Observable, of, Subscription } from "rxjs";
 import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 import { ActivatedRoute, Router } from "@angular/router";
 import { ApiServices } from "../../../core/services/api-services.service";
 import { IBoardRequest } from "../../../core/models/api.models";
 import { ApiFacade } from 'src/app/store/facade';
+import { ofType } from '@ngrx/effects';
+import { BoardsTypes } from 'src/app/store/actions/boards.actions';
+import { ActionsSubject } from '@ngrx/store';
 
 @Component({
   selector: 'app-new-board',
@@ -17,16 +20,25 @@ export class NewBoardComponent implements OnInit {
   public titleValue: string = '';
   public descriptionValue: string = '';
   public newBoardForm!: FormGroup;
+  subsc = new Subscription();
+  isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
+
 
   constructor(private fb: FormBuilder,
     private router: Router,
-    private apiFacade: ApiFacade) {
+    private apiFacade: ApiFacade,
+    private actionsSubj: ActionsSubject) {
   }
 
   ngOnInit(): void {
     this.newBoardForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
+    });
+    this.subsc = this.actionsSubj.pipe(
+      ofType(BoardsTypes.CreateBoardSuccess)
+    ).subscribe(data => {
+      this.router.navigateByUrl('/main')
     });
   }
 
@@ -43,6 +55,6 @@ export class NewBoardComponent implements OnInit {
       title: this.title?.value,
       description: this.description?.value,
     }
-    of(this.apiFacade.createBoard(body)).subscribe(() => this.router.navigateByUrl('/main'))
+    this.apiFacade.createBoard(body)
   }
 }

@@ -1,9 +1,14 @@
 import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, Router } from '@angular/router';
-import { Subscription } from 'rxjs';
-import { ApiServices } from 'src/app/core/services/api-services.service';
-import { IBoard, IColumn, IColumnRequest, ITask } from 'src/app/core/models/api.models';
+import { MatDialog } from '@angular/material/dialog';
+import { ActivatedRoute } from '@angular/router';
+import { ofType } from '@ngrx/effects';
+import { ActionsSubject } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { IBoard, IColumn, IColumnRequest, ITask, Status } from 'src/app/core/models/api.models';
+import { ActiveBordTypes } from 'src/app/store/actions/active-board.actions';
+import { BoardsTypes } from 'src/app/store/actions/boards.actions';
+import { ApiFacade } from 'src/app/store/facade';
 
 @Component({
   selector: 'app-board',
@@ -11,6 +16,11 @@ import { IBoard, IColumn, IColumnRequest, ITask } from 'src/app/core/models/api.
   styleUrls: ['./board.component.scss']
 })
 export class BoardComponent implements OnInit, OnDestroy {
+  public activeBoard$: Observable<IBoard | null> = this.apiFacade.activeBoard$
+  public columns$: Observable<IColumn[]> = this.apiFacade.activeBoardColumns$
+  private columnsArray: IColumn[] = []
+  isLoading$: Observable<boolean> = this.apiFacade.activeBoardLoadingStatus$
+
   public id: string | undefined;
   public subscription: Subscription[] = [];
 
@@ -38,29 +48,39 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   constructor(
     private activateRoute: ActivatedRoute,
-    private api: ApiServices
-  ) {}
+    private apiFacade: ApiFacade,
+    private actionsSubj: ActionsSubject
+  ) { }
 
   ngOnInit(): void {
     this.subscription.push(
       this.activateRoute.params.subscribe(
-        (params: { [x: string]: string | undefined }) =>
-          (this.id = params['id'])
+        (params: { [x: string]: string | undefined }) => {
+          this.id = params['id']
+          this.apiFacade.getActiveBoard(this.id!)
+        }
       )
     );
-
-    this.isLoaderOn = true;
-
+    this.apiFacade.getUsers()
     this.subscription.push(
-      this.api.getBoardById(this.id!)
-        .subscribe((data) => {
-          data?.columns?.sort((a,b) => a.order - b.order);
-          this.board = data;
-          this.MAX_COLUMN_ORDER = this.board.columns?.slice(-1)[0] ?
-                                  this.board.columns?.slice(-1)[0].order :
-                                  0 * this.INDEX_COEFFICIENT;
-          this.isLoaderOn = false;
-        }));
+      this.columns$.subscribe((columns) => {
+        this.MAX_COLUMN_ORDER = columns.length ? Math.max(...columns.map((el) => el.order)) : 0
+        this.columnsArray = columns
+      })
+    )
+    this.subscription.push(
+      this.actionsSubj.pipe(
+        ofType(ActiveBordTypes.CreateColumnFailure,
+          ActiveBordTypes.CreateTaskFailure,
+          ActiveBordTypes.UpdateColumnFailure,
+          ActiveBordTypes.UpdateTaskFailure,
+          ActiveBordTypes.DeleteTaskFailure,
+          ActiveBordTypes.DeleteColumnFailure)
+      ).subscribe(data => {
+        this.switchErrorModal()
+      })
+    )
+
   }
 
   ngOnDestroy(): void {
@@ -68,19 +88,17 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   public createColumn(title: string): void {
-    this.MAX_COLUMN_ORDER = this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT;
-
+    const order = this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT
+    console.log('order' + order)
     const columnRequest: IColumnRequest = {
-      title: title,
-      order: this.MAX_COLUMN_ORDER,
+      title,
+      order,
     };
+    this.apiFacade.createColumn(columnRequest, this.id!)
+  }
 
-    this.api
-      .createColumn(columnRequest, this.board!.id!)
-      .subscribe((data) => this.board?.columns?.push(data),
-                 (err) => {
-                  this.switchErrorModal();
-                  });
+  public isLoadingActiveBoard(status: Status) {
+    return status === Status.LOADING
   }
 
   public switchAddColumnModal(): void {
@@ -93,44 +111,28 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   public drop(event: CdkDragDrop<IColumn[]>): void {
-    moveItemInArray(this.board?.columns!, event.previousIndex, event.currentIndex);
+
+    moveItemInArray(this.columnsArray, event.previousIndex, event.currentIndex);
 
     if (event.previousIndex !== event.currentIndex) {
-      const nextItem: number = this.board!.columns![event.currentIndex + 1] ?
-                              this.board!.columns![event.currentIndex + 1].order :
-                              this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT * 2;
-      const prevItem: number = this.board!.columns![event.currentIndex - 1] ?
-                              this.board!.columns![event.currentIndex - 1].order :
-                              0;
+      const nextItem: number = this.columnsArray[event.currentIndex + 1] ?
+        this.columnsArray[event.currentIndex + 1].order :
+        this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT * 2;
+      const prevItem: number = this.columnsArray[event.currentIndex - 1] ?
+        this.columnsArray[event.currentIndex - 1].order :
+        0;
       let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
 
       const columnRequest: IColumnRequest = {
-          title: this.currentColumn.title,
-          order: freeIdx,
-        }
-        
-      this.swithLoader();
-
-      this.api.updateColumn(this.board!.id!,
-                            this.currentColumn.id,
-                            columnRequest)
-        .subscribe(
-          (data) => {
-            this.board?.columns?.splice(event.currentIndex, 1, data);
-            this.swithLoader();
-          },
-          (err) => {
-            this.switchErrorModal();
-            this.swithLoader();
-          });
+        title: this.currentColumn.title,
+        order: freeIdx,
+      }
+      this.apiFacade.updateColumn(this.id!, this.currentColumn.id, columnRequest)
     }
   }
 
   public setCurrentColumn(column: IColumn) {
-    this.currentColumn = column; 
+    this.currentColumn = column;
   }
 
-  public swithLoader() {
-    this.isLoaderOn = !this.isLoaderOn;
-  }
 }

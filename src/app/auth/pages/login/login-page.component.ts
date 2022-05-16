@@ -80,7 +80,7 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       this.isLoading = false
       this.router.navigateByUrl('/main');
     },
-      (error) => {
+      (error: Error) => {
         this.isLoading = false
         console.log(error);
         //Here you can insert the window "Incorrectly entered email or login"

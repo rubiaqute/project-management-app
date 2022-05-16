@@ -9,6 +9,10 @@ export enum CurrentUserTypes {
   GetCurrentUserSuccess = '[Users] GET USER FROM API SUCCESS',
   GetCurrentUserFailure = '[Users] GET USER FROM API FAILURE',
 
+  GetUsers = '[Users] GET ALL USERS FROM API',
+  GetUsersSuccess = '[Users] GET ALL USERS FROM API SUCCESS',
+  GetUsersFailure = '[Users] GET ALL USERS FROM API FAILURE',
+
   LogOutUser = '[Users] LOGOUT USER',
 }
 
@@ -22,7 +26,19 @@ export class GetCurrentUserSuccess implements Action {
 }
 export class GetCurrentUserFailure implements Action {
   readonly type = CurrentUserTypes.GetCurrentUserFailure;
-  constructor(public payload: HttpErrorResponse) { }
+  constructor() { }
+}
+export class GetUsers implements Action {
+  readonly type = CurrentUserTypes.GetUsers;
+  constructor() { }
+}
+export class GetUsersSuccess implements Action {
+  readonly type = CurrentUserTypes.GetUsersSuccess;
+  constructor(public payload: IUser[]) { }
+}
+export class GetUsersFailure implements Action {
+  readonly type = CurrentUserTypes.GetUsersFailure;
+  constructor() { }
 }
 export class LogOutUser implements Action {
   readonly type = CurrentUserTypes.LogOutUser;
@@ -33,4 +49,7 @@ export type CurrentUserActions =
   GetCurrentUser |
   GetCurrentUserSuccess |
   GetCurrentUserFailure |
+  GetUsers |
+  GetUsersSuccess |
+  GetUsersFailure |
   LogOutUser;
