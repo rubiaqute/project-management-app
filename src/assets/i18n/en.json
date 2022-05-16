@@ -40,7 +40,7 @@
       "LAST_NAME": "last name",
       "EMAIL": "email",
       "PASSWORD": "password",
-      "FIRST_NAME_REQUIRED": "The first name is required",
+      "NAME_REQUIRED": "The name is required",
       "EMAIL_REQUIRED": "The login email is required",
       "EMAIL_INVALID": "The login email is invalid",
       "PASSWORD_REQUIRED": "The password is required",
@@ -85,6 +85,7 @@
   },
   "WELCOME": {
     "BOARDS": "Boards",
+    "SEARCH": "Search",
     "WATCH_VIDEO": "Watch video",
     "TMINE": "Task Manager by Inga, Nastassia, Ed",
     "TITLE": "Create issues, break them into tasks, track relationships, add custom fields, and have conversations. Visualize large projects as spreadsheets or boards, and automate everything with code.",
