@@ -1,7 +1,7 @@
 @import "../../../../assets/styles/constants";
 
 .welcome-wrapper {
-  padding: 5% 20vw;
+  padding: 5% 15vw;
   margin: 0;
   text-align: center;
   display: flex;
@@ -50,6 +50,13 @@
 
     .mat-card-title-group {
       justify-content: space-between;
+    }
+    .developers {
+      height: 100%;
+
+      img {
+        height: 100%;
+      }
     }
   }
 
@@ -213,7 +220,7 @@
 @media (max-width: 1000px) {
   .welcome-wrapper {
     column-gap: 2%;
-
+    padding: 5% 10vw;
     &__top {
       flex-direction: column;
     }
@@ -222,7 +229,7 @@
 
 @media (max-width: 600px) {
   .welcome-wrapper {
-    padding: 5% 10vw;
+    padding: 5% 8vw;
     &__center {
       .mat-card-title-group {
         flex-direction: column;
