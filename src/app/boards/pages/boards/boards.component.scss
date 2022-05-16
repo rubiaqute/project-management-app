@@ -35,7 +35,7 @@
     &:hover {
       transform: translateY(2%);
       box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 3px -3px,
-      rgba(0, 0, 0, 0.14) 0px 3px 3px 0px, rgba(0, 0, 0, 0.12) 0px 3px 9px 0px;
+        rgba(0, 0, 0, 0.14) 0px 3px 3px 0px, rgba(0, 0, 0, 0.12) 0px 3px 9px 0px;
 
       .board {
         &__actions {
@@ -58,7 +58,12 @@
         overflow: hidden;
         color: transparent;
         -webkit-background-clip: text;
-        background-image: linear-gradient(to bottom, #000, #000, rgba(0, 0, 0, 0));
+        background-image: linear-gradient(
+          to bottom,
+          #000,
+          #000,
+          rgba(0, 0, 0, 0)
+        );
       }
 
       &__actions {
@@ -117,26 +122,40 @@
   justify-content: center;
 }
 
-@media (max-width: 1000px){
+@media (max-width: 1000px) {
   .boards {
     grid-template-columns: repeat(5, 1fr);
   }
 }
 
-@media (max-width: 750px){
+@media (max-width: 750px) {
   .boards {
     grid-template-columns: repeat(4, 1fr);
   }
 }
 
-@media (max-width: 550px){
+@media (max-width: 550px) {
   .boards {
     grid-template-columns: repeat(3, 1fr);
   }
 }
 
-@media (max-width: 400px){
+@media (max-width: 400px) {
   .boards {
     grid-template-columns: repeat(2, 1fr);
+  }
+}
+.results-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 100;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  .results {
+    width: 90%;
   }
 }
