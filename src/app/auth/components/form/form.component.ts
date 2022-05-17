@@ -22,6 +22,7 @@ export class FormComponent implements OnInit, OnDestroy {
   private subs: Subscription | undefined;
   activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$
   toggleBoard: boolean = true;
+  public isErrorModalOn: boolean = false
 
 
   constructor(private fb: FormBuilder,
@@ -97,7 +98,7 @@ export class FormComponent implements OnInit, OnDestroy {
       this.authService.setUser(user)
       console.log(user);
       //Here you can insert the window "Profile changed successfully"
-    })
+    }, (error) => this.isErrorModalOn = true)
     this.router.navigateByUrl('/main');
   }
 
@@ -109,7 +110,10 @@ export class FormComponent implements OnInit, OnDestroy {
     }
     this.apiService.signUp(body).subscribe((data: ISignUp) => {
       this.router.navigateByUrl('/auth/login');
-    })
+    },
+      (error) => {
+        this.isErrorModalOn = true
+      })
   }
 
   deleteUser() {
@@ -119,8 +123,7 @@ export class FormComponent implements OnInit, OnDestroy {
         console.log('User deleted');
       },
         (error) => {
-          console.log(error);
-          //Here you can insert the window "User deleted"
+          this.isErrorModalOn = true
         });
       this.authService.clearInfo();
       setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);
