@@ -126,5 +126,8 @@
     "PROFILE": "your profile",
     "COLUMN": "this column",
     "TASK": "this task"
+  },
+  "USER": {
+    "ERROR": "Login or password are not correct"
   }
 }
