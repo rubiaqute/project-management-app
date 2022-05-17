@@ -1,11 +1,16 @@
-import {Component, Output, EventEmitter, OnInit} from '@angular/core';
+import {Component, Output, EventEmitter, OnInit, ViewChild} from '@angular/core';
 import { TranslateService } from '@ngx-translate/core';
 import { AuthService } from "../../../auth/services/auth.service";
 import { Router } from "@angular/router";
-import { Observable } from "rxjs";
+import {Observable, Subscription} from "rxjs";
 import { ApiServices } from "../../services/api-services.service";
-import { IUser, Status } from '../../models/api.models';
+import {IBoardRequest, IUser, Status} from '../../models/api.models';
 import { ApiFacade } from 'src/app/store/facade';
+import {ModalComponent} from "../../../shared/components/modal/modal.component";
+import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {ofType} from "@ngrx/effects";
+import {BoardsTypes} from "../../../store/actions/boards.actions";
+import {ActionsSubject} from "@ngrx/store";
 
 @Component({
   selector: 'app-header',
@@ -18,17 +23,30 @@ export class HeaderComponent implements OnInit {
   public isErrorModalOn: boolean = false
   public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
   public activeUserStatus$: Observable<Status> = this.apiFacade.activeUserStatus$;
+  public id: string | undefined;
+  public subscription: Subscription[] = [];
+  public titleValue: string = '';
+  public descriptionValue: string = '';
+  public newBoardForm!: FormGroup;
+  public subsc = new Subscription();
+  public modalTitle = "BOARD.CREATE_NEW_BOARD";
+  isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
+
+  @ViewChild(ModalComponent) child : ModalComponent | undefined;
 
   @Output() themeChanged: EventEmitter<boolean> = new EventEmitter<boolean>();
 
-  constructor(public translate: TranslateService,
+  constructor(
+    private fb: FormBuilder,
+    public translate: TranslateService,
     public authService: AuthService,
     public apiService: ApiServices,
     private router: Router,
-    private apiFacade: ApiFacade) {
+    private apiFacade: ApiFacade,
+    private actionsSubj: ActionsSubject) {
   }
 
-  ngOnInit(): void {
+    ngOnInit(): void {
     this.activeUserStatus$.subscribe((status) => {
       if (status === Status.FAILURE) {
         this.authService.clearInfo();
@@ -37,6 +55,17 @@ export class HeaderComponent implements OnInit {
       }
     })
     this.authService.initAuth();
+
+    this.newBoardForm = this.fb.group({
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+    });
+
+      this.subsc = this.actionsSubj.pipe(
+        ofType(BoardsTypes.CreateBoardSuccess)
+      ).subscribe(data => {
+        this.router.navigateByUrl('/main')
+      });
   }
 
   public changeLanguage(): void {
@@ -57,5 +86,26 @@ export class HeaderComponent implements OnInit {
   logout() {
     this.authService.clearInfo();
     setTimeout(() => this.router.navigateByUrl(''), 0);
+  }
+
+  openNewBoardModal() {
+    this.child?.toggleModal();
+  }
+
+  get title(): AbstractControl | null {
+    return this.newBoardForm.get('title');
+  }
+
+  get description(): AbstractControl | null {
+    return this.newBoardForm.get('description');
+  }
+
+  addNewBoard() {
+    const body: IBoardRequest = {
+      title: this.title?.value,
+      description: this.description?.value,
+    }
+    this.apiFacade.createBoard(body);
+    this.child?.toggleModal();
   }
 }

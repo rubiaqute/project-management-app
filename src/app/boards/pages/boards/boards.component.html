@@ -45,17 +45,17 @@
     >
       <mat-card-actions class="board__actions">
         <mat-icon
-          [routerLink]="['/main/board/edit-board', board.id]"
+          (click)="openEditBoardModal($event, board.id)"
           color="primary"
           class="actions__btn create"
-          >edit
+        >edit
         </mat-icon>
 
         <mat-icon
           color="primary"
           class="actions__btn delete"
           (click)="openDialog(board.id, $event)"
-          >delete
+        >delete
         </mat-icon>
       </mat-card-actions>
       <mat-card-title class="board__title">
@@ -63,7 +63,7 @@
       >
       <mat-card-subtitle class="board__description">{{
         board.description | titlecase
-      }}</mat-card-subtitle>
+        }}</mat-card-subtitle>
     </mat-card>
   </div>
 </ng-container>
@@ -118,3 +118,49 @@
     </div>
   </mat-card>
 </div>
+
+<app-modal [title]="modalTitle">
+  <form [formGroup]="editBoardForm">
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.TITLE" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="title"
+      />
+      <mat-error *ngIf="titleBoard?.invalid && titleBoard?.touched">
+          <span *ngIf="titleBoard?.errors?.['required']">{{
+            "BOARD.ERROR_TITLE" | translate
+            }}</span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.DESCRIPTION" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="description"
+      />
+      <mat-error *ngIf="descriptionBoard?.invalid && descriptionBoard?.touched">
+          <span *ngIf="descriptionBoard?.errors?.['required']">{{
+            "BOARD.ERROR_DESCRIPTION" | translate
+            }}</span>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      class="sign-up__btn"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="editBoardForm.invalid"
+      (click)="editBoard()"
+    >
+      {{ "MENU.LINKS.EDIT" | translate }}
+    </button>
+  </form>
+</app-modal>

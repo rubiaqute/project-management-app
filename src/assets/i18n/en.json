@@ -79,6 +79,8 @@
     "ADD_COLUMN_MODAL_TITLE": "Column title",
     "ADD_COLUMN_MODAL_BUTTON": "Create column",
     "ERROR": "Oops, something went wrong",
+    "ERROR_TITLE": "The title is required",
+    "ERROR_DESCRIPTION": "The description is required",
     "COLUMN_NO_TITLE": "No title",
     "ADD_TASK_MODAL_TITLE": "Task text",
     "ADD_TASK_MODAL_DESCRIPTION": "Task description",
