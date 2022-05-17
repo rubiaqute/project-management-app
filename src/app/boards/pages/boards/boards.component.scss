@@ -180,6 +180,7 @@
   width: 100vw;
   height: 100vh;
   z-index: 100;
+  overflow-y: auto;
   .overlay {
     position: absolute;
     top: 0;
@@ -207,10 +208,19 @@
     &__items {
       display: flex;
       align-items: center;
+      justify-content: space-evenly;
       flex-wrap: wrap;
+      gap: 2vw;
       .results {
         &__item {
-          border: 1px solid red;
+          padding: $padding-default;
+          border-radius: 2%;
+          -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+            4px 4px 8px 0px rgba(203, 213, 221, 0.74);
+          -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+            4px 4px 8px 0px rgba(203, 213, 221, 0.74);
+          box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+            4px 4px 8px 0px rgba(203, 213, 221, 0.74);
         }
       }
     }
