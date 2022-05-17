@@ -11,6 +11,7 @@ import { HttpClient } from '@angular/common/http';
 import { HeaderComponent } from './components/header/header.component';
 import { StoreModule } from '@ngrx/store';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
+import {MatMenuModule} from "@angular/material/menu";
 
 export function HttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http);
@@ -32,7 +33,8 @@ export function HttpLoaderFactory(http: HttpClient) {
         deps: [HttpClient]
       },
       defaultLanguage: 'en'
-    })
+    }),
+    MatMenuModule
   ]
 })
 export class CoreModule { }

@@ -2,42 +2,104 @@
 
 .footer {
   height: $header-footer-height;
+
+
   &-container {
     position: relative;
     display: flex;
     align-items: center;
     justify-content: space-between;
     height: $header-footer-height;
+    transition: background-color 2s ease-in-out;
+
     .rsschool {
       width: 5vw;
       height: 100%;
       background: url(https://rs.school/images/rs_school_js.svg) center center no-repeat;
       background-size: contain;
+
       &:hover {
         opacity: 0.7;
       }
     }
+
     .developers {
       display: flex;
       align-items: center;
+
       &__title {
         margin: 0;
       }
+
       &__list {
         display: flex;
         align-items: center;
         margin-left: 1vw;
+
         .list__item {
           margin: 0 0.3vw;
+
           .item__link {
             color: $grey-light-color;
             filter: blur(0.1rem);
+
             &:hover {
               color: $white-color;
               filter: blur(0);
             }
           }
         }
+      }
+    }
+
+    .developers-hidden {
+      display: none;
+    }
+  }
+}
+.footer-active {
+  background-color: #007e8f;
+}
+
+.footer-dark {
+  background-color: #460c0c !important;
+}
+
+@media (max-width: 1200px) {
+  .footer {
+    &-container {
+      .rsschool {
+        width: 7vw;
+      }
+    }
+  }
+}
+
+
+@media (max-width: 700px) {
+  .footer {
+    &-container {
+      .rsschool {
+        width: 10vw;
+      }
+
+      .developers {
+        display: none
+      }
+    }
+
+    .developers-hidden {
+      display: block;
+    }
+
+  }
+}
+
+@media (max-width: 500px) {
+  .footer {
+    &-container {
+      .rsschool {
+        width: 15vw;
       }
     }
   }

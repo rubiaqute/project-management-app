@@ -217,3 +217,64 @@
 .tasks__list {
   transition: none;
 }
+
+
+@media (max-width: 1000px) {
+  .column {
+    width: 18vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .column {
+    width: 25vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .column {
+    width: 32vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .column {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .column {
+    width: 40vw;
+  }
+}
+
+@media (max-width: 400px) {
+  .column {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  .popup {
+    &__modal {
+      width: 40%;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .popup {
+    &__modal {
+      width: 50%;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .popup {
+    &__modal {
+      width: 70%;
+    }
+  }
+}

@@ -1,5 +1,5 @@
 <header class="header">
-  <mat-toolbar class="header-container" color="primary">
+  <mat-toolbar class="header-container " color="primary">
     <div class="toggles">
       <mat-slide-toggle (change)="changeLanguage()">
         <mat-icon class="toggles__icon">language</mat-icon>
@@ -8,12 +8,33 @@
         <mat-icon class="toggles__icon">bedtime</mat-icon>
       </mat-slide-toggle>
     </div>
-    <span class="header__title" [routerLink]="''">{{
-      "MENU.TITLE" | translate
-    }}</span>
-    <div class="user-controls" *ngIf="!!(activeUser$ | async) === false">
+    <div class="toggles-hidden">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-slide-toggle (change)="changeLanguage()">
+            <mat-icon class="toggles__icon">language</mat-icon>
+          </mat-slide-toggle>
+        </button>
+        <button mat-menu-item>
+        <mat-slide-toggle (change)="changeTheme()">
+          <mat-icon class="toggles__icon">bedtime</mat-icon>
+        </mat-slide-toggle>
+        </button>
+      </mat-menu>
+
+    </div>
+    <span class="header__title" [routerLink]="''">
+      {{"MENU.TITLE" | translate}}
+    </span>
+    <span class="header__title__hidden" [routerLink]="''">
+      {{"MENU.TITLE" | translate}}
+    </span>
+    <div class="user-controls__login" *ngIf="!!(activeUser$ | async) === false">
       <button
-        class="user-controls__btn"
+        class="user-controls__login__btn"
         mat-raised-button
         color="accent"
         [routerLink]="'/auth/login'"
@@ -21,7 +42,7 @@
         {{ "MENU.LINKS.LOGIN" | translate }}
       </button>
       <button
-        class="user-controls__btn"
+        class="user-controls__login__btn"
         mat-raised-button
         color="accent"
         [routerLink]="'/auth/sign-up'"
@@ -29,10 +50,10 @@
         {{ "MENU.LINKS.REGISTER" | translate }}
       </button>
     </div>
-    <div class="user-controls" *ngIf="activeUser$ | async">
+    <div class="user-controls__menu" *ngIf="activeUser$ | async">
       <span class="header__name">{{ (activeUser$ | async)!.name }}</span>
       <button
-        class="user-controls__btn"
+        class="user-controls__menu__btn"
         mat-mini-fab
         color="accent"
         [routerLink]="'/main/board/new-board'"
@@ -40,7 +61,7 @@
         <mat-icon>dashboard</mat-icon>
       </button>
       <button
-        class="user-controls__btn"
+        class="user-controls__menu__btn"
         mat-mini-fab
         color="accent"
         [routerLink]="'/auth/edit'"
@@ -48,13 +69,38 @@
         <mat-icon>edit</mat-icon>
       </button>
       <button
-        class="user-controls__btn"
+        class="user-controls__menu__btn"
         mat-mini-fab
         color="accent"
         (click)="logout()"
       >
         <mat-icon>exit_to_app</mat-icon>
       </button>
+    </div>
+    <div class="user-controls-hidden" *ngIf="activeUser$ | async">
+      <button mat-button [matMenuTriggerFor]="menu">
+        {{ (activeUser$ | async)!.name }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          class="user-controls__menu__btn"
+          color="accent"
+          [routerLink]="'/main/board/new-board'"
+        >New board</button>
+        <button
+          mat-menu-item
+          class="user-controls__menu__btn"
+          color="accent"
+          [routerLink]="'/auth/edit'"
+        >Edit Profile</button>
+        <button
+          mat-menu-item
+          class="user-controls__menu__btn"
+          color="accent"
+          (click)="logout()"
+        >Log out</button>
+      </mat-menu>
     </div>
   </mat-toolbar>
 </header>
