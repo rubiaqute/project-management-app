@@ -58,7 +58,14 @@
   "BOARDS": {
     "TITLE": "Let's look at your boards",
     "NO_BOARDS": "Oops, you don't have boards yet",
-    "CREATE": "Create a new one"
+    "CREATE": "Create a new one",
+    "FILTER": "Board filter",
+    "TASK_SEARCH": {
+      "TITLE":"Task search",
+      "BTN": "Search",
+      "RESULT": "Search results for",
+      "TO_BOARD": "Go to board"
+    }
   },
   "BOARD": {
     "TITLE": "title",
@@ -81,7 +88,12 @@
     "YES": "Yes",
     "NO": "No",
     "EXECUTOR": "Executor",
-    "USERS": "Users"
+    "USERS": "Users",
+    "TASK": {
+      "TASK": "Task",
+      "DESCRIPTION": "Description",
+      "BOARD": "Board"
+    }
   },
   "WELCOME": {
     "BOARDS": "Boards",
