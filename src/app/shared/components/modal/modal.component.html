@@ -6,16 +6,17 @@
       class="modal__close"
       (click)="toggleModal()"
     >
-      <mat-icon color="primary">close</mat-icon>
+      <mat-icon
+        color="primary">
+        close
+      </mat-icon>
     </button>
 
-
-
     <mat-card-title
-    >{{ title | translate | titlecase }}
+      class="modal__title"
+    >
+      {{ title | translate | titlecase }}
     </mat-card-title>
     <ng-content></ng-content>
-
-
   </mat-card>
 </div>

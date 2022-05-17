@@ -18,19 +18,19 @@ import {ActionsSubject} from "@ngrx/store";
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isDarkTheme: boolean = false;
-  langValue: boolean = false;
-  public isErrorModalOn: boolean = false
-  public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
-  public activeUserStatus$: Observable<Status> = this.apiFacade.activeUserStatus$;
+  public isDarkTheme: boolean = false;
   public id: string | undefined;
+  public isErrorModalOn: boolean = false
   public subscription: Subscription[] = [];
   public titleValue: string = '';
   public descriptionValue: string = '';
+  public langValue: boolean = false;
   public newBoardForm!: FormGroup;
   public subsc = new Subscription();
+  public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
+  public activeUserStatus$: Observable<Status> = this.apiFacade.activeUserStatus$;
   public modalTitle = "BOARD.CREATE_NEW_BOARD";
-  isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
+  public isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
 
   @ViewChild(ModalComponent) child : ModalComponent | undefined;
 
@@ -79,16 +79,16 @@ export class HeaderComponent implements OnInit {
     this.themeChanged.emit(this.isDarkTheme)
   }
 
-  edit() {
+  public edit() {
     setTimeout(() => this.router.navigateByUrl('/form'), 0);
   }
 
-  logout() {
+  public logout() {
     this.authService.clearInfo();
     setTimeout(() => this.router.navigateByUrl(''), 0);
   }
 
-  openNewBoardModal() {
+  public openNewBoardModal() {
     this.child?.toggleModal();
   }
 
@@ -100,7 +100,7 @@ export class HeaderComponent implements OnInit {
     return this.newBoardForm.get('description');
   }
 
-  addNewBoard() {
+  public addNewBoard() {
     const body: IBoardRequest = {
       title: this.title?.value,
       description: this.description?.value,

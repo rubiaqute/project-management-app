@@ -3,14 +3,14 @@ import {IBoard, IBoardRequest, ITask, IUser, Status} from 'src/app/core/models/a
 import {ApiServices} from 'src/app/core/services/api-services.service';
 import {ActivatedRoute, Router} from "@angular/router";
 import {ActionsSubject} from "@ngrx/store";
+import {ApiFacade} from 'src/app/store/facade';
+import {MatDialog} from '@angular/material/dialog';
+import {ConfirmationModalComponent} from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
 import {ModalComponent} from "../../../shared/components/modal/modal.component";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ofType} from "@ngrx/effects";
 import {BoardsTypes} from "../../../store/actions/boards.actions";
 import {forkJoin, map, Observable, Subscription} from 'rxjs';
-import {ApiFacade} from 'src/app/store/facade';
-import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationModalComponent} from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
 import {__assign} from 'tslib';
 
 interface ITaskSearch {
@@ -24,6 +24,7 @@ interface ITaskSearch {
   templateUrl: './boards.component.html',
   styleUrls: ['./boards.component.scss'],
 })
+
 export class BoardsComponent implements OnInit {
   public tasksResults: ITaskSearch[] = [];
   public tasks: ITask[] = [];
@@ -31,10 +32,6 @@ export class BoardsComponent implements OnInit {
   public isSeachingTasks = false;
   public taskSearchInput: string = '';
   public subs: Subscription | undefined;
-  public isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$;
-  public users$: Observable<IUser[]> = this.apiFacade.users$;
-  public users: IUser[] = [];
-  public searchStr: string = '';
   public id: string | undefined;
   public title: string = '';
   public titleValue: string = '';
@@ -43,8 +40,11 @@ export class BoardsComponent implements OnInit {
   public subsc = new Subscription();
   public modalTitle = "BOARD.EDIT_BOARD";
   public subscription: Subscription[] = [];
+  public users$: Observable<IUser[]> = this.apiFacade.users$;
+  public users: IUser[] = [];
+  public searchStr: string = '';
+  public isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
   @ViewChild(ModalComponent) child: ModalComponent | undefined;
-
 
   public boards$: Observable<IBoard[]> = this.apiFacade.boards$.pipe(
     map((boards: IBoard[]) =>
@@ -172,7 +172,7 @@ export class BoardsComponent implements OnInit {
     return '';
   }
 
-  search(value: string) {
+  public search(value: string) {
     this.title = value;
   }
 
@@ -191,8 +191,7 @@ export class BoardsComponent implements OnInit {
     evt.stopPropagation();
   }
 
-  openEditBoardModal(e: Event, id: string):
-    void {
+  public openEditBoardModal(e: Event, id: string): void {
     this.id = id;
     e.stopPropagation();
     this.child?.toggleModal();
@@ -206,7 +205,7 @@ export class BoardsComponent implements OnInit {
     return this.editBoardForm.get('description');
   }
 
-  editBoard() {
+  public editBoard() {
     const body: IBoardRequest = {
       title: this.titleBoard?.value,
       description: this.descriptionBoard?.value,
@@ -217,7 +216,7 @@ export class BoardsComponent implements OnInit {
     }
   }
 
-  ngOnDestroy() {
+  public ngOnDestroy() {
     this.subsc.unsubscribe();
   }
 }

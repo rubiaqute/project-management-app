@@ -33,56 +33,97 @@
 
       <mat-card
         class="board__column add-column"
-        (click)="switchAddColumnModal()"
+        (click)="openAddColumnModal($event, board.id)"
       >
-        <mat-icon color="primary" class="add-column__icon">add</mat-icon>
-        <p class="add-column__text">{{ "BOARD.ADD" | translate }}</p>
+        <mat-icon
+          color="primary"
+          class="add-column__icon">
+          add
+        </mat-icon>
+        <p class="add-column__text">
+          {{ "BOARD.ADD" | translate }}
+        </p>
       </mat-card>
     </div>
   </ng-container>
-  <div class="popup" *ngIf="isColumnModalOn">
-    <div class="popup__overlay" (click)="switchAddColumnModal()"></div>
-    <mat-card class="popup__modal">
-      <mat-form-field>
-        <mat-label>{{ "BOARD.ADD_COLUMN_MODAL_TITLE" | translate }}</mat-label>
-        <input matInput type="text" [(ngModel)]="title" />
-      </mat-form-field>
-      <button
-        mat-raised-button
-        color="primary"
-        [disabled]="!title!.trim()"
-        (click)="createColumn(title!.trim())"
-        (click)="switchAddColumnModal()"
-      >
-        {{ "BOARD.ADD_COLUMN_MODAL_BUTTON" | translate }}
-      </button>
-      <button
-        mat-icon-button
-        class="modal__close"
-        (click)="switchAddColumnModal()"
-      >
-        <mat-icon color="primary">close</mat-icon>
-      </button>
-    </mat-card>
-  </div>
 
-  <div class="popup" *ngIf="isErrorModalOn">
-    <div class="popup__overlay" (click)="switchErrorModal()"></div>
-    <mat-card class="popup__modal">
-      <img
-        class="modal__img"
-        src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
-        alt="img: server wrong"
-        draggable="false"
-      />
-      <p>{{ "BOARD.ERROR" | translate }}</p>
-      <button mat-icon-button class="modal__close" (click)="switchErrorModal()">
-        <mat-icon color="primary">close</mat-icon>
-      </button>
-    </mat-card>
-  </div>
+  <!--  <div class="popup" *ngIf="isColumnModalOn">-->
+  <!--    <div class="popup__overlay" (click)="switchAddColumnModal()"></div>-->
+  <!--    <mat-card class="popup__modal">-->
+  <!--      <mat-form-field>-->
+  <!--        <mat-label>{{ "BOARD.ADD_COLUMN_MODAL_TITLE" | translate }}</mat-label>-->
+  <!--        <input matInput type="text" [(ngModel)]="title"/>-->
+  <!--      </mat-form-field>-->
+  <!--      <button-->
+  <!--        mat-raised-button-->
+  <!--        color="primary"-->
+  <!--        [disabled]="!title!.trim()"-->
+  <!--        (click)="createColumn(title!.trim())"-->
+  <!--        (click)="switchAddColumnModal()"-->
+  <!--      >-->
+  <!--        {{ "BOARD.ADD_COLUMN_MODAL_BUTTON" | translate }}-->
+  <!--      </button>-->
+  <!--      <button-->
+  <!--        mat-icon-button-->
+  <!--        class="modal__close"-->
+  <!--        (click)="switchAddColumnModal()"-->
+  <!--      >-->
+  <!--        <mat-icon color="primary">close</mat-icon>-->
+  <!--      </button>-->
+  <!--    </mat-card>-->
+  <!--  </div>-->
+
+<!--    <div class="popup" *ngIf="isErrorModalOn">-->
+<!--      <div class="popup__overlay" (click)="switchErrorModal()"></div>-->
+<!--      <mat-card class="popup__modal">-->
+<!--        <img-->
+<!--          class="modal__img"-->
+<!--          src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"-->
+<!--          alt="img: server wrong"-->
+<!--          draggable="false"-->
+<!--        />-->
+<!--        <p>{{ "BOARD.ERROR" | translate }}</p>-->
+<!--        <button mat-icon-button class="modal__close" (click)="switchErrorModal()">-->
+<!--          <mat-icon color="primary">close</mat-icon>-->
+<!--        </button>-->
+<!--      </mat-card>-->
+<!--    </div>-->
 
   <button mat-icon-button class="back-btn" routerLink="/main" color="primary">
     <mat-icon>apps</mat-icon>
   </button>
 </ng-container>
+
+<app-modal [title]="modalTitle">
+  <form [formGroup]="addColumnForm">
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.ADD_COLUMN_MODAL_TITLE" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="title"
+      />
+      <mat-error
+        *ngIf="titleColumn?.invalid && titleColumn?.touched">
+          <span
+            *ngIf="titleColumn?.errors?.['required']">
+            {{"BOARD.ERROR_TITLE" | translate}}
+          </span>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      class="sign-up__btn"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="addColumnForm.invalid"
+      (click)="createColumn()"
+    >
+      {{ "BOARDS.CREATE" | translate }}
+    </button>
+  </form>
+</app-modal>
+

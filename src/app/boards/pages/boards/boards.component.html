@@ -130,10 +130,12 @@
         type="text"
         formControlName="title"
       />
-      <mat-error *ngIf="titleBoard?.invalid && titleBoard?.touched">
-          <span *ngIf="titleBoard?.errors?.['required']">{{
-            "BOARD.ERROR_TITLE" | translate
-            }}</span>
+      <mat-error
+        *ngIf="titleBoard?.invalid && titleBoard?.touched">
+          <span
+            *ngIf="titleBoard?.errors?.['required']">
+            {{"BOARD.ERROR_TITLE" | translate}}
+          </span>
       </mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -145,10 +147,11 @@
         type="text"
         formControlName="description"
       />
-      <mat-error *ngIf="descriptionBoard?.invalid && descriptionBoard?.touched">
-          <span *ngIf="descriptionBoard?.errors?.['required']">{{
-            "BOARD.ERROR_DESCRIPTION" | translate
-            }}</span>
+      <mat-error
+        *ngIf="descriptionBoard?.invalid && descriptionBoard?.touched">
+          <span *ngIf="descriptionBoard?.errors?.['required']">
+            {{"BOARD.ERROR_DESCRIPTION" | translate}}
+          </span>
       </mat-error>
     </mat-form-field>
 
