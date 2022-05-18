@@ -1,6 +1,5 @@
 import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
 import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
 import {ActivatedRoute} from '@angular/router';
 import {ofType} from '@ngrx/effects';
 import {ActionsSubject} from '@ngrx/store';
@@ -38,7 +37,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public dropCounter: number = 0;
 
   public addColumnForm!: FormGroup;
-  public modalTitle = "BOARD.ADD";
+  public modalTitle = "BOARD.ADD_COLUMN";
   @ViewChild(ModalComponent) child: ModalComponent | undefined;
 
   constructor(

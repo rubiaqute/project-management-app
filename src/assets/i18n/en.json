@@ -70,7 +70,7 @@
   "BOARD": {
     "TITLE": "title",
     "DESCRIPTION": "description",
-    "ADD": "Add new column",
+    "ADD_COLUMN": "Add new column",
     "EDIT_COLUMN_NAME": "Column name",
     "ADD_TASK": "Add task",
     "EDIT_BOARD": "Edit board",

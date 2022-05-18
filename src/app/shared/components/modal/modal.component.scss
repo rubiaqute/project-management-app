@@ -14,13 +14,13 @@
     position: relative;
     bottom: 50%;
     left: 50%;
-    height: 31vh;
+    min-height: 25vh;
     width: 27vw;
     transform: translate(-50%, -50%);
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-around;
     overflow: hidden;
     .modal {
       &__img {

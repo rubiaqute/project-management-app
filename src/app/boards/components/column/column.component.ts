@@ -1,14 +1,13 @@
-import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
 import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import { MatDialog } from '@angular/material/dialog';
-import { Observable, Subscription } from 'rxjs';
-import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
-import { IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
-import { ApiFacade } from 'src/app/store/facade';
+import {MatDialog} from '@angular/material/dialog';
+import {Observable, Subscription} from 'rxjs';
+import {ConfirmationModalComponent} from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
+import {IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser} from 'src/app/core/models/api.models';
+import {ApiFacade} from 'src/app/store/facade';
 import {ModalComponent} from "../../../shared/components/modal/modal.component";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {ActivatedRoute} from "@angular/router";
-import {ActionsSubject} from "@ngrx/store";
 
 @Component({
   selector: 'app-column',
@@ -51,7 +50,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public INDEX_COEFFICIENT: number = 100000000;
   public isLoaderOn: boolean = false;
   public addTaskForm!: FormGroup;
-  public modalTitle = "BOARD.ADD_TASK";
+  public editTaskForm!: FormGroup;
+  public modalTitle = "";
 
   @ViewChild(ModalComponent) child: ModalComponent | undefined;
 
@@ -59,10 +59,17 @@ export class ColumnComponent implements OnInit, OnDestroy {
     private fb: FormBuilder,
     private activateRoute: ActivatedRoute,
     private apiFacade: ApiFacade,
-    public dialog: MatDialog) {}
+    public dialog: MatDialog) {
+  }
 
   ngOnInit(): void {
     this.addTaskForm = this.fb.group({
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]],
+      user: ['', [Validators.required]]
+    });
+
+    this.editTaskForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       user: ['', [Validators.required]]
@@ -141,12 +148,12 @@ export class ColumnComponent implements OnInit, OnDestroy {
       done: false,
       order: this.MAX_TASK_ORDER,
       description: this.descriptionTask?.value,
-      userId: this.userTask?.value.id ,
+      userId: this.userTask?.value.id,
     };
     this.apiFacade.createTask(this.boardId, this.column.id, taskRequest)
   }
 
-  public editTask(title: string, description: string): void {
+  public editTask(): void {
     const taskRequest: ITaskRequestUpdate = {
       title: this.title!,
       done: this.currentTask!.done,
@@ -213,7 +220,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.currentTask = task;
     this.currentTaskChange.emit(task);
     this.userExecutor = this.users.find((el) => el.id === task.userId)
-
   }
 
   public setPrevColumn(column: IColumn): void {
@@ -227,7 +233,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public openDialog(e: Event): void {
     e.stopPropagation()
     const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-      data: { name: 'CONFIRMATION.COLUMN', isConfirmed: false },
+      data: {name: 'CONFIRMATION.COLUMN', isConfirmed: false},
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -240,6 +246,15 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public openAddTaskModal(e: Event, boardId: string, columnId: string): void {
+    this.modalTitle = "BOARD.ADD_TASK";
+    this.boardId = boardId;
+    this.columnId = columnId;
+    e.stopPropagation();
+    this.child?.toggleModal();
+  }
+
+  public openEditTaskModal(e: Event, boardId: string, columnId: string): void {
+    this.modalTitle = "BOARD.EDIT_TASK_MODAL_BUTTON";
     this.boardId = boardId;
     this.columnId = columnId;
     e.stopPropagation();

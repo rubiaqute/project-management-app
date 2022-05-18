@@ -67,7 +67,6 @@ export class BoardsComponent implements OnInit {
     this.apiFacade.getUsers();
     this.users$.subscribe((data) => (this.users = data));
 
-
     this.editBoardForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]]
