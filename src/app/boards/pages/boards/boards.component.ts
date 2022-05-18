@@ -1,4 +1,4 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
 import {IBoard, IBoardRequest, ITask, IUser, Status} from 'src/app/core/models/api.models';
 import {ApiServices} from 'src/app/core/services/api-services.service';
 import {ActivatedRoute, Router} from "@angular/router";
@@ -43,6 +43,7 @@ export class BoardsComponent implements OnInit {
   public users$: Observable<IUser[]> = this.apiFacade.users$;
   public users: IUser[] = [];
   public searchStr: string = '';
+  public userExecutor: IUser | undefined;
   public isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
   @ViewChild(ModalComponent) child: ModalComponent | undefined;
 
@@ -84,7 +85,7 @@ export class BoardsComponent implements OnInit {
     });
   }
 
-  openDialog(id: string | null, e: Event): void {
+  public openDialog(id: string | null, e: Event): void {
     e.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmationModalComponent, {
       data: {name: 'CONFIRMATION.BOARD', isConfirmed: false},
@@ -95,8 +96,7 @@ export class BoardsComponent implements OnInit {
     });
   }
 
-
-  getTasks(boards: IBoard[]): Observable<ITaskSearch[]> {
+  public getTasks(boards: IBoard[]): Observable<ITaskSearch[]> {
     let observables: Observable<any>[] = [];
     boards.forEach((el) => {
       observables.push(
@@ -114,7 +114,7 @@ export class BoardsComponent implements OnInit {
     return forkJoin(observables);
   }
 
-  searchTask(boards: IBoard[]) {
+  public searchTask(boards: IBoard[]) {
     this.isSeachingTasks = true;
     this.getTasks(boards).subscribe((data) => {
       this.tasksResults = data;
@@ -125,7 +125,7 @@ export class BoardsComponent implements OnInit {
     });
   }
 
-  getFilteredTasks(tasks: ITask[]) {
+  public getFilteredTasks(tasks: ITask[]) {
     return tasks.filter((task) => {
       return (
         task.title.toLowerCase().includes(this.taskSearchInput.trim().toLowerCase()) ||
@@ -136,24 +136,24 @@ export class BoardsComponent implements OnInit {
     });
   }
 
-  showTaskSearchResults(tasks: ITask[]) {
+  public showTaskSearchResults(tasks: ITask[]) {
     this.isResultsShown = true;
     this.tasks = tasks;
   }
 
-  getBoardName(taskId: string) {
+  public getBoardName(taskId: string) {
     return this.tasksResults.filter((el) => {
       return el.tasks.map((el) => el.id).includes(taskId);
     })[0].boardName;
   }
 
-  getBoardId(taskId: string) {
+  public getBoardId(taskId: string) {
     return this.tasksResults.filter((el) => {
       return el.tasks.map((el) => el.id).includes(taskId);
     })[0].boardId;
   }
 
-  closeResults(evt: Event) {
+  public closeResults(evt: Event) {
     evt.stopPropagation();
     this.isResultsShown = false;
     this.tasks = [];
@@ -161,7 +161,7 @@ export class BoardsComponent implements OnInit {
     this.taskSearchInput = '';
   }
 
-  getAssigneeName(userId: string) {
+  public getAssigneeName(userId: string) {
     if (this.users.length) {
       return (
         this.users.filter((el) => el.id === userId)[0]?.name ||
@@ -175,12 +175,12 @@ export class BoardsComponent implements OnInit {
     this.title = value;
   }
 
-  clearInput() {
+  public clearInput() {
     this.title = '';
     this.searchStr = '';
   }
 
-  deleteBoard(id: string | null) {
+  public deleteBoard(id: string | null) {
     if (id) {
       this.apiFacade.deleteBoardById(id);
     }

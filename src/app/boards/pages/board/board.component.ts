@@ -6,7 +6,6 @@ import {ActionsSubject} from '@ngrx/store';
 import {Observable, Subscription} from 'rxjs';
 import {IBoard, IColumn, IColumnRequest, ITask, Status} from 'src/app/core/models/api.models';
 import {ActiveBordTypes} from 'src/app/store/actions/active-board.actions';
-import {BoardsTypes} from 'src/app/store/actions/boards.actions';
 import {ApiFacade} from 'src/app/store/facade';
 import {ModalComponent} from "../../../shared/components/modal/modal.component";
 import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
@@ -48,7 +47,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-
     this.addColumnForm = this.fb.group({
       title: ['', [Validators.required]]
     });
@@ -103,11 +101,6 @@ export class BoardComponent implements OnInit, OnDestroy {
   public isLoadingActiveBoard(status: Status) {
     return status === Status.LOADING
   }
-
-  // public switchAddColumnModal(): void {
-  //   this.isColumnModalOn = !this.isColumnModalOn;
-  //   this.title = '';
-  // }
 
   public switchErrorModal(): void {
     this.isErrorModalOn = !this.isErrorModalOn;

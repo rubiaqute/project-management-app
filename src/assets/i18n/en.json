@@ -61,7 +61,7 @@
     "CREATE": "Create a new one",
     "FILTER": "Board filter",
     "TASK_SEARCH": {
-      "TITLE":"Task search",
+      "TITLE": "Task search",
       "BTN": "Search",
       "RESULT": "Search results for",
       "TO_BOARD": "Go to board"
