@@ -19,9 +19,9 @@
           </mat-slide-toggle>
         </button>
         <button mat-menu-item>
-        <mat-slide-toggle (change)="changeTheme()">
-          <mat-icon class="toggles__icon">bedtime</mat-icon>
-        </mat-slide-toggle>
+          <mat-slide-toggle (change)="changeTheme()">
+            <mat-icon class="toggles__icon">bedtime</mat-icon>
+          </mat-slide-toggle>
         </button>
       </mat-menu>
 
@@ -56,7 +56,7 @@
         class="user-controls__menu__btn"
         mat-mini-fab
         color="accent"
-        [routerLink]="'/main/board/new-board'"
+        (click)="openNewBoardModal()"
       >
         <mat-icon>dashboard</mat-icon>
       </button>
@@ -86,20 +86,23 @@
           mat-menu-item
           class="user-controls__menu__btn"
           color="accent"
-          [routerLink]="'/main/board/new-board'"
-        >New board</button>
+          (click)="openNewBoardModal()"
+        >New board
+        </button>
         <button
           mat-menu-item
           class="user-controls__menu__btn"
           color="accent"
           [routerLink]="'/auth/edit'"
-        >Edit Profile</button>
+        >Edit Profile
+        </button>
         <button
           mat-menu-item
           class="user-controls__menu__btn"
           color="accent"
           (click)="logout()"
-        >Log out</button>
+        >Log out
+        </button>
       </mat-menu>
     </div>
   </mat-toolbar>
@@ -123,3 +126,48 @@
     </button>
   </mat-card>
 </div>
+
+
+<app-modal [title]="modalTitle">
+  <form [formGroup]="newBoardForm">
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.TITLE" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="title"
+      />
+      <mat-error *ngIf="title?.invalid && title?.touched">
+          <span *ngIf="title?.errors?.['required']">
+            {{"BOARD.ERROR_TITLE" | translate}}
+          </span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        {{"BOARD.DESCRIPTION" | translate}}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="description"
+      />
+      <mat-error *ngIf="description?.invalid && description?.touched">
+          <span *ngIf="description?.errors?.['required']">
+            {{"BOARD.ERROR_DESCRIPTION" | translate}}
+          </span>
+      </mat-error>
+    </mat-form-field>
+    <button
+      class="sign-up__btn"
+      mat-raised-button
+      color="primary"
+      [disabled]="newBoardForm.invalid"
+      (click)="addNewBoard()"
+    >
+      {{ "BOARDS.CREATE" | translate }}
+    </button>
+  </form>
+</app-modal>

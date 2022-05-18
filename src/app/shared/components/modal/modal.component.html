@@ -1,0 +1,23 @@
+<div class="popup" *ngIf="isModalOn">
+  <div class="popup__overlay"
+       (click)="toggleModal()"></div>
+  <mat-card
+    class="popup__modal">
+    <button
+      mat-icon-button
+      class="modal__close"
+      (click)="toggleModal()"
+    >
+      <mat-icon
+        color="primary">
+        close
+      </mat-icon>
+    </button>
+    <mat-card-title
+      class="modal__title"
+    >
+      {{ title | translate | titlecase }}
+    </mat-card-title>
+    <ng-content></ng-content>
+  </mat-card>
+</div>

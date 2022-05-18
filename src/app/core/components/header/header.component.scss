@@ -74,6 +74,14 @@
   display: none;
 }
 
+app-modal {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
 @media (max-width: 750px) {
   .header {
     &-container {

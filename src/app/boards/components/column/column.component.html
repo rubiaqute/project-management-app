@@ -7,8 +7,12 @@
     >
       <b>{{ column.title }}</b>
     </mat-card-title>
-    <mat-form-field *ngIf="isTitleEditMode" class="header__input">
-      <mat-label>{{ "BOARD.EDIT_COLUMN_NAME" | translate }}</mat-label>
+    <mat-form-field
+      *ngIf="isTitleEditMode"
+      class="header__input">
+      <mat-label>
+        {{ "BOARD.EDIT_COLUMN_NAME" | translate }}
+      </mat-label>
       <input
         matInput
         type="text"
@@ -27,7 +31,8 @@
         color="primary"
         class="actions__btn delete"
         (click)="openDialog($event)"
-        >delete</mat-icon
+      >delete
+      </mat-icon
       >
     </mat-card-actions>
   </div>
@@ -53,103 +58,151 @@
       <div class="tasks-custom-placeholder" *cdkDragPlaceholder></div>
     </app-task>
   </div>
-  <div class="column__footer" (click)="switchTaskModal('add')">
-    <mat-icon color="primary" class="footer__icon">add</mat-icon>
-    <p class="footer__text">{{ "BOARD.ADD_TASK" | translate }}</p>
+  <div class="column__footer"
+       (click)="openAddTaskModal( boardId, column.id)"
+  >
+    <mat-icon
+      color="primary"
+      class="footer__icon">
+      add
+    </mat-icon>
+    <p class="footer__text">
+      {{ "BOARD.ADD_TASK" | translate }}
+    </p>
   </div>
 </mat-card>
 
-<div class="popup" *ngIf="isAddTaskModalOn">
-  <div class="popup__overlay" (click)="switchTaskModal('add')"></div>
-  <mat-card class="popup__modal">
-    <mat-form-field>
-      <mat-label>{{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}</mat-label>
-      <input matInput type="text" [(ngModel)]="title" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{
-        "BOARD.ADD_TASK_MODAL_DESCRIPTION" | translate
-      }}</mat-label>
-      <input matInput type="text" [(ngModel)]="description" />
-    </mat-form-field>
-    <mat-form-field>
-      <mat-label>{{ "BOARD.USERS" | translate }}</mat-label>
-      <mat-select [(ngModel)]="userExecutor">
-        <mat-option *ngFor="let user of users$ | async" [value]="user">
-          {{ user.name }}
-        </mat-option>
-      </mat-select>
-    </mat-form-field>
-    <button
-      mat-raised-button
-      color="primary"
-      [disabled]="!title!.trim() || !description!.trim() || !userExecutor"
-      (click)="createTask(title!.trim(), description!.trim())"
-      (click)="switchTaskModal('add')"
-    >
-      {{ "BOARD.ADD_TASK_MODAL_BUTTON" | translate }}
-    </button>
-    <button
-      mat-icon-button
-      class="modal__close"
-      (click)="switchTaskModal('add')"
-    >
-      <mat-icon color="primary">close</mat-icon>
-    </button>
-  </mat-card>
-</div>
 
-<div class="popup" *ngIf="isEditTaskModalOn">
-  <div class="popup__overlay" (click)="switchTaskModal()"></div>
-  <mat-card class="popup__modal">
+<app-modal [title]="modalAddTitle" >
+  <form [formGroup]="addTaskForm">
     <mat-form-field>
-      <mat-label>{{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}</mat-label>
-      <input matInput type="text" [(ngModel)]="title" />
+      <mat-label>
+        {{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="title"
+      />
+      <mat-error
+        *ngIf="titleTask?.invalid && titleTask?.touched">
+          <span
+            *ngIf="titleTask?.errors?.['required']">
+            {{"BOARD.ERROR_TITLE" | translate}}
+          </span>
+      </mat-error>
     </mat-form-field>
+
     <mat-form-field>
-      <mat-label>{{
-        "BOARD.ADD_TASK_MODAL_DESCRIPTION" | translate
-      }}</mat-label>
-      <input matInput type="text" [(ngModel)]="description" />
+      <mat-label>
+        {{"BOARD.ADD_TASK_MODAL_DESCRIPTION" | translate}}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="description"
+      />
+      <mat-error
+        *ngIf="descriptionTask?.invalid && descriptionTask?.touched">
+          <span
+            *ngIf="descriptionTask?.errors?.['required']">
+            {{"BOARD.ERROR_DESCRIPTION" | translate}}
+          </span>
+      </mat-error>
     </mat-form-field>
+
     <mat-form-field>
-      <mat-label>{{ "BOARD.USERS" | translate }}</mat-label>
-      <mat-select [(ngModel)]="userExecutor">
-        <mat-option *ngFor="let user of users$ | async" [value]="user">
+      <mat-label>
+        {{ "BOARD.USERS" | translate }}
+      </mat-label>
+      <mat-select
+        formControlName="user"
+      >
+        <mat-option
+          *ngFor="let user of users$ | async" [value]="user">
           {{ user.name }}
         </mat-option>
       </mat-select>
     </mat-form-field>
+
     <button
+      class="sign-up__btn"
       mat-raised-button
       color="primary"
-      [disabled]="!title!.trim() || !description!.trim() || !userExecutor"
-      (click)="editTask(title!.trim(), description!.trim())"
-      (click)="switchTaskModal()"
+      type="submit"
+      [disabled]="addTaskForm.invalid"
+      (click)="createTask()"
+    >
+      {{ "BOARDS.CREATE" | translate }}
+    </button>
+  </form>
+</app-modal>
+
+<app-modal [title]="modalEditTitle" >
+  <form [formGroup]="editTaskForm">
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.ADD_TASK_MODAL_TITLE" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="title"
+      />
+      <mat-error
+        *ngIf="titleTaskEdit?.invalid && titleTaskEdit?.touched">
+          <span
+            *ngIf="titleTaskEdit?.errors?.['required']">
+            {{"BOARD.ERROR_TITLE" | translate}}
+          </span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>
+        {{"BOARD.ADD_TASK_MODAL_DESCRIPTION" | translate}}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        formControlName="description"
+      />
+      <mat-error
+        *ngIf="descriptionTaskEdit?.invalid && descriptionTaskEdit?.touched">
+          <span
+            *ngIf="descriptionTaskEdit?.errors?.['required']">
+            {{"BOARD.ERROR_DESCRIPTION" | translate}}
+          </span>
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.USERS" | translate }}
+      </mat-label>
+      <mat-select
+        formControlName="user"
+      >
+        <mat-option
+          *ngFor="let user of users$ | async" [value]="user">
+          {{ user.name }}
+        </mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <button
+      class="sign-up__btn"
+      mat-raised-button
+      color="primary"
+      type="submit"
+      [disabled]="editTaskForm.invalid"
+      (click)="editTask()"
     >
       {{ "BOARD.EDIT_TASK_MODAL_BUTTON" | translate }}
     </button>
-    <button mat-icon-button class="modal__close" (click)="switchTaskModal()">
-      <mat-icon color="primary">close</mat-icon>
-    </button>
-  </mat-card>
-</div>
+  </form>
+</app-modal>
 
-<div class="popup" *ngIf="isErrorModalOn">
-  <div class="popup__overlay" (click)="switchErrorModal()"></div>
-  <mat-card class="popup__modal">
-    <img
-      class="modal__img"
-      src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
-      alt="img: server wrong"
-      draggable="false"
-    />
-    <p>{{ "BOARD.ERROR" | translate }}</p>
-    <button mat-icon-button class="modal__close" (click)="switchErrorModal()">
-      <mat-icon color="primary">close</mat-icon>
-    </button>
-  </mat-card>
-</div>
 
 <div class="popup" *ngIf="isTaskDetailsModalOn">
   <div class="popup__overlay" (click)="switchTaskDetailsModal()"></div>
@@ -160,15 +213,21 @@
     </h4>
     <h3 class="taskDetails__done">
       {{ "BOARD.DONE" | translate }}:
-      <span style="color: red; font-weight: bold">{{
-        currentTask?.done ? ("BOARD.YES" | translate) : ("BOARD.NO" | translate)
-      }}</span>
+      <span style="color: red; font-weight: bold">
+        {{currentTask?.done ? ("BOARD.YES" | translate) : ("BOARD.NO" | translate)}}
+      </span>
     </h3>
     <h2 class="taskDetails__executor">
       {{ "BOARD.EXECUTOR" | translate }}:
-      <span style="color: red">{{ userExecutor?.name }}</span>
+      <span style="color: red">
+        {{ userExecutor?.name }}
+      </span>
     </h2>
-    <button mat-raised-button color="primary" (click)="switchTaskModal()">
+    <button
+      mat-raised-button
+      color="primary"
+      (click)="openEditTaskModal(boardId, column.id)"
+    >
       {{ "BOARD.EDIT_TASK_MODAL_BUTTON" | translate }}
     </button>
     <button

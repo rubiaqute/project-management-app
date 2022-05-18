@@ -134,6 +134,15 @@
   }
 }
 
+app-modal {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    bottom: 58%;
+  }
+}
+
 :host {
   position: relative;
 }
