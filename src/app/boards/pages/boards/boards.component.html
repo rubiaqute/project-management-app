@@ -14,7 +14,7 @@
           [disabled]="taskSearchInput.length < 2"
           (click)="searchTask(boards)"
         >
-          <mat-icon *ngIf="taskSearchInput.length >= 2">search</mat-icon>
+          <mat-icon *ngIf="taskSearchInput.trim().length >= 2">search</mat-icon>
         </button>
       </mat-form-field>
     </div>
@@ -92,16 +92,6 @@
     </button>
     <div class="results__items">
       <div class="results__item" *ngFor="let task of tasks">
-        <<<<<<< HEAD
-        <p>{{ "BOARD.TASK.TASK" | translate }}: {{ task.title }}</p>
-        <p>
-          {{ "BOARD.TASK.DESCRIPTION" | translate }}: {{ task.description }}
-        </p>
-        <p>
-          {{ "BOARD.EXECUTOR" | translate }}: {{ getAssigneeName(task.userId) }}
-        </p>
-        <p>{{ "BOARD.TASK.BOARD" | translate }}: {{ getBoardName(task.id) }}</p>
-        =======
         <p>
           <b>{{ "BOARD.TASK.TASK" | translate }}:</b> {{ task.title }}
         </p>
@@ -117,7 +107,6 @@
           <b>{{ "BOARD.TASK.BOARD" | translate }}:</b>
           {{ getBoardName(task.id) }}
         </p>
-        >>>>>>> 0517142 (feat: start to write styles for task search)
         <button
           mat-raised-button
           color="accent"

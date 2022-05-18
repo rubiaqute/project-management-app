@@ -89,7 +89,6 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   public createColumn(title: string): void {
     const order = this.MAX_COLUMN_ORDER + this.INDEX_COEFFICIENT
-    console.log('order' + order)
     const columnRequest: IColumnRequest = {
       title,
       order,

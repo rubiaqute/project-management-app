@@ -86,7 +86,6 @@ export class LoginPageComponent implements OnInit, OnDestroy {
 
         this.isLoading = false
         this.isErrorModalOn = true
-        console.log(error);
         //Here you can insert the window "Incorrectly entered email or login"
       });
   }

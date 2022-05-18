@@ -38,7 +38,7 @@ export class BoardsComponent implements OnInit {
     private apiFacade: ApiFacade,
     public dialog: MatDialog,
     private apiService: ApiServices
-  ) {}
+  ) { }
   ngOnInit(): void {
     this.apiFacade.loadBoards();
     this.apiFacade.getUsers();
@@ -86,10 +86,10 @@ export class BoardsComponent implements OnInit {
   getFilteredTasks(tasks: ITask[]) {
     return tasks.filter((task) => {
       return (
-        task.title.includes(this.taskSearchInput) ||
-        task.description.includes(this.taskSearchInput) ||
+        task.title.toLowerCase().includes(this.taskSearchInput.trim().toLowerCase()) ||
+        task.description.toLowerCase().includes(this.taskSearchInput.trim().toLowerCase()) ||
         (this.getAssigneeName(task.userId) &&
-          this.getAssigneeName(task.userId).includes(this.taskSearchInput))
+          this.getAssigneeName(task.userId).toLowerCase().includes(this.taskSearchInput.trim().toLowerCase()))
       );
     });
   }
