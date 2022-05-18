@@ -53,6 +53,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public editTaskForm!: FormGroup;
   public modalTitle = "";
   public modalAdd: boolean = true;
+  public modalAboutTask: boolean = true;
 
   @ViewChild(ModalComponent) child: ModalComponent | undefined;
 

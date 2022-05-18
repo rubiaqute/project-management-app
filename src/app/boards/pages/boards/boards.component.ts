@@ -28,6 +28,7 @@ interface ITaskSearch {
 export class BoardsComponent implements OnInit {
   public tasksResults: ITaskSearch[] = [];
   public tasks: ITask[] = [];
+  public board: IBoard | undefined = undefined;
   public isResultsShown = false;
   public isSeachingTasks = false;
   public taskSearchInput: string = '';
@@ -72,6 +73,7 @@ export class BoardsComponent implements OnInit {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
+
     if (this.id) {
       this.apiService.getBoardById(this.id).subscribe((data: IBoard) => {
         this.titleValue = data.title;
@@ -83,6 +85,13 @@ export class BoardsComponent implements OnInit {
     ).subscribe(data => {
       this.router.navigateByUrl('/main')
     });
+  }
+
+  ngOnChanges(): void {
+    // this.editBoardForm = this.fb.group({
+    //   title: [`${this.titleBoard?.value}`, [Validators.required]],
+    //   description: [`${this.descriptionBoard?.value}`, [Validators.required]]
+    // });
   }
 
   public openDialog(id: string | null, e: Event): void {
@@ -190,8 +199,9 @@ export class BoardsComponent implements OnInit {
     evt.stopPropagation();
   }
 
-  public openEditBoardModal(e: Event, id: string): void {
+  public openEditBoardModal(e: Event, id: string, board: IBoard): void {
     this.id = id;
+    this.board = board;
     e.stopPropagation();
     this.child?.toggleModal();
   }

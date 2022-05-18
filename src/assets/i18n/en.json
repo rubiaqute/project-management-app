@@ -69,6 +69,7 @@
   },
   "BOARD": {
     "TITLE": "title",
+    "INFO_ABOUT_TASK": "Info about task",
     "DESCRIPTION": "description",
     "ADD_COLUMN": "Add new column",
     "EDIT_COLUMN_NAME": "Column name",

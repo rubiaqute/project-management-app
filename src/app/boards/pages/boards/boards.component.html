@@ -7,7 +7,7 @@
     <div class="search__task-search">
       <mat-form-field class="task-search__input" appearance="fill">
         <mat-label>{{ "BOARDS.TASK_SEARCH.TITLE" | translate }}</mat-label>
-        <input matInput [(ngModel)]="taskSearchInput" />
+        <input matInput [(ngModel)]="taskSearchInput"/>
         <button
           class="search__btn"
           mat-icon-button
@@ -19,8 +19,12 @@
       </mat-form-field>
     </div>
     <div class="search__filter">
-      <mat-form-field class="filter__input" appearance="fill">
-        <mat-label>{{ "BOARDS.FILTER" | translate }}</mat-label>
+      <mat-form-field
+        class="filter__input"
+        appearance="fill">
+        <mat-label>
+          {{ "BOARDS.FILTER" | translate }}
+        </mat-label>
         <input
           #myInput
           matInput
@@ -29,8 +33,11 @@
           (input)="search(myInput.value)"
           maxlength="256"
         />
-        <button class="search__btn" mat-icon-button (click)="clearInput()">
-          <mat-icon *ngIf="searchStr">close</mat-icon>
+        <button class="search__btn" mat-icon-button
+                (click)="clearInput()">
+          <mat-icon
+            *ngIf="searchStr">close
+          </mat-icon>
         </button>
         <mat-hint align="end">{{ myInput.value.length }} / 50</mat-hint>
       </mat-form-field>
@@ -45,10 +52,11 @@
     >
       <mat-card-actions class="board__actions">
         <mat-icon
-          (click)="openEditBoardModal($event, board.id)"
+          (click)="openEditBoardModal($event, board.id, board)"
           color="primary"
           class="actions__btn create"
-        >edit
+        >
+          edit
         </mat-icon>
 
         <mat-icon
@@ -80,7 +88,7 @@
       {{ "BOARDS.TASK_SEARCH.RESULT" | translate }}
       <span
         style="color: firebrick; font-size: 3rem; text-decoration: underline"
-        >{{ taskSearchInput }}</span
+      >{{ taskSearchInput }}</span
       >
     </p>
     <button
@@ -119,7 +127,7 @@
   </mat-card>
 </div>
 
-<app-modal [title]="modalTitle">
+<app-modal [title]="modalTitle" >
   <form [formGroup]="editBoardForm">
     <mat-form-field>
       <mat-label>
@@ -128,6 +136,7 @@
       <input
         matInput
         type="text"
+        [value]="board?.title"
         formControlName="title"
       />
       <mat-error
@@ -145,6 +154,7 @@
       <input
         matInput
         type="text"
+        [value]="board?.description"
         formControlName="description"
       />
       <mat-error
