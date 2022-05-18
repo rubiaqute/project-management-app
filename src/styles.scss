@@ -78,6 +78,9 @@ html {
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+img {
+  -webkit-user-drag: none;
+}
 .background-primary {
   background-color: mat-color($themes-primary);
 }
