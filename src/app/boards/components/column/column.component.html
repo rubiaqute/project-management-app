@@ -73,7 +73,7 @@
 </mat-card>
 
 
-<app-modal [title]="modalTitle">
+<app-modal [title]="modalTitle" *ngIf="modalAdd">
   <form [formGroup]="addTaskForm">
     <mat-form-field>
       <mat-label>
@@ -138,7 +138,7 @@
   </form>
 </app-modal>
 
-<app-modal [title]="modalTitle">
+<app-modal [title]="modalTitle" *ngIf="!modalAdd">
   <form [formGroup]="editTaskForm">
     <mat-form-field>
       <mat-label>
@@ -150,9 +150,9 @@
         formControlName="title"
       />
       <mat-error
-        *ngIf="titleTask?.invalid && titleTask?.touched">
+        *ngIf="titleTaskEdit?.invalid && titleTaskEdit?.touched">
           <span
-            *ngIf="titleTask?.errors?.['required']">
+            *ngIf="titleTaskEdit?.errors?.['required']">
             {{"BOARD.ERROR_TITLE" | translate}}
           </span>
       </mat-error>
@@ -168,9 +168,9 @@
         formControlName="description"
       />
       <mat-error
-        *ngIf="descriptionTask?.invalid && descriptionTask?.touched">
+        *ngIf="descriptionTaskEdit?.invalid && descriptionTaskEdit?.touched">
           <span
-            *ngIf="descriptionTask?.errors?.['required']">
+            *ngIf="descriptionTaskEdit?.errors?.['required']">
             {{"BOARD.ERROR_DESCRIPTION" | translate}}
           </span>
       </mat-error>
@@ -195,10 +195,10 @@
       mat-raised-button
       color="primary"
       type="submit"
-      [disabled]="addTaskForm.invalid"
+      [disabled]="editTaskForm.invalid"
       (click)="editTask()"
     >
-      {{ "BOARDS.CREATE" | translate }}
+      {{ "BOARD.EDIT_TASK_MODAL_BUTTON" | translate }}
     </button>
   </form>
 </app-modal>

@@ -52,6 +52,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public addTaskForm!: FormGroup;
   public editTaskForm!: FormGroup;
   public modalTitle = "";
+  public modalAdd: boolean = true;
 
   @ViewChild(ModalComponent) child: ModalComponent | undefined;
 
@@ -63,22 +64,23 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    this.MAX_TASK_ORDER = this.column!.tasks?.slice(-1)[0]
+      ? this.column!.tasks?.slice(-1)[0].order
+      : 0;
+    this.users$.subscribe((data) => this.users = data)
+  }
+
+  ngOnChanges(): void {
+    this.editTaskForm = this.fb.group({
+      title: [`${this.currentTask?.title}`, [Validators.required]],
+      description: [`${this.currentTask?.description}`, [Validators.required]],
+      user: ['', [Validators.required]]
+    });
     this.addTaskForm = this.fb.group({
       title: ['', [Validators.required]],
       description: ['', [Validators.required]],
       user: ['', [Validators.required]]
     });
-
-    this.editTaskForm = this.fb.group({
-      title: ['', [Validators.required]],
-      description: ['', [Validators.required]],
-      user: ['', [Validators.required]]
-    });
-
-    this.MAX_TASK_ORDER = this.column!.tasks?.slice(-1)[0]
-      ? this.column!.tasks?.slice(-1)[0].order
-      : 0;
-    this.users$.subscribe((data) => this.users = data)
   }
 
   ngOnDestroy(): void {
@@ -117,7 +119,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
       this.description = this.currentTask?.description;
       this.isTaskDetailsModalOn = false;
     }
-
   }
 
   public switchErrorModal(): void {
@@ -153,17 +154,28 @@ export class ColumnComponent implements OnInit, OnDestroy {
     this.apiFacade.createTask(this.boardId, this.column.id, taskRequest)
   }
 
+  get titleTaskEdit(): AbstractControl | null {
+    return this.editTaskForm.get('title');
+  }
+
+  get descriptionTaskEdit(): AbstractControl | null {
+    return this.editTaskForm.get('description');
+  }
+
+  get userTaskEdit(): AbstractControl | null {
+    return this.editTaskForm.get('user');
+  }
+
   public editTask(): void {
     const taskRequest: ITaskRequestUpdate = {
-      title: this.title!,
+      title: this.titleTaskEdit?.value,
       done: this.currentTask!.done,
       order: this.currentTask!.order,
-      description: this.description!,
-      userId: this.userExecutor!.id,
+      description: this.descriptionTaskEdit?.value!,
+      userId: this.userTaskEdit?.value.id,
       boardId: this.boardId,
       columnId: this.column!.id,
     };
-
     this.apiFacade.updateTask(this.boardId, this.column.id, this.currentTask!.id, taskRequest)
   }
 
@@ -254,7 +266,8 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public openEditTaskModal(e: Event, boardId: string, columnId: string): void {
-    this.modalTitle = "BOARD.EDIT_TASK_MODAL_BUTTON";
+    this.modalTitle = "BOARD.EDIT_TASK";
+    this.modalAdd = false;
     this.boardId = boardId;
     this.columnId = columnId;
     e.stopPropagation();
