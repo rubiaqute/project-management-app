@@ -186,6 +186,14 @@
   }
 }
 
+app-modal {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
 // https://material.angular.io/cdk/drag-drop/overview
 
 .cdk-drag-preview {

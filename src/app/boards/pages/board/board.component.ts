@@ -43,9 +43,10 @@ export class BoardComponent implements OnInit, OnDestroy {
 
   constructor(
     private fb: FormBuilder,
-              private activateRoute: ActivatedRoute,
-              private apiFacade: ApiFacade,
-              private actionsSubj: ActionsSubject) {}
+    private activateRoute: ActivatedRoute,
+    private apiFacade: ApiFacade,
+    private actionsSubj: ActionsSubject) {
+  }
 
   ngOnInit(): void {
 
