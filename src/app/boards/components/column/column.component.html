@@ -59,7 +59,7 @@
     </app-task>
   </div>
   <div class="column__footer"
-       (click)="openAddTaskModal($event, boardId, column.id)"
+       (click)="openAddTaskModal( boardId, column.id)"
   >
     <mat-icon
       color="primary"
@@ -73,7 +73,7 @@
 </mat-card>
 
 
-<app-modal [title]="modalTitle" *ngIf="modalAdd">
+<app-modal [title]="modalAddTitle" >
   <form [formGroup]="addTaskForm">
     <mat-form-field>
       <mat-label>
@@ -138,7 +138,7 @@
   </form>
 </app-modal>
 
-<app-modal [title]="modalTitle" *ngIf="!modalAdd">
+<app-modal [title]="modalEditTitle" >
   <form [formGroup]="editTaskForm">
     <mat-form-field>
       <mat-label>
@@ -226,7 +226,7 @@
     <button
       mat-raised-button
       color="primary"
-      (click)="openEditTaskModal($event, boardId, column.id)"
+      (click)="openEditTaskModal(boardId, column.id)"
     >
       {{ "BOARD.EDIT_TASK_MODAL_BUTTON" | translate }}
     </button>

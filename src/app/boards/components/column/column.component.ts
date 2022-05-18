@@ -1,5 +1,15 @@
 import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
+import {
+  Component,
+  EventEmitter,
+  Input,
+  OnDestroy,
+  OnInit,
+  Output,
+  QueryList,
+  ViewChild,
+  ViewChildren
+} from '@angular/core';
 import {MatDialog} from '@angular/material/dialog';
 import {Observable, Subscription} from 'rxjs';
 import {ConfirmationModalComponent} from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
@@ -51,11 +61,10 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public isLoaderOn: boolean = false;
   public addTaskForm!: FormGroup;
   public editTaskForm!: FormGroup;
-  public modalTitle = "";
-  public modalAdd: boolean = true;
-  public modalAboutTask: boolean = true;
+  public modalEditTitle = "BOARD.EDIT_TASK";
+  public modalAddTitle = "BOARD.ADD_TASK";
 
-  @ViewChild(ModalComponent) child: ModalComponent | undefined;
+  @ViewChildren(ModalComponent) children: QueryList<any> | undefined;
 
   constructor(
     private fb: FormBuilder,
@@ -258,20 +267,16 @@ export class ColumnComponent implements OnInit, OnDestroy {
     evt.stopPropagation();
   }
 
-  public openAddTaskModal(e: Event, boardId: string, columnId: string): void {
-    this.modalTitle = "BOARD.ADD_TASK";
+  public openAddTaskModal(boardId: string, columnId: string): void {
+    console.log(this.children)
     this.boardId = boardId;
     this.columnId = columnId;
-    e.stopPropagation();
-    this.child?.toggleModal();
+    this.children?.first?.toggleModal();
   }
 
-  public openEditTaskModal(e: Event, boardId: string, columnId: string): void {
-    this.modalTitle = "BOARD.EDIT_TASK";
-    this.modalAdd = false;
+  public openEditTaskModal(boardId: string, columnId: string): void {
     this.boardId = boardId;
     this.columnId = columnId;
-    e.stopPropagation();
-    this.child?.toggleModal();
+    this.children?.last?.toggleModal();
   }
 }

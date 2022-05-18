@@ -12,8 +12,8 @@
     color="primary"
     (click)="stopPropagation($event)"
     (change)="switchCompleteFlag()"
-    [checked]="task.done"
-    [disabled]="task.userId !== (activeUser$ | async)!.id"
+    [checked]="task?.done"
+    [disabled]="task?.userId !== (activeUser$ | async)!?.id"
   >
     {{ "BOARD.DONE" | translate }}
   </mat-checkbox>
