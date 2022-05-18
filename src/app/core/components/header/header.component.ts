@@ -15,6 +15,7 @@ import { ApiFacade } from 'src/app/store/facade';
 export class HeaderComponent implements OnInit {
   isDarkTheme: boolean = false;
   langValue: boolean = false;
+  public isErrorModalOn: boolean = false
   public activeUser$: Observable<IUser | null> = this.apiFacade.activeUser$;
   public activeUserStatus$: Observable<Status> = this.apiFacade.activeUserStatus$;
 
@@ -31,6 +32,7 @@ export class HeaderComponent implements OnInit {
     this.activeUserStatus$.subscribe((status) => {
       if (status === Status.FAILURE) {
         this.authService.clearInfo();
+        this.isErrorModalOn = true
         setTimeout(() => this.router.navigateByUrl('/auth/login'), 0);
       }
     })
