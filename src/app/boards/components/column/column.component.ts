@@ -3,6 +3,7 @@ import {
   Component,
   EventEmitter,
   Input,
+  OnChanges,
   OnDestroy,
   OnInit,
   Output,
@@ -24,7 +25,7 @@ import { ActivatedRoute } from "@angular/router";
   templateUrl: './column.component.html',
   styleUrls: ['./column.component.scss']
 })
-export class ColumnComponent implements OnInit, OnDestroy {
+export class ColumnComponent implements OnInit, OnDestroy, OnChanges {
   public columnId!: string;
 
   @Input()
