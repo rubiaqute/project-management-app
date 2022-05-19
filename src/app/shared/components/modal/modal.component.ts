@@ -1,16 +1,12 @@
-import {Component, OnInit, Input} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 @Component({
   selector: 'app-modal',
   templateUrl: './modal.component.html',
   styleUrls: ['./modal.component.scss']
 })
-export class ModalComponent implements OnInit {
+export class ModalComponent {
   public isModalOn: boolean = false;
-
-  constructor() { }
-
-  ngOnInit(): void {}
 
   @Input() title = ""
 

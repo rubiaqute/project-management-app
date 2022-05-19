@@ -17,9 +17,10 @@
     cursor: pointer;
     display: none;
     position: absolute;
-    top: 1vh;
-    left: calc(50vw - 152px);
-
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 1rem;
     &:hover {
       filter: blur(1px);
     }
@@ -174,17 +175,8 @@ app-modal {
         display: none;
       }
 
-      .user-controls__login {
-        margin-top: 4vh;
-      }
-
       .user-controls-hidden {
         display: block;
-        margin-top: 4vh;
-      }
-
-      .toggles-hidden {
-        margin-top: 4vh;
       }
     }
   }

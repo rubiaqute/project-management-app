@@ -39,10 +39,17 @@ export class FormComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordValidator]],
     });
+
+    this.signUpForm.valueChanges.subscribe(data => this.onSignUpFormValueChange(data));
   }
 
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
+  }
+
+  private onSignUpFormValueChange(data: any) {
+    this.emailValue = data.email;
+    this.nameValue = data.name;
   }
 
   openDialog(): void {

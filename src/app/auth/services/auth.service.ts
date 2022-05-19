@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Router } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { Subject } from "rxjs";
 import { IUser } from 'src/app/core/models/api.models';
@@ -8,11 +9,12 @@ import { ApiFacade } from 'src/app/store/facade';
 
 export class AuthService {
   public token$ = new Subject<any>();
-  constructor(private apiFacade: ApiFacade) { }
+  constructor(private apiFacade: ApiFacade, private router: Router) { }
 
   initAuth() {
     if (localStorage.getItem('tokenRubiaqute')) {
       const userId = JSON.parse(localStorage.getItem('currentUserRubiaqute')!).id;
+      this.router.navigate(['main'])
       this.apiFacade.setUser(userId)
       this.token$.next(localStorage.getItem('tokenRubiaqute'));
     }

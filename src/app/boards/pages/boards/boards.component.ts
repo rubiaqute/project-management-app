@@ -1,4 +1,4 @@
-import {Component, EventEmitter, Input, OnInit, Output, ViewChild} from '@angular/core';
+import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
 import {IBoard, IBoardRequest, ITask, IUser, Status} from 'src/app/core/models/api.models';
 import {ApiServices} from 'src/app/core/services/api-services.service';
 import {ActivatedRoute, Router} from "@angular/router";
@@ -25,7 +25,7 @@ interface ITaskSearch {
   styleUrls: ['./boards.component.scss'],
 })
 
-export class BoardsComponent implements OnInit {
+export class BoardsComponent implements OnInit, OnDestroy {
   public tasksResults: ITaskSearch[] = [];
   public tasks: ITask[] = [];
   public board: IBoard | undefined = undefined;
@@ -70,8 +70,8 @@ export class BoardsComponent implements OnInit {
     this.users$.subscribe((data) => (this.users = data));
 
     this.editBoardForm = this.fb.group({
-      title: [[Validators.required]],
-      description: [[Validators.required]]
+      title: ['', [Validators.required]],
+      description: ['', [Validators.required]]
     });
 
     if (this.id) {
@@ -85,13 +85,6 @@ export class BoardsComponent implements OnInit {
     ).subscribe(data => {
       this.router.navigateByUrl('/main')
     });
-  }
-
-  ngOnChanges(): void {
-    // this.editBoardForm = this.fb.group({
-    //   title: [`${this.titleBoard?.value}`, [Validators.required]],
-    //   description: [`${this.descriptionBoard?.value}`, [Validators.required]]
-    // });
   }
 
   public openDialog(id: string | null, e: Event): void {
@@ -203,6 +196,8 @@ export class BoardsComponent implements OnInit {
     this.id = id;
     this.board = board;
     e.stopPropagation();
+    this.editBoardForm.setValue({'title': this.board.title, 
+                                 'description': this.board.description});
     this.child?.toggleModal();
   }
 

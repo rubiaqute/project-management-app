@@ -268,7 +268,6 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public openAddTaskModal(boardId: string, columnId: string): void {
-    console.log(this.children)
     this.boardId = boardId;
     this.columnId = columnId;
     this.children?.first?.toggleModal();

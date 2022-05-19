@@ -107,5 +107,7 @@ export class HeaderComponent implements OnInit {
     }
     this.apiFacade.createBoard(body);
     this.child?.toggleModal();
+    this.newBoardForm.setValue({'title': '',
+                                'description': ''})
   }
 }
