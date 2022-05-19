@@ -14,7 +14,6 @@
         <input
           matInput
           type="email"
-          [(ngModel)]="emailValue"
           formControlName="email"
         />
         <mat-error *ngIf="email?.invalid && email?.touched">
@@ -32,7 +31,6 @@
         <input
           matInput
           type="text"
-          [(ngModel)]="nameValue"
           formControlName="name"
         />
         <mat-error *ngIf="name?.invalid && name?.touched">
@@ -85,7 +83,7 @@
           (click)="edit()"
           mat-raised-button
           color="primary"
-          type="submit"
+          type="button"
           [disabled]="signUpForm.invalid"
         >
           {{ "MENU.LINKS.EDIT" | translate }}
@@ -106,7 +104,7 @@
           (click)="signup()"
           mat-raised-button
           color="primary"
-          type="submit"
+          type="button"
           [disabled]="signUpForm.invalid"
         >
           {{ "AUTH.REGISTER.TITLE" | translate }}

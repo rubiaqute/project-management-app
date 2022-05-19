@@ -9,7 +9,6 @@
         <input
           matInput
           type="text"
-          [(ngModel)]="name"
           formControlName="email"
         />
         <mat-error *ngIf="email?.invalid && email?.touched">

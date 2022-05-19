@@ -33,10 +33,16 @@ export class LoginPageComponent implements OnInit, OnDestroy {
       email: ['', [Validators.required, Validators.email]],
       password: ['', [Validators.required, this.passwordValidator]],
     });
+
+    this.loginForm.valueChanges.subscribe(data => this.onLoginFormValueChange(data));
   }
 
   ngOnDestroy(): void {
     this.subs?.unsubscribe();
+  }
+
+  private onLoginFormValueChange(data: any) {
+    this.name = data.email
   }
 
   private passwordValidator(control: FormControl): { [key: string]: string } | null {
