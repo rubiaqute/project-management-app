@@ -35,11 +35,7 @@
         class="board__column add-column"
         (click)="openAddColumnModal($event, board.id)"
       >
-        <mat-icon
-          color="primary"
-          class="add-column__icon">
-          add
-        </mat-icon>
+        <mat-icon color="primary" class="add-column__icon"> add </mat-icon>
         <p class="add-column__text">
           {{ "BOARD.ADD_COLUMN" | translate }}
         </p>
@@ -47,14 +43,8 @@
     </div>
   </ng-container>
 
-  <button
-    mat-icon-button
-    class="back-btn"
-    routerLink="/main"
-    color="primary">
-    <mat-icon>
-      apps
-    </mat-icon>
+  <button mat-icon-button class="back-btn" routerLink="/main" color="primary">
+    <mat-icon> apps </mat-icon>
   </button>
 </ng-container>
 
@@ -64,17 +54,11 @@
       <mat-label>
         {{ "BOARD.ADD_COLUMN_MODAL_TITLE" | translate }}
       </mat-label>
-      <input
-        matInput
-        type="text"
-        formControlName="title"
-      />
-      <mat-error
-        *ngIf="titleColumn?.invalid && titleColumn?.touched">
-          <span
-            *ngIf="titleColumn?.errors?.['required']">
-            {{"BOARD.ERROR_TITLE" | translate}}
-          </span>
+      <input matInput type="text" formControlName="title" />
+      <mat-error *ngIf="titleColumn?.invalid && titleColumn?.touched">
+        <span *ngIf="titleColumn?.errors?.['required']">
+          {{ "BOARD.ERROR_TITLE" | translate }}
+        </span>
       </mat-error>
     </mat-form-field>
 
@@ -91,3 +75,22 @@
   </form>
 </app-modal>
 
+<div class="popup" *ngIf="isErrorModalOn">
+  <div class="popup__overlay" (click)="isErrorModalOn = !isErrorModalOn"></div>
+  <mat-card class="popup__modal">
+    <img
+      class="modal__img"
+      src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
+      alt="img: server wrong"
+      draggable="false"
+    />
+    <p>{{ "USER.COMMON_ERROR" | translate }}</p>
+    <button
+      mat-icon-button
+      class="modal__close"
+      (click)="isErrorModalOn = !isErrorModalOn"
+    >
+      <mat-icon color="primary">close</mat-icon>
+    </button>
+  </mat-card>
+</div>

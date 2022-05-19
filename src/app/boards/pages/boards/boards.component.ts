@@ -1,17 +1,17 @@
-import {Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild} from '@angular/core';
-import {IBoard, IBoardRequest, ITask, IUser, Status} from 'src/app/core/models/api.models';
-import {ApiServices} from 'src/app/core/services/api-services.service';
-import {ActivatedRoute, Router} from "@angular/router";
-import {ActionsSubject} from "@ngrx/store";
-import {ApiFacade} from 'src/app/store/facade';
-import {MatDialog} from '@angular/material/dialog';
-import {ConfirmationModalComponent} from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
-import {ModalComponent} from "../../../shared/components/modal/modal.component";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ofType} from "@ngrx/effects";
-import {BoardsTypes} from "../../../store/actions/boards.actions";
-import {forkJoin, map, Observable, Subscription} from 'rxjs';
-import {__assign} from 'tslib';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output, ViewChild } from '@angular/core';
+import { IBoard, IBoardRequest, ITask, IUser, Status } from 'src/app/core/models/api.models';
+import { ApiServices } from 'src/app/core/services/api-services.service';
+import { ActivatedRoute, Router } from "@angular/router";
+import { ActionsSubject } from "@ngrx/store";
+import { ApiFacade } from 'src/app/store/facade';
+import { MatDialog } from '@angular/material/dialog';
+import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
+import { ModalComponent } from "../../../shared/components/modal/modal.component";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ofType } from "@ngrx/effects";
+import { BoardsTypes } from "../../../store/actions/boards.actions";
+import { forkJoin, map, Observable, Subscription } from 'rxjs';
+import { __assign } from 'tslib';
 
 interface ITaskSearch {
   boardId: string;
@@ -46,6 +46,7 @@ export class BoardsComponent implements OnInit, OnDestroy {
   public searchStr: string = '';
   public userExecutor: IUser | undefined;
   public isLoading: Observable<boolean> = this.apiFacade.boardsLoadingStatus$
+  public isErrorModalOn: boolean = false;
   @ViewChild(ModalComponent) child: ModalComponent | undefined;
 
   public boards$: Observable<IBoard[]> = this.apiFacade.boards$.pipe(
@@ -73,24 +74,29 @@ export class BoardsComponent implements OnInit, OnDestroy {
       title: ['', [Validators.required]],
       description: ['', [Validators.required]]
     });
-
-    if (this.id) {
-      this.apiService.getBoardById(this.id).subscribe((data: IBoard) => {
-        this.titleValue = data.title;
-        this.descriptionValue = data.description
-      })
-    }
     this.subsc = this.actionsSubj.pipe(
       ofType(BoardsTypes.UpdateBoardSuccess)
     ).subscribe(data => {
       this.router.navigateByUrl('/main')
     });
+    this.actionsSubj.pipe(
+      ofType(BoardsTypes.UpdateBoardFailure,
+        BoardsTypes.CreateBoardFailure,
+        BoardsTypes.DeleteBoardFailure,
+      )
+    ).subscribe(data => {
+      this.switchErrorModal()
+    })
+
+  }
+  public switchErrorModal(): void {
+    this.isErrorModalOn = !this.isErrorModalOn;
   }
 
   public openDialog(id: string | null, e: Event): void {
     e.stopPropagation();
     const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-      data: {name: 'CONFIRMATION.BOARD', isConfirmed: false},
+      data: { name: 'CONFIRMATION.BOARD', isConfirmed: false },
     });
 
     dialogRef.afterClosed().subscribe((result) => {
@@ -108,7 +114,7 @@ export class BoardsComponent implements OnInit, OnDestroy {
             data.columns?.forEach((column) => {
               column.tasks ? (tasks = tasks.concat(...column.tasks)) : null;
             });
-            return {boardId: el.id, boardName: el.title, tasks};
+            return { boardId: el.id, boardName: el.title, tasks };
           })
         )
       );
@@ -196,8 +202,10 @@ export class BoardsComponent implements OnInit, OnDestroy {
     this.id = id;
     this.board = board;
     e.stopPropagation();
-    this.editBoardForm.setValue({'title': this.board.title, 
-                                 'description': this.board.description});
+    this.editBoardForm.setValue({
+      'title': this.board.title,
+      'description': this.board.description
+    });
     this.child?.toggleModal();
   }
 

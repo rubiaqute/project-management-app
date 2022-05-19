@@ -211,7 +211,8 @@ app-modal {
       top: 0;
       right: 0;
       &:hover {
-        -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+        -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+          both;
         animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
       }
     }
@@ -241,6 +242,67 @@ app-modal {
             }
           }
         }
+      }
+    }
+  }
+}
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  &__overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  &__modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50vh;
+    width: 25vw;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    .modal {
+      &__img {
+        width: 25%;
+      }
+      &__close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        &:hover {
+          -webkit-animation: shake-lr 0.7s
+            cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+          animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+        }
+      }
+    }
+    .taskDetails {
+      padding: 0 2vw;
+      &__title {
+        align-self: flex-start;
+      }
+      &__description {
+        width: 100%;
+        align-self: flex-end;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-style: italic;
+      }
+      &__done {
+        align-self: flex-start;
+      }
+      &__executor {
+        align-self: flex-end;
       }
     }
   }

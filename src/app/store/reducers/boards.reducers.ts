@@ -29,6 +29,7 @@ export function boardsReducer(
     case BoardsTypes.UpdateBoardSuccess: {
       const newBoardsState = Object.assign([], state.boards.filter((el) => el.id !== action.payload.id))
       newBoardsState.push(action.payload)
+
       return { ...state, boards: newBoardsState, updateBoardStatus: Status.SUCCESS, loadingStatus: false };
     }
 

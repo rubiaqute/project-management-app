@@ -145,6 +145,7 @@
   },
   "USER": {
     "ERROR": "Login or password are not correct",
-    "SIGNUP_FAILED": "Failed. Please check your data"
+    "SIGNUP_FAILED": "Failed. Please check your data",
+    "COMMON_ERROR": "Something went wrong"
   }
 }

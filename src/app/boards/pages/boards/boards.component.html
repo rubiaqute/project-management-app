@@ -7,7 +7,7 @@
     <div class="search__task-search">
       <mat-form-field class="task-search__input" appearance="fill">
         <mat-label>{{ "BOARDS.TASK_SEARCH.TITLE" | translate }}</mat-label>
-        <input matInput [(ngModel)]="taskSearchInput"/>
+        <input matInput [(ngModel)]="taskSearchInput" />
         <button
           class="search__btn"
           mat-icon-button
@@ -19,9 +19,7 @@
       </mat-form-field>
     </div>
     <div class="search__filter">
-      <mat-form-field
-        class="filter__input"
-        appearance="fill">
+      <mat-form-field class="filter__input" appearance="fill">
         <mat-label>
           {{ "BOARDS.FILTER" | translate }}
         </mat-label>
@@ -33,11 +31,8 @@
           (input)="search(myInput.value)"
           maxlength="256"
         />
-        <button class="search__btn" mat-icon-button
-                (click)="clearInput()">
-          <mat-icon
-            *ngIf="searchStr">close
-          </mat-icon>
+        <button class="search__btn" mat-icon-button (click)="clearInput()">
+          <mat-icon *ngIf="searchStr">close </mat-icon>
         </button>
         <mat-hint align="end">{{ myInput.value.length }} / 50</mat-hint>
       </mat-form-field>
@@ -63,7 +58,7 @@
           color="primary"
           class="actions__btn delete"
           (click)="openDialog(board.id, $event)"
-        >delete
+          >delete
         </mat-icon>
       </mat-card-actions>
       <mat-card-title class="board__title">
@@ -71,7 +66,7 @@
       >
       <mat-card-subtitle class="board__description">{{
         board.description | titlecase
-        }}</mat-card-subtitle>
+      }}</mat-card-subtitle>
     </mat-card>
   </div>
 </ng-container>
@@ -88,7 +83,7 @@
       {{ "BOARDS.TASK_SEARCH.RESULT" | translate }}
       <span
         style="color: firebrick; font-size: 3rem; text-decoration: underline"
-      >{{ taskSearchInput }}</span
+        >{{ taskSearchInput }}</span
       >
     </p>
     <button
@@ -128,7 +123,7 @@
   </mat-card>
 </div>
 
-<app-modal [title]="modalTitle" >
+<app-modal [title]="modalTitle">
   <form [formGroup]="editBoardForm">
     <mat-form-field>
       <mat-label>
@@ -140,12 +135,10 @@
         [value]="board?.title"
         formControlName="title"
       />
-      <mat-error
-        *ngIf="titleBoard?.invalid && titleBoard?.touched">
-          <span
-            *ngIf="titleBoard?.errors?.['required']">
-            {{"BOARD.ERROR_TITLE" | translate}}
-          </span>
+      <mat-error *ngIf="titleBoard?.invalid && titleBoard?.touched">
+        <span *ngIf="titleBoard?.errors?.['required']">
+          {{ "BOARD.ERROR_TITLE" | translate }}
+        </span>
       </mat-error>
     </mat-form-field>
     <mat-form-field>
@@ -158,11 +151,10 @@
         [value]="board?.description"
         formControlName="description"
       />
-      <mat-error
-        *ngIf="descriptionBoard?.invalid && descriptionBoard?.touched">
-          <span *ngIf="descriptionBoard?.errors?.['required']">
-            {{"BOARD.ERROR_DESCRIPTION" | translate}}
-          </span>
+      <mat-error *ngIf="descriptionBoard?.invalid && descriptionBoard?.touched">
+        <span *ngIf="descriptionBoard?.errors?.['required']">
+          {{ "BOARD.ERROR_DESCRIPTION" | translate }}
+        </span>
       </mat-error>
     </mat-form-field>
 
@@ -178,3 +170,22 @@
     </button>
   </form>
 </app-modal>
+<div class="popup" *ngIf="isErrorModalOn">
+  <div class="popup__overlay" (click)="isErrorModalOn = !isErrorModalOn"></div>
+  <mat-card class="popup__modal">
+    <img
+      class="modal__img"
+      src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
+      alt="img: server wrong"
+      draggable="false"
+    />
+    <p>{{ "USER.COMMON_ERROR" | translate }}</p>
+    <button
+      mat-icon-button
+      class="modal__close"
+      (click)="isErrorModalOn = !isErrorModalOn"
+    >
+      <mat-icon color="primary">close</mat-icon>
+    </button>
+  </mat-card>
+</div>
