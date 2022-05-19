@@ -136,6 +136,7 @@
       </mat-label>
       <input
         matInput
+        #inputRef
         type="text"
         formControlName="title"
       />
@@ -151,6 +152,7 @@
       </mat-label>
       <input
         matInput
+        #descriptionRef
         type="text"
         formControlName="description"
       />
@@ -164,8 +166,11 @@
       class="sign-up__btn"
       mat-raised-button
       color="primary"
-      [disabled]="newBoardForm.invalid"
+      [disabled]="newBoardForm.invalid ||
+                   !inputRef.value.trim() ||
+                   !descriptionRef.value.trim()"
       (click)="addNewBoard()"
+      type="button"
     >
       {{ "BOARDS.CREATE" | translate }}
     </button>

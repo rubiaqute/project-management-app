@@ -95,6 +95,18 @@ app-modal {
     }
   }
 }
+@media (max-width: 500px) {
+  .header {
+    &__title {
+      font-size: 1rem;
+      text-align: center;
+    }
+    &__title__hidden {
+      font-size: 1rem;
+      text-align: center;
+    }
+  }
+}
 .popup {
   position: absolute;
   top: 0;
