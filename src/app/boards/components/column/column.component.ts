@@ -1,4 +1,4 @@
-import {CdkDragDrop, moveItemInArray, transferArrayItem} from '@angular/cdk/drag-drop';
+import { CdkDragDrop, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
 import {
   Component,
   EventEmitter,
@@ -10,14 +10,14 @@ import {
   ViewChild,
   ViewChildren
 } from '@angular/core';
-import {MatDialog} from '@angular/material/dialog';
-import {Observable, Subscription} from 'rxjs';
-import {ConfirmationModalComponent} from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
-import {IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser} from 'src/app/core/models/api.models';
-import {ApiFacade} from 'src/app/store/facade';
-import {ModalComponent} from "../../../shared/components/modal/modal.component";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
-import {ActivatedRoute} from "@angular/router";
+import { MatDialog } from '@angular/material/dialog';
+import { Observable, Subscription } from 'rxjs';
+import { ConfirmationModalComponent } from 'src/app/core/components/confirmation-modal/confirmation-modal.component';
+import { IColumn, IColumnRequest, ITask, ITaskRequest, ITaskRequestUpdate, IUser } from 'src/app/core/models/api.models';
+import { ApiFacade } from 'src/app/store/facade';
+import { ModalComponent } from "../../../shared/components/modal/modal.component";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
+import { ActivatedRoute } from "@angular/router";
 
 @Component({
   selector: 'app-column',
@@ -152,7 +152,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public createTask(): void {
-    this.MAX_TASK_ORDER = this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT;
+    this.MAX_TASK_ORDER = this.column!.tasks ? Math.max(...this.column.tasks.map((el) => el.order)) + this.INDEX_COEFFICIENT : 0;
 
     const taskRequest: ITaskRequest = {
       title: this.titleTask?.value,
@@ -190,24 +190,28 @@ export class ColumnComponent implements OnInit, OnDestroy {
   }
 
   public drop(event: CdkDragDrop<ITask[]>): void {
-
-    const nextItem: number = this.column!.tasks![event.currentIndex + 1]
-      ? this.column!.tasks![event.currentIndex + 1].order
-      : this.MAX_TASK_ORDER + this.INDEX_COEFFICIENT * 2;
-    const prevItem: number = this.column!.tasks![event.currentIndex - 1]
-      ? this.column!.tasks![event.currentIndex - 1].order
-      : 0;
-    let freeIdx: number = Math.round(((nextItem - prevItem) / 2) + prevItem);
-
+    const previousIndex = event.previousIndex
+    const currentIndex = event.currentIndex
 
     if (event.previousContainer === event.container) {
+      let newOrder;
+      if (previousIndex > currentIndex) {
+        const pivot = this.column.tasks![currentIndex - 1] ?
+          this.column.tasks![currentIndex - 1].order : this.column.tasks![currentIndex].order - this.INDEX_COEFFICIENT
+        newOrder = Math.round((this.column.tasks![currentIndex].order + pivot) / 2)
+      }
+      if (previousIndex < currentIndex) {
+        const pivot = this.column.tasks![currentIndex + 1] ?
+          this.column.tasks![currentIndex + 1].order : this.column.tasks![currentIndex].order + this.INDEX_COEFFICIENT
+        newOrder = Math.round((this.column.tasks![currentIndex].order + pivot) / 2)
+      }
       moveItemInArray(event.container.data, event.previousIndex, event.currentIndex);
 
       if (event.previousIndex !== event.currentIndex) {
         const taskRequest: ITaskRequestUpdate = {
           title: this.currentTask!.title,
           done: this.currentTask!.done,
-          order: freeIdx,
+          order: newOrder || 0,
           description: this.currentTask!.description,
           userId: this.currentTask!.userId,
           boardId: this.boardId,
@@ -255,7 +259,7 @@ export class ColumnComponent implements OnInit, OnDestroy {
   public openDialog(e: Event): void {
     e.stopPropagation()
     const dialogRef = this.dialog.open(ConfirmationModalComponent, {
-      data: {name: 'CONFIRMATION.COLUMN', isConfirmed: false},
+      data: { name: 'CONFIRMATION.COLUMN', isConfirmed: false },
     });
 
     dialogRef.afterClosed().subscribe(result => {
