@@ -210,6 +210,10 @@ app-modal {
       position: absolute;
       top: 0;
       right: 0;
+      &:hover {
+        -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+        animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+      }
     }
     &__heading {
       font-size: 2rem;
@@ -230,6 +234,12 @@ app-modal {
             4px 4px 8px 0px rgba(203, 213, 221, 0.74);
           box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
             4px 4px 8px 0px rgba(203, 213, 221, 0.74);
+          &-btn {
+            &:hover {
+              -webkit-animation: jello-horizontal 0.9s both;
+              animation: jello-horizontal 0.9s both;
+            }
+          }
         }
       }
     }

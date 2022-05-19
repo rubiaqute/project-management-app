@@ -78,14 +78,23 @@ html {
 body {
   font-family: Roboto, "Helvetica Neue", sans-serif;
 }
+img {
+  -webkit-user-drag: none;
+}
 .background-primary {
   background-color: mat-color($themes-primary);
 }
 .background-accent {
-  background-color: mat-color($themes-accent);
+  background-color: mat-color($themes-accent-dark);
 }
 .transparent-background {
   background: #ffffffd0;
+}
+.gh-link {
+  color: mat-color($themes-accent);
+  &:hover {
+    opacity: 0.7;
+  }
 }
 .dark-theme-mode {
   .background-primary {
@@ -96,6 +105,9 @@ body {
   }
   .transparent-background {
     background: #424242e3;
+  }
+  .gh-link {
+    color: mat-color($themes-primary);
   }
 }
 .center {

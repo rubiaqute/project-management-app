@@ -10,28 +10,26 @@
       <h2>
         {{ "WELCOME.TITLE" | translate }}
       </h2>
-      <div>
-        <button
-          class="watch__btn"
-          mat-raised-button
-          color="primary"
-          type="submit"
-          [routerLink]="['/main']"
-        >
-          {{ "WELCOME.BOARDS" | translate }}
-        </button>
-      </div>
+      <button
+        class="watch__btn welcome__btn"
+        mat-raised-button
+        color="primary"
+        type="button"
+        [routerLink]="['/main']"
+      >
+        {{ "WELCOME.BOARDS" | translate }}
+      </button>
     </div>
     <div class="welcome-wrapper__right">
       <div class="logo">
         <img class="fav-icon" src="assets/images/tmine/TMINE_free-file.png" />
       </div>
 
-      <button mat-raised-button color="primary" type="submit">
-        <a href="#" target="_blank">
+      <a href="#" target="_blank">
+        <button mat-raised-button color="primary" type="button" class="welcome__btn">
           {{ "WELCOME.WATCH_VIDEO" | translate }}
-        </a>
-      </button>
+        </button>
+      </a>
 
       <div class="sun">
         <img class="dev dev-first" src="assets/images/dev1.png" />
@@ -79,7 +77,9 @@
               </mat-list-item>
               <mat-list-item role="listitem">
                 <mat-icon>attachment</mat-icon>
-                <a href="https://github.com/rubiaqute" target="_blank">
+                <a href="https://github.com/rubiaqute" 
+                   target="_blank"
+                   class="gh-link">
                   github.com/rubiaqute
                 </a>
               </mat-list-item>
@@ -144,21 +144,17 @@
               <mat-list-item role="listitem">
                 <mat-icon>attachment</mat-icon>
                 <a
-                  href="https://github.com/batashofa?tab=repositories"
+                  href="https://github.com/batashofa?tab=repositories" 
                   target="_blank"
-                >
+                  class="gh-link">
                   github.com/batashofa
                 </a>
               </mat-list-item>
             </mat-list>
           </mat-card-subtitle>
-          <<<<<<< HEAD
           <div class="developers">
-            <img mat-card-xl-image src="../../../../assets/images/dev2.png" />
+            <img mat-card-xl-image src="assets/images/dev2.png" />
           </div>
-          =======
-          <img mat-card-xl-image src="assets/images/dev2.png" />
-          >>>>>>> 38705da (fix: change paths to images for deploy)
         </mat-card-title-group>
         <mat-card-content>
           <h2>
@@ -210,19 +206,17 @@
               </mat-list-item>
               <mat-list-item role="listitem">
                 <mat-icon>attachment</mat-icon>
-                <a href="https://github.com/EdChekanov" target="_blank">
+                <a href="https://github.com/EdChekanov" 
+                   target="_blank"
+                   class="gh-link">
                   github.com/EdChekanov
                 </a>
               </mat-list-item>
             </mat-list>
           </mat-card-subtitle>
-          <<<<<<< HEAD
           <div class="developers">
-            <img mat-card-xl-image src="../../../../assets/images/dev3.png" />
+            <img mat-card-xl-image src="assets/images/dev3.png" />
           </div>
-          =======
-          <img mat-card-xl-image src="assets/images/dev3.png" />
-          >>>>>>> 38705da (fix: change paths to images for deploy)
         </mat-card-title-group>
         <mat-card-content>
           <h2>
