@@ -1,0 +1,151 @@
+{
+  "MENU": {
+    "TITLE": "Project Management Applications",
+    "LINKS": {
+      "BOARDS": "Boards",
+      "CREATEBOARD": "Create board",
+      "EDIT": "Edit",
+      "EDIT_PROFILE": "Edit profile",
+      "LOGOUT": "Logout",
+      "LOGIN": "Login",
+      "REGISTER": "Sign Up"
+    }
+  },
+  "FOOTER": {
+    "DEVELOPERS": {
+      "TITLE": "Developers",
+      "LIST": {
+        "INGA": "Inga",
+        "NASTASSIA": "Nastassia",
+        "ED": "Ed"
+      }
+    }
+  },
+  "AUTH": {
+    "LOGIN": {
+      "TITLE": "login",
+      "EMAIL": "email",
+      "PASSWORD": "password",
+      "EMAIL_REQUIRED": "The login email is required",
+      "EMAIL_INVALID": "The login email is invalid",
+      "PASSWORD_REQUIRED": "The password is required",
+      "PASSWORD_NO_NUMBERS": "Your password isn't strong enough, please add numbers",
+      "PASSWORD_NO_LETTERS": "Your password isn't strong enough, please add letters",
+      "PASSWORD_MIN_LENGTH": "The password should contain at least 8 characters"
+    },
+    "REGISTER": {
+      "TITLE": "sign up",
+      "NAME": "name",
+      "FIRST_NAME": "first name",
+      "LAST_NAME": "last name",
+      "EMAIL": "email",
+      "PASSWORD": "password",
+      "NAME_REQUIRED": "The name is required",
+      "EMAIL_REQUIRED": "The login email is required",
+      "EMAIL_INVALID": "The login email is invalid",
+      "PASSWORD_REQUIRED": "The password is required",
+      "PASSWORD_NO_NUMBERS": "Your password isn't strong enough, please add numbers",
+      "PASSWORD_NO_LETTERS": "Your password isn't strong enough, please add letters",
+      "PASSWORD_MIN_LENGTH": "The password should contain at least 8 characters",
+      "ALREADY_MEMBER": "Already a member?"
+    }
+  },
+  "NOT_FOUND": {
+    "MESSAGE": "Oops, something went wrong",
+    "TO_MAIN": "Main page"
+  },
+  "DELETE": "Delete my profile",
+  "BOARDS": {
+    "TITLE": "Let's look at your boards",
+    "NO_BOARDS": "Oops, you don't have boards yet",
+    "CREATE": "Create a new one",
+    "FILTER": "Board filter",
+    "TASK_SEARCH": {
+      "TITLE": "Task search",
+      "BTN": "Search",
+      "RESULT": "Search results for",
+      "TO_BOARD": "Go to board"
+    }
+  },
+  "BOARD": {
+    "TITLE": "title",
+    "INFO_ABOUT_TASK": "Info about task",
+    "DESCRIPTION": "description",
+    "ADD_COLUMN": "Add new column",
+    "EDIT_COLUMN_NAME": "Column name",
+    "ADD_TASK": "Add task",
+    "EDIT_TASK": "Edit task",
+    "EDIT_BOARD": "Edit board",
+    "NEW_BOARD": "New board",
+    "CREATE_NEW_BOARD": "Create new board",
+    "ADD_COLUMN_MODAL_TITLE": "Column title",
+    "ADD_COLUMN_MODAL_BUTTON": "Create column",
+    "ERROR": "Oops, something went wrong",
+    "ERROR_TITLE": "The title is required",
+    "ERROR_DESCRIPTION": "The description is required",
+    "COLUMN_NO_TITLE": "No title",
+    "ADD_TASK_MODAL_TITLE": "Task text",
+    "ADD_TASK_MODAL_DESCRIPTION": "Task description",
+    "ADD_TASK_MODAL_BUTTON": "Create task",
+    "EDIT_TASK_MODAL_BUTTON": "Edit task",
+    "DONE": "Done",
+    "YES": "Yes",
+    "NO": "No",
+    "EXECUTOR": "Executor",
+    "USERS": "Users",
+    "TASK": {
+      "TASK": "Task",
+      "DESCRIPTION": "Description",
+      "BOARD": "Board"
+    }
+  },
+  "WELCOME": {
+    "BOARDS": "Boards",
+    "SEARCH": "Search",
+    "WATCH_VIDEO": "Watch video",
+    "TMINE": "Task Manager by Inga, Nastassia, Ed",
+    "TITLE": "Create issues, break them into tasks, track relationships, add custom fields, and have conversations. Visualize large projects as spreadsheets or boards, and automate everything with code.",
+    "ABOUT_WORK": "About working on the TMINE project:",
+    "MOSCOW_RUSSIA": "Moscow, Russia",
+    "MINSK_BELARUS": "Minsk, Belarus",
+    "MAHILYOW_BELARUS": "Mahilyow, Belarus",
+    "TEAM_LEADER": "Team leader",
+    "INGA_TASK1": "Code Review",
+    "INGA_TASK2": "Repository initialization",
+    "INGA_TASK3": "Store connection",
+    "INGA_TASK4": "Fixing developer bugs",
+    "NASTASSIA_TASK1": "Deploy backend to heroku",
+    "NASTASSIA_TASK2": "Writing a service with API requests",
+    "NASTASSIA_TASK3": "Writing an authorization service",
+    "NASTASSIA_TASK4": "Welcome and Edit Profile User Interface",
+    "ED_TASK1": "UI of login page, main page and board page",
+    "ED_TASK2": "Board route",
+    "ED_TASK3": "Functionality of tasks and columns",
+    "ED_TASK4": "Implementation of drag-n-drop functionality for tasks and columns",
+    "EXTRA_INFO": "Extra information",
+    "EXTRA1": "Work from anywhere",
+    "EXTRA2": "Participate in the discussion, control the execution of tasks. All this is free in TMINE mobile application.",
+    "EXTRA3": "Use comfortable language",
+    "EXTRA4": "At the moment the application is developed in two languages: Russian and English. You can switch the language in the header.",
+    "EXTRA5": "Choose a design",
+    "EXTRA6": "You can use the app in day or night mode. You can switch the mode in the header",
+    "EXTRA7": "Communication with application developers",
+    "EXTRA8": "If you have any questions or suggestions about the application, you can contact the developers. Contact details are above.",
+    "EXTRA9": "Versatile working environment",
+    "EXTRA10": "TMINE is convenient to use for both small teams and large companies. Its capabilities are suitable for all business sectors.",
+    "EXTRA11": "Use mobile and desktop version",
+    "EXTRA12": "TMINE is designed with an adaptive layout, which allows you to use it on any device (mobile phones, tablets, laptops and computers). Minimum page width - 320px."
+  },
+  "CONFIRMATION": {
+    "TITLE": "Are you sure you want to delete",
+    "BOARD": "this board",
+    "PROFILE": "your profile",
+    "COLUMN": "this column",
+    "TASK": "this task"
+  },
+  "USER": {
+    "ERROR": "Login or password are not correct",
+    "SIGNUP_FAILED": "Failed. Please check your data",
+    "COMMON_ERROR": "Something went wrong"
+  }
+}

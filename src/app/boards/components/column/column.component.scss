@@ -1,0 +1,288 @@
+@import "../../../../assets/styles/constants.scss";
+@import "../../../../assets/styles/keyframes.scss";
+
+.column {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  min-width: 15vw;
+  width: 15vw;
+  height: calc($main-height - $board-title-height * 2 - 8vh);
+  margin: 0 0.5vw;
+  padding: 0 1vw;
+  &__header {
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+    .header {
+      &__title {
+        align-self: center;
+        font-size: 1.5rem;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+        cursor: pointer;
+        &:hover {
+          text-decoration: underline;
+        }
+      }
+      &__input {
+        width: 12vw;
+      }
+      &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        padding: 0;
+        opacity: 0;
+        .actions {
+          &__btn {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            &:hover {
+              -webkit-animation: jello-horizontal 0.9s both;
+              animation: jello-horizontal 0.9s both;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__tasks {
+    display: flex;
+    flex-direction: column;
+    padding: 3%;
+    flex-grow: 1;
+    overflow-y: auto;
+    box-shadow: inset 0px 6px 3px -3px rgb(0 0 0 / 20%), inset 0px 3px 3px 0px rgb(0 0 0 / 14%),
+      inset 0px 3px 9px 0px rgb(0 0 0 / 12%);
+    .tasks {
+      &__task {
+        position: relative;
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        border-radius: 5px;
+        border-bottom: 2px solid lightblue;
+        .task {
+          &__executor {
+            position: absolute;
+            bottom: 0;
+            right: 0;
+            width: 24px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            font-style: italic;
+            font-weight: 700;
+            font-family: "Rubik", sans-serif;
+            color: firebrick;
+          }
+          &__btn {
+            cursor: pointer;
+            opacity: 0;
+            &:hover {
+              -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+              animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+            }
+          }
+        }
+        &:hover {
+          .task {
+            &__btn {
+              opacity: 1;
+            }
+          }
+        }
+      }
+    }
+  }
+  &__footer {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    &:hover {
+      -webkit-animation: pulsate-bck 0.5s ease-in-out infinite both;
+      animation: pulsate-bck 0.5s ease-in-out infinite both;
+    }
+    .footer {
+      &__text {
+        margin: 0;
+      }
+    }
+  }
+  &:hover {
+    .column{
+      &__header {
+        .header {
+          &__actions {
+            opacity: 1;
+          }
+        }
+      }
+    }
+  }
+}
+.popup {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 100vh;
+  width: 100vw;
+  z-index: 1;
+  &__overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(0,0,0,0.1);
+  }
+  &__modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    min-height: 25vh;
+    width: 25vw;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    .modal {
+      &__img {
+        width: 25%;
+      }
+      &__close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        &:hover {
+          -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+          animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+        }
+      }
+    }
+    .taskDetails {
+      padding: 0 2vw;
+      &__title {
+        align-self: flex-start;
+      }
+      &__description {
+        width: 100%;
+        align-self: flex-end;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-style: italic;
+      }
+      &__done {
+        align-self: flex-start;
+      }
+      &__executor {
+        align-self: flex-end;
+      }
+    }
+  }
+}
+
+app-modal {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+}
+
+// https://material.angular.io/cdk/drag-drop/overview
+
+.cdk-drag-preview {
+  box-sizing: border-box;
+  border-radius: 4px;
+  box-shadow: 0 5px 5px -3px rgba(0, 0, 0, 0.2),
+              0 8px 10px 1px rgba(0, 0, 0, 0.14),
+              0 3px 14px 2px rgba(0, 0, 0, 0.12);
+}
+
+.cdk-drag-animating {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.tasks__list:last-child {
+  border: none;
+}
+
+.column__tasks.cdk-drop-list-dragging .tasks__list:not(.cdk-drag-placeholder) {
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.tasks-custom-placeholder {
+  background: transparent;
+  min-height: 10vh;
+  transition: transform 250ms cubic-bezier(0, 0, 0.2, 1);
+}
+
+.tasks__list {
+  transition: none;
+}
+
+
+@media (max-width: 1000px) {
+  .column {
+    width: 18vw;
+  }
+}
+
+@media (max-width: 900px) {
+  .column {
+    width: 25vw;
+  }
+}
+
+@media (max-width: 700px) {
+  .column {
+    width: 32vw;
+  }
+}
+
+@media (max-width: 600px) {
+  .column {
+    width: 35vw;
+  }
+}
+
+@media (max-width: 500px) {
+  .column {
+    width: 40vw;
+  }
+}
+
+@media (max-width: 400px) {
+  .column {
+    width: 60vw;
+  }
+}
+
+@media (max-width: 1000px) {
+  .popup {
+    &__modal {
+      width: 40%;
+    }
+  }
+}
+
+@media (max-width: 800px) {
+  .popup {
+    &__modal {
+      width: 50%;
+    }
+  }
+}
+
+@media (max-width: 500px) {
+  .popup {
+    &__modal {
+      width: 70%;
+    }
+  }
+}

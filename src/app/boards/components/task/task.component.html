@@ -1,0 +1,22 @@
+<div class="task" *ngIf="task">
+  <p class="task__text" title="{{ task?.description }}">{{ task?.title }}</p>
+  <div class="task__btn" (click)="openDialog($event)">
+    <mat-icon color="primary">close</mat-icon>
+  </div>
+  <mat-checkbox
+    class="task__checkbox"
+    color="primary"
+    (click)="stopPropagation($event)"
+    (change)="switchCompleteFlag()"
+    [checked]="task?.done"
+    [disabled]="task?.userId !== (activeUser$ | async)!?.id"
+  >
+    {{ "BOARD.DONE" | translate }}
+  </mat-checkbox>
+  <div
+    class="task__executor"
+    title="Executor - {{ getExecutorName(users$ | async) }}"
+  >
+    {{ getExecutorName(users$ | async) }}
+  </div>
+</div>

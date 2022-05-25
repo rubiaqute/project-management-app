@@ -1,0 +1,303 @@
+@import "../../../../assets/styles/constants.scss";
+@import "../../../../assets/styles/keyframes.scss";
+
+.page-title {
+  margin: 0;
+  height: $board-title-height;
+  text-align: center;
+}
+
+.search {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: $padding-default;
+  width: 100%;
+  text-align: center;
+
+  &__input {
+    width: 40vw;
+  }
+  &__btn {
+    position: absolute;
+    top: -50%;
+    right: 0;
+  }
+  &__filter {
+    position: relative;
+    width: 50vw;
+    .filter {
+      &__input {
+        width: 100%;
+      }
+    }
+  }
+  &__task-search {
+    position: relative;
+    width: 30vw;
+    .task-search {
+      &__input {
+        width: 100%;
+      }
+    }
+  }
+}
+
+.boards {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  justify-items: center;
+  align-items: center;
+  height: auto;
+  padding: $padding-default;
+  gap: 1vw;
+
+  &__board {
+    width: 100%;
+    height: 20vh;
+    padding: 0 1vw;
+    cursor: pointer;
+    transition: 0.3s;
+    overflow: hidden;
+
+    &:hover {
+      transform: translateY(2%);
+      box-shadow: rgba(0, 0, 0, 0.2) 0px 6px 3px -3px,
+        rgba(0, 0, 0, 0.14) 0px 3px 3px 0px, rgba(0, 0, 0, 0.12) 0px 3px 9px 0px;
+
+      .board {
+        &__actions {
+          opacity: 1;
+        }
+      }
+    }
+
+    .board {
+      &__title {
+        font-size: 1.5rem;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      &__description {
+        font-size: 1.3rem;
+        max-height: 12vh;
+        overflow: hidden;
+        color: transparent;
+        -webkit-background-clip: text;
+      }
+
+      &__actions {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        margin: 0;
+        opacity: 0;
+
+        .actions {
+          &__btn {
+            &.create:hover {
+              -webkit-animation: vibrate 0.3s linear infinite both;
+              animation: vibrate 0.3s linear infinite both;
+            }
+
+            &.delete:hover {
+              -webkit-animation: jello-horizontal 0.9s both;
+              animation: jello-horizontal 0.9s both;
+            }
+          }
+        }
+      }
+    }
+  }
+
+  .no-boards {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+
+    &__btn {
+      &:hover {
+        -webkit-animation: jello-horizontal 0.9s both;
+        animation: jello-horizontal 0.9s both;
+      }
+    }
+  }
+}
+
+app-modal {
+  form {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    bottom: 58%;
+  }
+}
+
+:host {
+  position: relative;
+}
+
+.spinner-wrapper {
+  position: absolute;
+  top: 0;
+  left: 0;
+  min-width: 100vw;
+  min-height: 100vh;
+  z-index: 100;
+  align-items: center;
+  display: flex;
+  justify-content: center;
+}
+
+@media (max-width: 1000px) {
+  .boards {
+    grid-template-columns: repeat(5, 1fr);
+  }
+}
+
+@media (max-width: 750px) {
+  .boards {
+    grid-template-columns: repeat(4, 1fr);
+  }
+}
+
+@media (max-width: 550px) {
+  .boards {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 400px) {
+  .boards {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+.results-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 100;
+  overflow-y: auto;
+  .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba($color: #000000, $alpha: 0.1);
+    -webkit-backdrop-filter: blur(1px);
+    backdrop-filter: blur(1px);
+  }
+  .results {
+    position: absolute;
+    top: 2%;
+    left: 50%;
+    width: 90%;
+    transform: translateX(-50%);
+    &__close-btn {
+      position: absolute;
+      top: 0;
+      right: 0;
+      &:hover {
+        -webkit-animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955)
+          both;
+        animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+      }
+    }
+    &__heading {
+      font-size: 2rem;
+    }
+    &__items {
+      display: flex;
+      align-items: center;
+      justify-content: space-evenly;
+      flex-wrap: wrap;
+      gap: 2vw;
+      .results {
+        &__item {
+          padding: $padding-default;
+          border-radius: 2%;
+          -webkit-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+            4px 4px 8px 0px rgba(203, 213, 221, 0.74);
+          -moz-box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+            4px 4px 8px 0px rgba(203, 213, 221, 0.74);
+          box-shadow: 4px 4px 8px 0px rgba(34, 60, 80, 0.2),
+            4px 4px 8px 0px rgba(203, 213, 221, 0.74);
+          &-btn {
+            &:hover {
+              -webkit-animation: jello-horizontal 0.9s both;
+              animation: jello-horizontal 0.9s both;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+.popup {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  z-index: 1;
+  &__overlay {
+    height: 100%;
+    width: 100%;
+    background: rgba(0, 0, 0, 0.1);
+  }
+  &__modal {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    height: 50vh;
+    width: 25vw;
+    transform: translate(-50%, -50%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden;
+    .modal {
+      &__img {
+        width: 25%;
+      }
+      &__close {
+        position: absolute;
+        top: 0;
+        right: 0;
+        cursor: pointer;
+        &:hover {
+          -webkit-animation: shake-lr 0.7s
+            cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+          animation: shake-lr 0.7s cubic-bezier(0.455, 0.03, 0.515, 0.955) both;
+        }
+      }
+    }
+    .taskDetails {
+      padding: 0 2vw;
+      &__title {
+        align-self: flex-start;
+      }
+      &__description {
+        width: 100%;
+        align-self: flex-end;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        font-style: italic;
+      }
+      &__done {
+        align-self: flex-start;
+      }
+      &__executor {
+        align-self: flex-end;
+      }
+    }
+  }
+}

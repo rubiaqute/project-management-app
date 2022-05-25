@@ -1,0 +1,96 @@
+<ng-container *ngIf="activeBoard$ | async as board">
+  <h3 class="page-title" title="{{ board.title }}">
+    <b>{{ board?.title }}</b>
+  </h3>
+  <h4 class="page-description fading" title="{{ board.description }}">
+    {{ board?.description }}
+  </h4>
+
+  <ng-container *ngIf="columns$ | async as columns">
+    <div
+      class="middle-container board"
+      cdkDropList
+      cdkDropListOrientation="horizontal"
+      (cdkDropListDropped)="drop($event)"
+      cdkDropListGroup
+    >
+      <div
+        *ngIf="isLoading$ | async"
+        class="spinner-wrapper transparent-background"
+      >
+        <mat-spinner></mat-spinner>
+      </div>
+      <app-column
+        class="board__column-list"
+        *ngFor="let column of columns"
+        [column]="column"
+        [boardId]="board.id!"
+        (cdkDragStarted)="setCurrentColumn(column)"
+        [(currentTask)]="currentTask"
+        [(prevColumn)]="prevColumn"
+        cdkDrag
+      ></app-column>
+
+      <mat-card
+        class="board__column add-column"
+        (click)="openAddColumnModal($event, board.id)"
+      >
+        <mat-icon color="primary" class="add-column__icon"> add </mat-icon>
+        <p class="add-column__text">
+          {{ "BOARD.ADD_COLUMN" | translate }}
+        </p>
+      </mat-card>
+    </div>
+  </ng-container>
+
+  <button mat-icon-button class="back-btn" routerLink="/main" color="primary">
+    <mat-icon> apps </mat-icon>
+  </button>
+</ng-container>
+
+<app-modal [title]="modalTitle">
+  <form [formGroup]="addColumnForm">
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.ADD_COLUMN_MODAL_TITLE" | translate }}
+      </mat-label>
+      <input matInput type="text" formControlName="title" />
+      <mat-error *ngIf="titleColumn?.invalid && titleColumn?.touched">
+        <span *ngIf="titleColumn?.errors?.['required']">
+          {{ "BOARD.ERROR_TITLE" | translate }}
+        </span>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      class="sign-up__btn"
+      mat-raised-button
+      color="primary"
+      type="button"
+      [disabled]="addColumnForm.invalid"
+      (click)="createColumn()"
+    >
+      {{ "BOARDS.CREATE" | translate }}
+    </button>
+  </form>
+</app-modal>
+
+<div class="popup" *ngIf="isErrorModalOn">
+  <div class="popup__overlay" (click)="isErrorModalOn = !isErrorModalOn"></div>
+  <mat-card class="popup__modal">
+    <img
+      class="modal__img"
+      src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
+      alt="img: server wrong"
+      draggable="false"
+    />
+    <p>{{ "USER.COMMON_ERROR" | translate }}</p>
+    <button
+      mat-icon-button
+      class="modal__close"
+      (click)="isErrorModalOn = !isErrorModalOn"
+    >
+      <mat-icon color="primary">close</mat-icon>
+    </button>
+  </mat-card>
+</div>

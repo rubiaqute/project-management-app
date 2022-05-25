@@ -1,0 +1,191 @@
+<ng-container *ngIf="boards$ | async as boards">
+  <h2 class="page-title">
+    <b>{{ "BOARDS.TITLE" | translate }}:</b>
+  </h2>
+
+  <div class="search">
+    <div class="search__task-search">
+      <mat-form-field class="task-search__input" appearance="fill">
+        <mat-label>{{ "BOARDS.TASK_SEARCH.TITLE" | translate }}</mat-label>
+        <input matInput [(ngModel)]="taskSearchInput" />
+        <button
+          class="search__btn"
+          mat-icon-button
+          [disabled]="taskSearchInput.length < 2"
+          (click)="searchTask(boards)"
+        >
+          <mat-icon *ngIf="taskSearchInput.trim().length >= 2">search</mat-icon>
+        </button>
+      </mat-form-field>
+    </div>
+    <div class="search__filter">
+      <mat-form-field class="filter__input" appearance="fill">
+        <mat-label>
+          {{ "BOARDS.FILTER" | translate }}
+        </mat-label>
+        <input
+          #myInput
+          matInput
+          [(ngModel)]="searchStr"
+          name="search"
+          (input)="search(myInput.value)"
+          maxlength="256"
+        />
+        <button class="search__btn" mat-icon-button (click)="clearInput()">
+          <mat-icon *ngIf="searchStr">close </mat-icon>
+        </button>
+        <mat-hint align="end">{{ myInput.value.length }} / 50</mat-hint>
+      </mat-form-field>
+    </div>
+  </div>
+
+  <div class="middle-container boards">
+    <mat-card
+      class="boards__board"
+      *ngFor="let board of boards | filterByTitle: title"
+      [routerLink]="['/main/boards', board.id]"
+    >
+      <mat-card-actions class="board__actions">
+        <mat-icon
+          (click)="openEditBoardModal($event, board.id, board)"
+          color="primary"
+          class="actions__btn create"
+        >
+          edit
+        </mat-icon>
+
+        <mat-icon
+          color="primary"
+          class="actions__btn delete"
+          (click)="openDialog(board.id, $event)"
+          >delete
+        </mat-icon>
+      </mat-card-actions>
+      <mat-card-title class="board__title">
+        <b>{{ board.title | titlecase }}</b></mat-card-title
+      >
+      <mat-card-subtitle class="board__description fading">{{
+        board.description | titlecase
+      }}</mat-card-subtitle>
+    </mat-card>
+  </div>
+</ng-container>
+<div
+  class="spinner-wrapper transparent-background"
+  *ngIf="(isLoading | async) || isSeachingTasks"
+>
+  <mat-spinner></mat-spinner>
+</div>
+<div class="results-wrapper" *ngIf="isResultsShown">
+  <div class="overlay" (click)="closeResults($event)"></div>
+  <mat-card class="results">
+    <p class="results__heading">
+      {{ "BOARDS.TASK_SEARCH.RESULT" | translate }}
+      <span
+        style="color: firebrick; font-size: 3rem; text-decoration: underline"
+        >{{ taskSearchInput }}</span
+      >
+    </p>
+    <button
+      mat-icon-button
+      (click)="closeResults($event)"
+      class="results__close-btn"
+    >
+      <mat-icon>close</mat-icon>
+    </button>
+    <div class="results__items">
+      <div class="results__item" *ngFor="let task of tasks">
+        <p>
+          <b>{{ "BOARD.TASK.TASK" | translate }}:</b> {{ task.title }}
+        </p>
+        <p>
+          <b>{{ "BOARD.TASK.DESCRIPTION" | translate }}:</b>
+          {{ task.description }}
+        </p>
+        <p>
+          <b>{{ "BOARD.EXECUTOR" | translate }}:</b>
+          {{ getAssigneeName(task.userId) }}
+        </p>
+        <p>
+          <b>{{ "BOARD.TASK.BOARD" | translate }}:</b>
+          {{ getBoardName(task.id) }}
+        </p>
+        <button
+          mat-raised-button
+          class="results__item-btn"
+          color="accent"
+          [routerLink]="['/main/boards', getBoardId(task.id)]"
+        >
+          {{ "BOARDS.TASK_SEARCH.TO_BOARD" | translate }}
+        </button>
+      </div>
+    </div>
+  </mat-card>
+</div>
+
+<app-modal [title]="modalTitle">
+  <form [formGroup]="editBoardForm">
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.TITLE" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        [value]="board?.title"
+        formControlName="title"
+      />
+      <mat-error *ngIf="titleBoard?.invalid && titleBoard?.touched">
+        <span *ngIf="titleBoard?.errors?.['required']">
+          {{ "BOARD.ERROR_TITLE" | translate }}
+        </span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.DESCRIPTION" | translate }}
+      </mat-label>
+      <input
+        matInput
+        type="text"
+        [value]="board?.description"
+        formControlName="description"
+      />
+      <mat-error *ngIf="descriptionBoard?.invalid && descriptionBoard?.touched">
+        <span *ngIf="descriptionBoard?.errors?.['required']">
+          {{ "BOARD.ERROR_DESCRIPTION" | translate }}
+        </span>
+      </mat-error>
+    </mat-form-field>
+
+    <button
+      class="sign-up__btn"
+      mat-raised-button
+      color="primary"
+      type="button"
+      [disabled]="editBoardForm.invalid"
+      (click)="editBoard()"
+    >
+      {{ "BOARD.EDIT_BOARD" | translate }}
+    </button>
+  </form>
+</app-modal>
+<div class="popup" *ngIf="isErrorModalOn">
+  <div class="popup__overlay" (click)="isErrorModalOn = !isErrorModalOn"></div>
+  <mat-card class="popup__modal">
+    <img
+      class="modal__img"
+      src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
+      alt="img: server wrong"
+      draggable="false"
+    />
+    <p>{{ "USER.COMMON_ERROR" | translate }}</p>
+    <button
+      mat-icon-button
+      class="modal__close"
+      (click)="isErrorModalOn = !isErrorModalOn"
+    >
+      <mat-icon color="primary">close</mat-icon>
+    </button>
+  </mat-card>
+</div>

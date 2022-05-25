@@ -1,0 +1,18 @@
+<div class="middle-container not-found">
+  <img
+    class="not-found__img"
+    src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
+    alt="img: not found"
+    draggable="false"
+  />
+  <p class="not-found__text">{{ "NOT_FOUND.MESSAGE" | translate }}</p>
+  <button
+    mat-raised-button
+    class="not-found__btn"
+    type="button"
+    color="primary"
+    [routerLink]="['/main']"
+  >
+    {{ "NOT_FOUND.TO_MAIN" | translate }}
+  </button>
+</div>

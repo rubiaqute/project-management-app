@@ -1,0 +1,178 @@
+<header class="header">
+  <mat-toolbar class="header-container " color="primary">
+    <div class="toggles">
+      <mat-slide-toggle (change)="changeLanguage()">
+        <mat-icon class="toggles__icon">language</mat-icon>
+      </mat-slide-toggle>
+      <mat-slide-toggle (change)="changeTheme()">
+        <mat-icon class="toggles__icon">bedtime</mat-icon>
+      </mat-slide-toggle>
+    </div>
+    <div class="toggles-hidden">
+      <button mat-icon-button [matMenuTriggerFor]="menu" aria-label="Example icon-button with a menu">
+        <mat-icon>more_vert</mat-icon>
+      </button>
+      <mat-menu #menu="matMenu">
+        <button mat-menu-item>
+          <mat-slide-toggle (change)="changeLanguage()">
+            <mat-icon class="toggles__icon">language</mat-icon>
+          </mat-slide-toggle>
+        </button>
+        <button mat-menu-item>
+          <mat-slide-toggle (change)="changeTheme()">
+            <mat-icon class="toggles__icon">bedtime</mat-icon>
+          </mat-slide-toggle>
+        </button>
+      </mat-menu>
+
+    </div>
+    <span class="header__title" [routerLink]="''">
+      {{"MENU.TITLE" | translate}}
+    </span>
+    <span class="header__title__hidden" [routerLink]="''">
+      {{"MENU.TITLE" | translate}}
+    </span>
+    <div class="user-controls__login" *ngIf="!!(activeUser$ | async) === false">
+      <button
+        class="user-controls__login__btn"
+        mat-raised-button
+        color="accent"
+        [routerLink]="'/auth/login'"
+      >
+        {{ "MENU.LINKS.LOGIN" | translate }}
+      </button>
+      <button
+        class="user-controls__login__btn"
+        mat-raised-button
+        color="accent"
+        [routerLink]="'/auth/sign-up'"
+      >
+        {{ "MENU.LINKS.REGISTER" | translate }}
+      </button>
+    </div>
+    <div class="user-controls__menu" *ngIf="activeUser$ | async">
+      <span class="header__name">{{ (activeUser$ | async)!.name }}</span>
+      <button
+        class="user-controls__menu__btn"
+        mat-mini-fab
+        color="accent"
+        (click)="openNewBoardModal()"
+      >
+        <mat-icon>dashboard</mat-icon>
+      </button>
+      <button
+        class="user-controls__menu__btn"
+        mat-mini-fab
+        color="accent"
+        [routerLink]="'/auth/edit'"
+      >
+        <mat-icon>edit</mat-icon>
+      </button>
+      <button
+        class="user-controls__menu__btn"
+        mat-mini-fab
+        color="accent"
+        (click)="logout()"
+      >
+        <mat-icon>exit_to_app</mat-icon>
+      </button>
+    </div>
+    <div class="user-controls-hidden" *ngIf="activeUser$ | async">
+      <button mat-button [matMenuTriggerFor]="menu">
+        {{ (activeUser$ | async)!.name }}
+      </button>
+      <mat-menu #menu="matMenu">
+        <button
+          mat-menu-item
+          class="user-controls__menu__btn"
+          color="accent"
+          (click)="openNewBoardModal()"
+        >New board
+        </button>
+        <button
+          mat-menu-item
+          class="user-controls__menu__btn"
+          color="accent"
+          [routerLink]="'/auth/edit'"
+        >Edit Profile
+        </button>
+        <button
+          mat-menu-item
+          class="user-controls__menu__btn"
+          color="accent"
+          (click)="logout()"
+        >Log out
+        </button>
+      </mat-menu>
+    </div>
+  </mat-toolbar>
+</header>
+<div class="popup" *ngIf="isErrorModalOn">
+  <div class="popup__overlay" (click)="isErrorModalOn = !isErrorModalOn"></div>
+  <mat-card class="popup__modal">
+    <img
+      class="modal__img"
+      src="https://i.ibb.co/Hh0TWGj/3099447-evil-monkey-no-see-icon.png"
+      alt="img: server wrong"
+      draggable="false"
+    />
+    <p>{{ "USER.ERROR" | translate }}</p>
+    <button
+      mat-icon-button
+      class="modal__close"
+      (click)="isErrorModalOn = !isErrorModalOn"
+    >
+      <mat-icon color="primary">close</mat-icon>
+    </button>
+  </mat-card>
+</div>
+
+
+<app-modal [title]="modalTitle">
+  <form [formGroup]="newBoardForm">
+    <mat-form-field>
+      <mat-label>
+        {{ "BOARD.TITLE" | translate }}
+      </mat-label>
+      <input
+        matInput
+        #inputRef
+        type="text"
+        formControlName="title"
+      />
+      <mat-error *ngIf="title?.invalid && title?.touched">
+          <span *ngIf="title?.errors?.['required']">
+            {{"BOARD.ERROR_TITLE" | translate}}
+          </span>
+      </mat-error>
+    </mat-form-field>
+    <mat-form-field>
+      <mat-label>
+        {{"BOARD.DESCRIPTION" | translate}}
+      </mat-label>
+      <input
+        matInput
+        #descriptionRef
+        type="text"
+        formControlName="description"
+      />
+      <mat-error *ngIf="description?.invalid && description?.touched">
+          <span *ngIf="description?.errors?.['required']">
+            {{"BOARD.ERROR_DESCRIPTION" | translate}}
+          </span>
+      </mat-error>
+    </mat-form-field>
+    <button
+      class="sign-up__btn"
+      mat-raised-button
+      color="primary"
+      [disabled]="newBoardForm.invalid ||
+                   !inputRef.value.trim() ||
+                   !descriptionRef.value.trim()"
+      (click)="addNewBoard()"
+      type="button"
+    >
+      {{ "BOARDS.CREATE" | translate }}
+    </button>
+  </form>
+</app-modal>

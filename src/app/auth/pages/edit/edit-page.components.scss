@@ -1,0 +1,29 @@
+@import "../../../../assets/styles/constants.scss";
+
+.sign-up {
+  margin-top: 2vh;
+  padding: $padding-default;
+  width: $authcard-width;
+  &__input {
+    width: 100%;
+    font-size: 12px;
+    .suffix {
+      cursor: pointer;
+    }
+  }
+  &__btn {
+    margin-left: 100%;
+    transform: translateX(-100%);
+    padding: 0 2vw;
+  }
+  .subtext {
+    font-size: 1.4rem;
+    text-align: center;
+    &__link {
+      cursor: pointer;
+      &:hover {
+        opacity: 0.7;
+      }
+    }
+  }
+}
