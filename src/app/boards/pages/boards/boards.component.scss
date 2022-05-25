@@ -86,12 +86,6 @@
         overflow: hidden;
         color: transparent;
         -webkit-background-clip: text;
-        background-image: linear-gradient(
-          to bottom,
-          #000,
-          #000,
-          rgba(0, 0, 0, 0)
-        );
       }
 
       &__actions {

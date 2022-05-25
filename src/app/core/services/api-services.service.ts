@@ -29,7 +29,7 @@ export class ApiServices {
       signIn)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -40,7 +40,7 @@ export class ApiServices {
       signUp)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -51,7 +51,7 @@ export class ApiServices {
     return this.http.get<IUser[]>(`${this.url}/users`)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -61,7 +61,7 @@ export class ApiServices {
     return this.http.get<IUser>(`${this.url}/users/${id}`)
     // .pipe(
     //   catchError((err => {
-    //     console.error(err);
+    //
     //     return throwError(err);
     //   }))
     // );
@@ -71,7 +71,7 @@ export class ApiServices {
     return this.http.put<IUser>(`${this.url}/users/${id}`, user)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -81,7 +81,7 @@ export class ApiServices {
     return this.http.delete<IUser>(`${this.url}/users/${id}`)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -92,7 +92,7 @@ export class ApiServices {
   //   return this.http.get<IBoard[]>(`${this.url}/boards`)
   //     .pipe(
   //       catchError((err => {
-  //         console.error(err);
+  //
   //         return throwError(err);
   //       }))
   //     );
@@ -122,7 +122,7 @@ export class ApiServices {
     return this.http.get<IColumn[]>(`${this.url}/boards/${boardId}/columns`)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -132,7 +132,7 @@ export class ApiServices {
     return this.http.get<IColumn>(`${this.url}/boards/${boardId}/columns/${columnId}`)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -155,7 +155,7 @@ export class ApiServices {
     return this.http.get<ITask[]>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks`)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -165,7 +165,7 @@ export class ApiServices {
     return this.http.get<ITask>(`${this.url}/boards/${boardId}/columns/${columnId}/tasks/${taskId}`)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -188,7 +188,7 @@ export class ApiServices {
     return this.http.post<IFile>(`${this.url}/file`, file)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );
@@ -198,7 +198,7 @@ export class ApiServices {
     return this.http.get<IFile>(`${this.url}/file/${taskId}/${fileName}`)
       .pipe(
         catchError((err => {
-          console.error(err);
+
           return throwError(err);
         }))
       );

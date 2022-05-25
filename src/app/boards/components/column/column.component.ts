@@ -8,7 +8,6 @@ import {
   OnInit,
   Output,
   QueryList,
-  ViewChild,
   ViewChildren
 } from '@angular/core';
 import { MatDialog } from '@angular/material/dialog';
@@ -85,7 +84,7 @@ export class ColumnComponent implements OnInit, OnDestroy, OnChanges {
     this.editTaskForm = this.fb.group({
       title: [`${this.currentTask?.title}`, [Validators.required]],
       description: [`${this.currentTask?.description}`, [Validators.required]],
-      user: ['', [Validators.required]]
+      user: [this.userExecutor, [Validators.required]]
     });
     this.addTaskForm = this.fb.group({
       title: ['', [Validators.required]],
@@ -153,7 +152,7 @@ export class ColumnComponent implements OnInit, OnDestroy, OnChanges {
   }
 
   public createTask(): void {
-    this.MAX_TASK_ORDER = this.column!.tasks ? Math.max(...this.column.tasks.map((el) => el.order)) + this.INDEX_COEFFICIENT : 0;
+    this.MAX_TASK_ORDER = this.column!.tasks!.length ? Math.max(...this.column.tasks!.map((el) => el.order)) + this.INDEX_COEFFICIENT : 0;
 
     const taskRequest: ITaskRequest = {
       title: this.titleTask?.value,

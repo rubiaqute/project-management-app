@@ -1,14 +1,14 @@
-import {CdkDragDrop, moveItemInArray} from '@angular/cdk/drag-drop';
-import {Component, OnDestroy, OnInit, ViewChild} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
-import {ofType} from '@ngrx/effects';
-import {ActionsSubject} from '@ngrx/store';
-import {Observable, Subscription} from 'rxjs';
-import {IBoard, IColumn, IColumnRequest, ITask, Status} from 'src/app/core/models/api.models';
-import {ActiveBordTypes} from 'src/app/store/actions/active-board.actions';
-import {ApiFacade} from 'src/app/store/facade';
-import {ModalComponent} from "../../../shared/components/modal/modal.component";
-import {AbstractControl, FormBuilder, FormGroup, Validators} from "@angular/forms";
+import { CdkDragDrop, moveItemInArray } from '@angular/cdk/drag-drop';
+import { Component, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { ofType } from '@ngrx/effects';
+import { ActionsSubject } from '@ngrx/store';
+import { Observable, Subscription } from 'rxjs';
+import { IBoard, IColumn, IColumnRequest, ITask, Status } from 'src/app/core/models/api.models';
+import { ActiveBordTypes } from 'src/app/store/actions/active-board.actions';
+import { ApiFacade } from 'src/app/store/facade';
+import { ModalComponent } from "../../../shared/components/modal/modal.component";
+import { AbstractControl, FormBuilder, FormGroup, Validators } from "@angular/forms";
 
 @Component({
   selector: 'app-board',
@@ -138,6 +138,7 @@ export class BoardComponent implements OnInit, OnDestroy {
   public openAddColumnModal(e: Event, id: string | null): void {
     this.id = id;
     e.stopPropagation();
+    this.addColumnForm.setValue({ 'title': '' })
     this.child?.toggleModal();
   }
 }
